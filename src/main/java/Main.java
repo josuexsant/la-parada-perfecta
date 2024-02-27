@@ -1,3 +1,4 @@
+import controller.CtrlUsuario;
 import model.CreateConnection;
 
 import java.sql.Connection;
@@ -20,5 +21,9 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("josuexsanta@example.com","1234");
+
     }
 }
