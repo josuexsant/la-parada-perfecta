@@ -41,10 +41,9 @@ public class CreateConnection {
         String jdbcUrl;
         jdbcUrl = "jdbc:mysql://" + this.hostname + ":" +
                 this.port + "/" + this.database;
-        System.out.println(jdbcUrl);
         conn = DriverManager.getConnection(jdbcUrl, this.username,
                 this.password);
-        System.out.println("    Successfully connected");
+        System.out.println("    -> Successfully connected");
         return conn;
     }
 }

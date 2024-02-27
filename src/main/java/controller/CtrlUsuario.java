@@ -10,11 +10,12 @@ import java.sql.SQLException;
 public class CtrlUsuario {
     private CreateConnection createConn = new CreateConnection();
 
-    public void iniciarSesion(String correoElectronico, String password){
+    public boolean iniciarSesion(String correoElectronico, String password){
         try {
             if(validarCorreoElectronico(correoElectronico)){
                 if(validarPassword(correoElectronico, password)){
                     System.out.println("Inicio de sesión exitoso");
+                    return true;
                 }else {
                     System.out.println("Contraseña incorrecta");
                 }
@@ -24,6 +25,7 @@ public class CtrlUsuario {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 
     public boolean validarCorreoElectronico(String correoElectronico) throws SQLException{
