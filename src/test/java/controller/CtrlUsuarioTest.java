@@ -25,7 +25,6 @@ class CtrlUsuarioTest {
     }
 
 
-
     @Test
     @DisplayName("Validación de cuentas")
     void iniciarSesion() {
