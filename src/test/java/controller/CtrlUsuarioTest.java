@@ -1,5 +1,6 @@
 package controller;
 
+import model.Usuario;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CtrlUsuarioTest {
     CtrlUsuario ctrlUsuario = new CtrlUsuario();
+    Usuario usuario = new Usuario(2);
 
     @Test
     @DisplayName("Validación de cuentas")
@@ -63,7 +65,8 @@ class CtrlUsuarioTest {
     void validarPassword() {
         // Contraseña correcta
         try{
-            assertEquals(true, ctrlUsuario.validarPassword("josuexsanta@example.com","1234"));
+            ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com");
+            assertEquals(true, ctrlUsuario.validarPassword("1234"));
             System.out.println("Contraseña correcta validada.");
         }catch (SQLException e){
             e.printStackTrace();
@@ -71,7 +74,8 @@ class CtrlUsuarioTest {
 
         //Contraseña incorrecta
         try{
-            assertEquals(false, ctrlUsuario.validarPassword("josuexsanta@example.com","0000"));
+            ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com");
+            assertEquals(false, ctrlUsuario.validarPassword("0000"));
             System.out.println("Contraseña incorrecta no validada");
         }catch (SQLException e){
             e.printStackTrace();

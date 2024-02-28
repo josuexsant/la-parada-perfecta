@@ -1,19 +1,17 @@
 package controller;
 
 import model.CreateConnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import model.Usuario;
 import java.sql.SQLException;
 
 public class CtrlUsuario {
-    private CreateConnection createConn = new CreateConnection();
+    private Usuario usuario;
+    private final CreateConnection createConn = new CreateConnection();
 
     public boolean iniciarSesion(String correoElectronico, String password){
         try {
             if(validarCorreoElectronico(correoElectronico)){
-                if(validarPassword(correoElectronico, password)){
+                if(validarPassword(password)){
                     System.out.println("Inicio de sesión exitoso");
                     return true;
                 }else {
@@ -29,20 +27,20 @@ public class CtrlUsuario {
     }
 
     public boolean validarCorreoElectronico(String correoElectronico) throws SQLException{
-        String query = "SELECT id from informacion_usuario WHERE correo_electronico =" + "?";
-        Connection conn = createConn.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, correoElectronico);
-        ResultSet rs = pstmt.executeQuery();
-        return rs.next();
+        if (Usuario.usuarioExiste(correoElectronico)){
+            int idUsuario = Usuario.obtenerIdUsuario(correoElectronico);
+            usuario = new Usuario(2);
+            return true;
+        }
+        return false;
     }
-    public boolean validarPassword(String correoElectronico, String password) throws SQLException{
-        String query = "SELECT id_usuario FROM passwords JOIN informacion_usuario ON passwords.id_usuario = informacion_usuario.id WHERE informacion_usuario.correo_electronico = ? AND passwords.password = ?";
-        Connection conn = createConn.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, correoElectronico);
-        pstmt.setString(2, password);
-        ResultSet rs = pstmt.executeQuery();
-        return rs.next();
+    public boolean validarPassword(String password) throws SQLException{
+        if (usuario.getPassword().equals(password))
+            return true;
+        return false;
+    }
+
+    public Usuario getUsuario(){
+        return usuario;
     }
 }
