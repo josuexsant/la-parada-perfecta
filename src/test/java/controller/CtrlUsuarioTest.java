@@ -1,5 +1,6 @@
 package controller;
 
+import model.Usuario;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,13 +10,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CtrlUsuarioTest {
     CtrlUsuario ctrlUsuario = new CtrlUsuario();
+    Usuario usuario = new Usuario(2);
 
     @Test
     @DisplayName("Registro de usuarios")
     void registrarUsuario(){
-        assertEquals(true, ctrlUsuario.registrarUsuario(1, "Alexis", "12390", "Gomez", "Solano", 1234567890, "alexisgs@example.com", 1, 1));
-        System.out.println("Usuario registrado con exito");
+        // Registro de usuario exitoso
+        assertEquals(true, ctrlUsuario.registrarUsuario(1, "Alexis", "12390", "Gomez", "Solano", "1234567890", "alexisgs@example.com", 1, 1));
+        System.out.println("+ Usuario registrado con exito");
+
+        // Registro de usuario fallido (informacion duplicada)
+        assertEquals(false, ctrlUsuario.registrarUsuario(1, "Alexis", "12390", "Gomez", "Solano", "1234567890", "alexisgs@example.com", 1, 1));
+        System.out.println("+ Registro de usuario sin exito");
     }
+
 
 
     @Test
@@ -71,7 +79,8 @@ class CtrlUsuarioTest {
     void validarPassword() {
         // Contraseña correcta
         try{
-            assertEquals(true, ctrlUsuario.validarPassword("josuexsanta@example.com","1234"));
+            ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com");
+            assertEquals(true, ctrlUsuario.validarPassword("1234"));
             System.out.println("Contraseña correcta validada.");
         }catch (SQLException e){
             e.printStackTrace();
@@ -79,7 +88,8 @@ class CtrlUsuarioTest {
 
         //Contraseña incorrecta
         try{
-            assertEquals(false, ctrlUsuario.validarPassword("josuexsanta@example.com","0000"));
+            ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com");
+            assertEquals(false, ctrlUsuario.validarPassword("0000"));
             System.out.println("Contraseña incorrecta no validada");
         }catch (SQLException e){
             e.printStackTrace();

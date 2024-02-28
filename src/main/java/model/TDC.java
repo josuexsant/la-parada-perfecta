@@ -6,12 +6,12 @@ public class TDC {
     private int id_usuario;
     private int numero_tarjeta;
     private Date fecha_expiracion;
-    private int cvv;
+    private String cvv;
     private String nombre_titular;
     private String direccion_facturacion;
 
 
-    public TDC(int id, int id_usuario, int numero_tarjeta, Date fecha_expiracion, int cvv, String nombre_titular, String direccion_facturacion){
+    public TDC(int id, int id_usuario, int numero_tarjeta, Date fecha_expiracion, String cvv, String nombre_titular, String direccion_facturacion){
         this.id = id;
         this.id_usuario = id_usuario;
         this.numero_tarjeta = numero_tarjeta;
@@ -53,11 +53,11 @@ public class TDC {
         return fecha_expiracion;
     }
 
-    public void setCvv(int cvv){
+    public void setCvv(String cvv){
         this.cvv = cvv;
     }
 
-    public int getCvv(){
+    public String getCvv(){
         return cvv;
     }
 
