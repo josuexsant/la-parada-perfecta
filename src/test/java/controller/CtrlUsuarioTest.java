@@ -11,6 +11,14 @@ class CtrlUsuarioTest {
     CtrlUsuario ctrlUsuario = new CtrlUsuario();
 
     @Test
+    @DisplayName("Registro de usuarios")
+    void registrarUsuario(){
+        assertEquals(true, ctrlUsuario.registrarUsuario(1, "Alexis", "12390", "Gomez", "Solano", 1234567890, "alexisgs@example.com", 1, 1));
+        System.out.println("Usuario registrado con exito");
+    }
+
+
+    @Test
     @DisplayName("Validación de cuentas")
     void iniciarSesion() {
         // Correo registrado y contraseña correcta:

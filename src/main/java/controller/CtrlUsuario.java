@@ -1,6 +1,7 @@
 package controller;
 
 import model.CreateConnection;
+import model.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,33 @@ import java.sql.SQLException;
 
 public class CtrlUsuario {
     private CreateConnection createConn = new CreateConnection();
+
+    public boolean registrarUsuario(int id, String nombre, String password, String apellidoPaterno, String apellidoMaterno, int numeroTelefono, String correoElectronico, int idGenero, int idCiudad) {
+        registroUsuario psql = new registroUsuario();
+        Usuario p = new Usuario(id, nombre, password, apellidoPaterno, apellidoPaterno, numeroTelefono, correoElectronico, idGenero, idCiudad);
+
+        p.setId(id);
+        p.setNombre(nombre);
+        p.setPassword(password);
+        p.setApellidoPaterno(apellidoPaterno);
+        p.setApellidoMaterno(apellidoMaterno);
+        p.setNumeroTelefono(numeroTelefono);
+        p.setCorreoElectronico(correoElectronico);
+        p.setIdGenero(idGenero);
+        p.setIdCiudad(idCiudad);
+
+        try {
+            if(psql.registrar(p)){
+                System.out.println("Registro de usuario exitoso");
+                return true;
+            }else{
+                System.out.println("Registro de usuario fallido");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 
     public boolean iniciarSesion(String correoElectronico, String password){
         try {
