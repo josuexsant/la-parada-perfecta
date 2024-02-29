@@ -1,4 +1,4 @@
-package org.example;
+package view;
 
 import javax.swing.*;
 
@@ -16,7 +16,7 @@ public class RegistroUsuario {
     private JComboBox comboBox2;
     private JButton siguienteButton;
 
-    public static void main(String[] args) {
+    public void mostrarRegistro() {
         JFrame frame = new JFrame("RegistroUsuario");
         frame.setContentPane(new RegistroUsuario().RegistroUsuario);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
