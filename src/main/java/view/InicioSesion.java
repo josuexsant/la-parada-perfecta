@@ -27,8 +27,16 @@ public class InicioSesion {
                 String password = new String(passwordField1.getPassword());
 
                 if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
+
                     // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                     JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+
+                    ViewMenu inicioMenuFrame = new ViewMenu();
+                    inicioMenuFrame.setTitle("Inicio");
+                    inicioMenuFrame.setVisible(true);
+                    inicioMenuFrame.setSize(300, 300);
+                    inicioMenuFrame.setLocationRelativeTo(null);
+
                 } else {
                     // Inicio de sesión fallido, mostrar un mensaje de error
                     JOptionPane.showMessageDialog(null, "Inicio de sesión fallido");
@@ -43,6 +51,8 @@ public class InicioSesion {
                 registroUsuario.mostrarRegistro();
             }
         });
+
+
     }
 
 

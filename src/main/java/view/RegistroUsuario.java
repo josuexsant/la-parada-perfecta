@@ -3,8 +3,6 @@ package view;
 import javax.swing.*;
 
 public class RegistroUsuario {
-
-
     private JPanel RegistroUsuario;
     private JTextField textField1;
     private JTextField textField2;

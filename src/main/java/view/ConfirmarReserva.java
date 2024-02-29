@@ -9,10 +9,20 @@ public class ConfirmarReserva extends JFrame {
     private JLabel confirmarReservaLabel;
     private JLabel labelInfo;
 
-    ConfirmarReserva(){
+    public ConfirmarReserva(){
         setContentPane(CReserva);
     }
     public void mostrarInformacionSeleccionada(String informacion) {
         labelInfo.setText("<html>" + informacion + "</html>");
+    }
+
+    public void MostrarInicio(){
+        JFrame frame = new JFrame("Inicio");
+        frame.setContentPane(new ConfirmarReserva().CReserva);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(true);
+        frame.setVisible(true);
     }
 }

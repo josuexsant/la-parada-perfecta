@@ -20,13 +20,20 @@ public class ResgitroReserva extends JFrame {
     private JComboBox<String> MesBox;
     private JLabel LabelHSalida;
 
+    public void MostrarInicio(){
+        JFrame frame = new JFrame("Inicio");
+        frame.setContentPane(new ResgitroReserva().ReservaP);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(true);
+        frame.setVisible(true);
+    }
 
     public ResgitroReserva(){
        super ("Crear reserva");
-
         setContentPane(ReservaP);
         RegistroHora();
-
         MesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -35,27 +42,23 @@ public class ResgitroReserva extends JFrame {
                 RegistroDia(mesSeleccionado);
             }
         });
-
         RegistroFecha();
         Confirmar();
-
     }
 
     public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
-            int hour = (f == 0) ? 12 : (f > 12) ? f - 12 : f;
-            String period = (f < 12) ? "AM" : "PM";
-            HoraLlegada.addItem(String.format("%d:00 %s", hour, period));
-            HoraSalida.addItem(String.format("%d:00 %s", hour, period));
+            HoraLlegada.addItem(String.format("%s",f));
+            HoraSalida.addItem(String.format("%s", f));
         }
     }
 
-public void RegistroFecha() {
-    MesBox.removeAllItems();
-    for (int mes = 1; mes <= 12; mes++) {
-        MesBox.addItem(Integer.toString(mes));
+    public void RegistroFecha() {
+        MesBox.removeAllItems();
+        for (int mes = 1; mes <= 12; mes++) {
+            MesBox.addItem(Integer.toString(mes));
+        }
     }
-}
 
     public void RegistroDia(int mes) {
         DiaBox.removeAllItems();
@@ -77,22 +80,21 @@ public void RegistroFecha() {
                 break;
         }
     }
-    /*
-    private void Confirmar(){
-        ActionListener accion = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfirmarReserva confirmarReservaFrame = new ConfirmarReserva();
-                confirmarReservaFrame.setTitle("Confirmar Reserva");
-                confirmarReservaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                confirmarReservaFrame.setVisible(true);
-                confirmarReservaFrame.setSize(900,300);
-                confirmarReservaFrame.setLocationRelativeTo(null);
-            }
-        };
-        confirmarButton.addActionListener(accion);
+
+    private double calcularCosto(int horasSeleccionadas) {
+        // Puedes ajustar la tarifa por hora según tus necesidades
+        double tarifaPorHora = 10.0;
+        if (horasSeleccionadas < 0) {
+            throw new IllegalArgumentException("Las horas seleccionadas deben ser positivas.");
+        }
+        double costoTotal = horasSeleccionadas * tarifaPorHora;
+        return costoTotal;
     }
-     */
+
+    private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida) {
+        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s:00 <br><br> Hora Salida: %s:00 <br><br>",nombre, mes, dia, horaLlegada, horaSalida);
+    }
+
 
     private void Confirmar() {
         ActionListener accion = new ActionListener() {
@@ -102,8 +104,8 @@ public void RegistroFecha() {
                 int diaSeleccionado = Integer.parseInt((String) DiaBox.getSelectedItem());
                 String horaLlegadaSeleccionada = (String) HoraLlegada.getSelectedItem();
                 String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
+                String nombreSeleccionado = txtnombreUsuario.getText();
 
-                // Crear e instanciar la nueva ventana de confirmación
                 ConfirmarReserva confirmarReservaFrame = new ConfirmarReserva();
                 confirmarReservaFrame.setTitle("Confirmar Reserva");
                 confirmarReservaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,15 +113,18 @@ public void RegistroFecha() {
                 confirmarReservaFrame.setSize(900, 300);
                 confirmarReservaFrame.setLocationRelativeTo(null);
 
-                // Enviar la información seleccionada a la ventana de confirmación
-                String informacionSeleccionada = String.format("Mes: %d, Día: %d, Hora Llegada: %s, Hora Salida: %s",
-                        mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada);
+                String informacionSeleccionada = construirInformacionSeleccionada(nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada);
+
+                int horaInicio = Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]);
+                int horaFin = Integer.parseInt(horaSalidaSeleccionada.split(":")[0]);
+                int horasSeleccionadas = horaFin - horaInicio;
+                double costoTotal = calcularCosto(horasSeleccionadas);
+                informacionSeleccionada += String.format("\nCosto Total: $%.2f", costoTotal);
                 confirmarReservaFrame.mostrarInformacionSeleccionada(informacionSeleccionada);
             }
         };
         confirmarButton.addActionListener(accion);
     }
-
 
 
 }
