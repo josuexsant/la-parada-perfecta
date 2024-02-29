@@ -8,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Date;
 
-
 public class TDC {
     private String numero_tarjeta;
     private Date fecha_expiracion;
