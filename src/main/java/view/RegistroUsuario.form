@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.RegistroUsuario">
-  <grid id="27dc6" binding="RegistroUsuario" layout-manager="GridLayoutManager" row-count="11" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="RegistroUsuariopanel" layout-manager="GridLayoutManager" row-count="11" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="803" height="1314"/>
@@ -35,7 +35,7 @@
           <text value="Nombre"/>
         </properties>
       </component>
-      <component id="7ac6f" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="7ac6f" class="javax.swing.JTextField" binding="nombretext">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -54,7 +54,7 @@
           <text value="Apellido Paterno"/>
         </properties>
       </component>
-      <component id="3e1b9" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+      <component id="3e1b9" class="javax.swing.JTextField" binding="apellidoPaternotext">
         <constraints>
           <grid row="2" column="2" row-span="2" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -73,7 +73,7 @@
           <text value="Apellido Materno"/>
         </properties>
       </component>
-      <component id="50c8e" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+      <component id="50c8e" class="javax.swing.JTextField" binding="apellidoMaternotext">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -92,7 +92,7 @@
           <text value="Telefono"/>
         </properties>
       </component>
-      <component id="5ea10" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+      <component id="5ea10" class="javax.swing.JTextField" binding="telefonotext">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -111,7 +111,7 @@
           <text value="Correo Electronico"/>
         </properties>
       </component>
-      <component id="511ea" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+      <component id="511ea" class="javax.swing.JTextField" binding="correotext">
         <constraints>
           <grid row="6" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -140,7 +140,7 @@
           <text value="Genero"/>
         </properties>
       </component>
-      <component id="2d9c2" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <component id="2d9c2" class="javax.swing.JComboBox" binding="genero">
         <constraints>
           <grid row="8" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -161,7 +161,7 @@
           <text value="Contraseña"/>
         </properties>
       </component>
-      <component id="139c9" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+      <component id="139c9" class="javax.swing.JPasswordField" binding="contraseña">
         <constraints>
           <grid row="7" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -180,7 +180,7 @@
           <text value="Estado"/>
         </properties>
       </component>
-      <component id="57da4" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+      <component id="57da4" class="javax.swing.JComboBox" binding="ciudades">
         <constraints>
           <grid row="9" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -190,7 +190,7 @@
             <item value="Puebla"/>
             <item value="México"/>
             <item value="Veracruz"/>
-            <item value="Guadalajara"/>
+            <item value="Nayarit"/>
           </model>
         </properties>
       </component>
