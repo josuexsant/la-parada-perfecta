@@ -19,8 +19,7 @@ public class Usuario {
     private int idCiudad;
     private static CreateConnection createConn = new CreateConnection();
 
-    public Usuario(int id, String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad) {
-        this.id = id;
+    public Usuario(String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad) {
         this.nombre = nombre;
         this.password = password;
         this.apellidoPaterno = apellidoPaterno;
@@ -77,7 +76,6 @@ public class Usuario {
     public void setId(int id) {
         this.id = id;
     }
-
     public String getNombre() {
         return nombre;
     }
@@ -143,28 +141,38 @@ public class Usuario {
     }
 
     public static boolean registrar(Usuario usr) throws SQLException {
-        String query = "INSERT INTO informacion_usuario (id, nombre, apellido_paterno, apellido_materno, numero_telefono, correo_electronico, id_genero, id_ciudades) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-        String passwordQuery = "INSERT INTO passwords (password) VALUES (?);";
+        String infoQuery = "INSERT INTO informacion_usuario (nombre, apellido_paterno, apellido_materno, numero_telefono, correo_electronico, id_genero, id_ciudades) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String passwordQuery = "INSERT INTO passwords (password, id_usuario) VALUES (?, ?);";
+        String idUsuarioQuery = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?;";
 
         Connection conn = createConn.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query);
+        PreparedStatement infoPstmt = conn.prepareStatement(infoQuery);
         PreparedStatement passwordPstmt = conn.prepareStatement(passwordQuery);
+        PreparedStatement idPstmt = conn.prepareStatement(idUsuarioQuery);
 
         try {
             // Primera consulta para los datos de usuario
-            pstmt.setInt(1, usr.getId());
-            pstmt.setString(2, usr.getNombre());
-            pstmt.setString(3, usr.getApellidoPaterno());
-            pstmt.setString(4, usr.getApellidoMaterno());
-            pstmt.setString(5, usr.getNumeroTelefono());
-            pstmt.setString(6, usr.getCorreoElectronico());
-            pstmt.setInt(7, usr.getIdGenero());
-            pstmt.setInt(8, usr.getIdCiudad());
+            infoPstmt.setString(1, usr.getNombre());
+            infoPstmt.setString(2, usr.getApellidoPaterno());
+            infoPstmt.setString(3, usr.getApellidoMaterno());
+            infoPstmt.setString(4, usr.getNumeroTelefono());
+            infoPstmt.setString(5, usr.getCorreoElectronico());
+            infoPstmt.setInt(6, usr.getIdGenero());
+            infoPstmt.setInt(7, usr.getIdCiudad());
 
-            pstmt.executeUpdate();
+            infoPstmt.executeUpdate();
 
-            // Segunfa consulta para agregar la contraseña
+            // Obtener el id_usuario recién insertado
+            idPstmt.setString(1, usr.getCorreoElectronico());
+            ResultSet resultSet = idPstmt.executeQuery();
+            int userId = 0;
+            if (resultSet.next()) {
+                userId = resultSet.getInt("id");
+            }
+
+            // Segunda consulta para agregar la contraseña y el id_usuario
             passwordPstmt.setString(1, usr.getPassword());
+            passwordPstmt.setInt(2, userId);
             passwordPstmt.executeUpdate();
 
             return true;
@@ -173,17 +181,21 @@ public class Usuario {
             return false;
         } finally {
             // Cierra los PreparedStatements y la conexión en el bloque finally
-            if (pstmt != null) {
-                pstmt.close();
+            if (infoPstmt != null) {
+                infoPstmt.close();
             }
             if (passwordPstmt != null) {
                 passwordPstmt.close();
+            }
+            if (idPstmt != null) {
+                idPstmt.close();
             }
             if (conn != null) {
                 conn.close();
             }
         }
     }
+
 
 
     public static boolean usuarioExiste(String correoElectronico) throws SQLException {
