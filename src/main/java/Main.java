@@ -12,7 +12,7 @@ public class Main {
         try {
             CreateConnection createConn = new CreateConnection();
             Connection conn = createConn.getConnection();
-            String query = "show tables";
+            String query = "slecto *  infkrnrifn";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
