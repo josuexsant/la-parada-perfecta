@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Usuario {
     private int id;
@@ -139,6 +141,50 @@ public class Usuario {
     public void setIdCiudad(int idCiudad) {
         this.idCiudad = idCiudad;
     }
+
+    public static boolean registrar(Usuario usr) throws SQLException {
+        String query = "INSERT INTO informacion_usuario (id, nombre, apellido_paterno, apellido_materno, numero_telefono, correo_electronico, id_genero, id_ciudades) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String passwordQuery = "INSERT INTO passwords (password) VALUES (?);";
+
+        Connection conn = createConn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        PreparedStatement passwordPstmt = conn.prepareStatement(passwordQuery);
+
+        try {
+            // Primera consulta para los datos de usuario
+            pstmt.setInt(1, usr.getId());
+            pstmt.setString(2, usr.getNombre());
+            pstmt.setString(3, usr.getApellidoPaterno());
+            pstmt.setString(4, usr.getApellidoMaterno());
+            pstmt.setString(5, usr.getNumeroTelefono());
+            pstmt.setString(6, usr.getCorreoElectronico());
+            pstmt.setInt(7, usr.getIdGenero());
+            pstmt.setInt(8, usr.getIdCiudad());
+
+            pstmt.executeUpdate();
+
+            // Segunfa consulta para agregar la contraseña
+            passwordPstmt.setString(1, usr.getPassword());
+            passwordPstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            // Cierra los PreparedStatements y la conexión en el bloque finally
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (passwordPstmt != null) {
+                passwordPstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
 
     public static boolean usuarioExiste(String correoElectronico) throws SQLException {
         String query = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?";
