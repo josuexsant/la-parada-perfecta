@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import static model.Usuario.usuarioExiste;
 
 public class CtrlUsuario {
-    private Usuario usuario;
+    private static Usuario usuario;
     private final CreateConnection createConn = new CreateConnection();
 
     public boolean registrarUsuario(String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad) throws SQLException {
@@ -75,7 +75,7 @@ public class CtrlUsuario {
         return false;
     }
 
-    public Usuario getUsuario(){
+    public static Usuario getUsuario(){
         return usuario;
     }
 }
