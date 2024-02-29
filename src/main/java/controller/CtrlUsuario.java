@@ -63,7 +63,7 @@ public class CtrlUsuario {
     public boolean validarCorreoElectronico(String correoElectronico) throws SQLException{
         if (usuarioExiste(correoElectronico)){
             int idUsuario = Usuario.obtenerIdUsuario(correoElectronico);
-            usuario = new Usuario(2);
+            usuario = new Usuario(idUsuario);
             return true;
         }
         return false;

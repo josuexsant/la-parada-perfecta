@@ -97,6 +97,7 @@ public class TDC {
     }
 
     public static boolean registrar(TDC tc) throws SQLException{
+
         String query = "INSERT INTO informacion_TDC (numero_tarjeta, fecha_expiracion, cvv, nombre_titular, direccion_facturacion) VALUES (?,?,?,?,?,?,?);";
         String idUsuarioQuery = "SELECT id FROM informacion_usuario WHERE  = ?;";
 

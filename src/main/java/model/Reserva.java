@@ -1,4 +1,7 @@
 package model;
+import controller.CtrlAutomovil;
+import controller.CtrlUsuario;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 
