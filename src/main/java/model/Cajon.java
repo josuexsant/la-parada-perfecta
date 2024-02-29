@@ -1,11 +1,6 @@
 package model;
 
 public class Cajon {
-    enum Estado {
-        OCUPADO,
-        LIBRE,
-        RESERVADO
-    }
     private int id;
     private int piso;
     private Estado estado;

@@ -1,6 +1,10 @@
-package org.example;
+package view;
+
+import controller.CtrlUsuario;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InicioSesion {
 
@@ -8,12 +12,41 @@ public class InicioSesion {
     private JLabel Correo;
     private JLabel Contraseña;
     private JButton registrarseButton;
-    private JTextField textField1;
     private JTextField textField2;
     private JButton ingresarButton;
+    private JPasswordField passwordField1;
+    private CtrlUsuario ctrlUsuario;
+
+    public InicioSesion() {
+        ctrlUsuario = new CtrlUsuario();
+
+        ingresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String correoElectronico = textField2.getText();
+                String password = new String(passwordField1.getPassword());
+
+                if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
+                    // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
+                    JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+                } else {
+                    // Inicio de sesión fallido, mostrar un mensaje de error
+                    JOptionPane.showMessageDialog(null, "Inicio de sesión fallido");
+                }
+            }
+        });
+
+        registrarseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RegistroUsuario registroUsuario = new RegistroUsuario();
+                registroUsuario.mostrarRegistro();
+            }
+        });
+    }
 
 
-    public static void main(String[] args) {
+    public void mostrarInicio() {
         JFrame frame = new JFrame("Inicio");
         frame.setContentPane(new InicioSesion().Inicio);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
