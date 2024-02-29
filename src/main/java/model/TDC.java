@@ -8,9 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Date;
 
-import jdk.internal.classfile.impl.UnboundAttribute;
-import model.Usuario;
-
 
 public class TDC {
     private String numero_tarjeta;
