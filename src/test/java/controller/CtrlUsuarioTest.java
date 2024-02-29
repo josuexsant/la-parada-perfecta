@@ -10,18 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CtrlUsuarioTest {
     CtrlUsuario ctrlUsuario = new CtrlUsuario();
-    Usuario usuario = new Usuario(2);
+    Usuario usuario = new Usuario(1);
 
     @Test
-    @DisplayName("Registro de usuarios")
-    void registrarUsuario(){
+    @DisplayName("Registro de usuarios") void registrarUsuario() throws SQLException {
         // Registro de usuario exitoso
-        assertEquals(true, ctrlUsuario.registrarUsuario(1, "Alexis", "12390", "Gomez", "Solano", "1234567890", "alexisgs@example.com", 1, 1));
+        assertEquals(true, ctrlUsuario.registrarUsuario("Fernando", "2222", "Quiroz", "Castillo", "9999999999", "fer@example.com", 1, 1));
         System.out.println("+ Usuario registrado con exito");
 
-        // Registro de usuario fallido (informacion duplicada)
-        assertEquals(false, ctrlUsuario.registrarUsuario(1, "Alexis", "12390", "Gomez", "Solano", "1234567890", "alexisgs@example.com", 1, 1));
-        System.out.println("+ Registro de usuario sin exito");
+        // Informacion de usuario duplicada (Correo electronico)
+        assertEquals(false, ctrlUsuario.registrarUsuario("Fernando", "2222", "Quiroz", "Castillo", "9999999999", "fer@example.com", 1, 1));
+        System.out.println("+ Usuario no registrado");
     }
 
 
