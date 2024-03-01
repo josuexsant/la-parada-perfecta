@@ -24,4 +24,5 @@ public class RegistroUsuario {
         frame.setVisible(true);
     }
 
+
 }
