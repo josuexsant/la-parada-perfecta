@@ -172,6 +172,7 @@
         </constraints>
         <properties>
           <font name="SF Pro Display" size="18"/>
+          <model/>
         </properties>
       </component>
       <component id="4d3f5" class="javax.swing.JComboBox" binding="DiaBox">

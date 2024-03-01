@@ -11,9 +11,11 @@ public class RegistroTDC {
     private JTextField TNumero;
     private JTextField TCvv;
     private JTextField TDir;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
+    private JSpinner FechaMes;
     private JButton finalizarButton;
+    private JComboBox<String> mesBox;
+    private JComboBox<String> Añobox;
+
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("RegistroTDC");
@@ -27,7 +29,15 @@ public class RegistroTDC {
 
     public RegistroTDC(){
         Confirmar();
+
     }
+
+
+
+
+
+
+
 
 
     private String construirInformacionSeleccionada(String nombre, String Numero, String Cvv, String TDir) {
@@ -41,6 +51,7 @@ public class RegistroTDC {
                 String NumeroS = TNumero.getText();
                 String CvvS = TCvv.getText();
                 String TDrir = TDir.getText();
+
 
                 MostrarTDC mostrarTdc = new MostrarTDC();
                 mostrarTdc.setTitle("Confirmar Reserva");
