@@ -70,6 +70,8 @@ public class InicioSesion extends JFrame{
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
+
+
     }
 
 
