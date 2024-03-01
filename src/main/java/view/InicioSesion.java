@@ -1,6 +1,7 @@
 package view;
 
 import controller.CtrlUsuario;
+import model.Log;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -43,9 +44,11 @@ public class InicioSesion extends JFrame{
                     inicioMenuFrame.setVisible(true);
                     inicioMenuFrame.setSize(300, 300);
                     inicioMenuFrame.setLocationRelativeTo(null);
+                    Log.success("Sesion Exitosa");
                 } else {
                     // Inicio de sesión fallido, mostrar un mensaje de error
                     JOptionPane.showMessageDialog(null, "Inicio de sesión fallido");
+                    Log.error("Fallo en el inicio de sesion");
                 }
             }
         });
@@ -70,8 +73,7 @@ public class InicioSesion extends JFrame{
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
-
-
+        Log.info("Se inicia la vista Inicio de sesion");
     }
 
 

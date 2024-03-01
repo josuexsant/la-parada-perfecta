@@ -1,6 +1,7 @@
 package view;
 
 import controller.CtrlUsuario;
+import model.Log;
 import model.Usuario;
 
 import javax.swing.*;
@@ -44,9 +45,10 @@ public class RegistroUsuario {
 
                 try {
                     boolean registroExitoso= Usuario.registrar(nuevoUsuario);
-
                     if (registroExitoso){
+
                         JOptionPane.showMessageDialog(null,"Registro Exitoso");
+                        Log.info("");
                     }else{
                         JOptionPane.showMessageDialog(null,"Error en el registro");
                     }
@@ -68,6 +70,7 @@ public class RegistroUsuario {
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
+        Log.info("Se carga interfaz de registro de usuario");
     }
 
 

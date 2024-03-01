@@ -1,6 +1,6 @@
 package view;
 
-import sun.misc.VM;
+import model.Log;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,6 +21,7 @@ public class ConfirmarReserva extends JFrame {
     }
     public void mostrarInformacionSeleccionada(String informacion) {
         labelInfo.setText("<html>" + informacion + "</html>");
+        Log.info("Muestra la informaciòn de la reserva");
     }
 
     public void MostrarInicio(){
@@ -31,6 +32,8 @@ public class ConfirmarReserva extends JFrame {
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
+        Log.info("Se inicio vista Confirmar la reserva");
+
     }
 
     public void BMenu(){
@@ -43,6 +46,8 @@ public class ConfirmarReserva extends JFrame {
                 VMenu.setVisible(true);
                 VMenu.setSize(300, 300);
                 VMenu.setLocationRelativeTo(null);
+                Log.info("Se inicio vista Menù");
+
             }
         };
         MenuButton.addActionListener(accion);
