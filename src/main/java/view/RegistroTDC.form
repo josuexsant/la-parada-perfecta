@@ -110,6 +110,8 @@
         </constraints>
         <properties>
           <font name="SF Pro Display" size="18" style="0"/>
+          <inheritsPopupMenu value="false"/>
+          <visible value="true"/>
         </properties>
       </component>
       <component id="7eb1a" class="javax.swing.JSpinner" binding="spinner2" default-binding="true">

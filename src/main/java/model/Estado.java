@@ -1,5 +1,5 @@
 package model;
 
 public enum Estado {
-        OCUPADO,LIBRE,RESERVADO
+        OCUPADO,DISPONIBLE,RESERVADO
 }
