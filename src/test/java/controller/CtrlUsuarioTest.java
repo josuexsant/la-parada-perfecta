@@ -51,6 +51,7 @@ class CtrlUsuarioTest {
         try {
             assertEquals(true, ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com"));
             System.out.println("Correo registrado validado. (josuexsanta@example.com)");
+            System.out.println(ctrlUsuario.getUsuario().getNombre());
         }catch (SQLException e){
             e.printStackTrace();
         }
