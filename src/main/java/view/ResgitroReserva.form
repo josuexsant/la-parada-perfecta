@@ -80,7 +80,7 @@
           <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Lucida Sans Typewriter" size="14" style="0"/>
+          <font name="SF Pro Display" size="18" style="0"/>
           <text value="Mes: "/>
         </properties>
       </component>
@@ -96,7 +96,7 @@
           </grid>
         </constraints>
         <properties>
-          <font name="Lucida Sans Typewriter" size="14" style="0"/>
+          <font name="SF Pro Display" size="18" style="0"/>
           <text value="Día:"/>
         </properties>
       </component>
@@ -118,6 +118,7 @@
           </grid>
         </constraints>
         <properties>
+          <font name="SF Pro Display" size="18"/>
           <name value="HoraLlegada"/>
         </properties>
       </component>
@@ -135,14 +136,16 @@
           <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Lucida Sans Typewriter" size="14" style="0"/>
+          <font name="SF Pro Display" size="18" style="0"/>
         </properties>
       </component>
       <component id="8ae15" class="javax.swing.JComboBox" binding="HoraSalida">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="SF Pro Display" size="18"/>
+        </properties>
       </component>
       <hspacer id="385c">
         <constraints>
@@ -154,7 +157,7 @@
           <grid row="6" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Lucida Sans Typewriter" size="16" style="0"/>
+          <font name="SF Pro Display" size="18" style="0"/>
           <text value="Confirmar"/>
         </properties>
       </component>
@@ -163,37 +166,21 @@
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="d22f4" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Lucida Sans Typewriter" size="14" style="0"/>
-          <text value="Total a pagar:"/>
-        </properties>
-      </component>
-      <component id="4f1b0" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Lucida Sans Typewriter" size="14"/>
-          <text value="...."/>
-        </properties>
-      </component>
       <component id="fb263" class="javax.swing.JComboBox" binding="MesBox">
         <constraints>
           <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Lucida Sans Typewriter" size="14"/>
+          <font name="SF Pro Display" size="18"/>
         </properties>
       </component>
       <component id="4d3f5" class="javax.swing.JComboBox" binding="DiaBox">
         <constraints>
           <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="SF Pro Display" size="18" style="0"/>
+        </properties>
       </component>
     </children>
   </grid>

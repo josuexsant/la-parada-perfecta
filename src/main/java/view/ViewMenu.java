@@ -23,6 +23,7 @@ public class ViewMenu extends JFrame{
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                dispose();
                 ResgitroReserva RegistroFrame = new ResgitroReserva();
                 RegistroFrame.setTitle("Confirmar Reserva");
                 RegistroFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

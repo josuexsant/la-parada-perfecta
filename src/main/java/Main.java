@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-            InicioSesion sesion = new InicioSesion();
-            sesion.mostrarInicio();
-        }
+        InicioSesion sesion = new InicioSesion();
+        sesion.mostrarInicio();
+    }
 }

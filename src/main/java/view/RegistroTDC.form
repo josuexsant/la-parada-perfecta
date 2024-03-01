@@ -28,7 +28,7 @@
           <text value="Nombre del Titular"/>
         </properties>
       </component>
-      <component id="26f15" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="26f15" class="javax.swing.JTextField" binding="TxtNombre">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -47,7 +47,7 @@
           <text value="Numero de Tarjeta"/>
         </properties>
       </component>
-      <component id="c9937" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+      <component id="c9937" class="javax.swing.JTextField" binding="TNumero">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -84,7 +84,7 @@
           <text value="Direccion de Facturación"/>
         </properties>
       </component>
-      <component id="d79f" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+      <component id="d79f" class="javax.swing.JTextField" binding="TCvv">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -94,7 +94,7 @@
           <font name="SF Pro Display" size="18" style="0"/>
         </properties>
       </component>
-      <component id="c4a05" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+      <component id="c4a05" class="javax.swing.JTextField" binding="TDir">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>

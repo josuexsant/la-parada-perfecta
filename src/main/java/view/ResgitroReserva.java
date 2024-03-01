@@ -48,8 +48,8 @@ public class ResgitroReserva extends JFrame {
 
     public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
-            HoraLlegada.addItem(String.format("%s",f));
-            HoraSalida.addItem(String.format("%s", f));
+            HoraLlegada.addItem(String.format("%s:00",f));
+            HoraSalida.addItem(String.format("%s:00", f));
         }
     }
 
@@ -92,7 +92,7 @@ public class ResgitroReserva extends JFrame {
     }
 
     private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida) {
-        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s:00 <br><br> Hora Salida: %s:00 <br><br>",nombre, mes, dia, horaLlegada, horaSalida);
+        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br>",nombre, mes, dia, horaLlegada, horaSalida);
     }
 
 

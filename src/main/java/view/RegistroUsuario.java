@@ -70,6 +70,7 @@ public class RegistroUsuario {
         frame.setVisible(true);
     }
 
+
     private int obtenerIdGenero(String genero) {
          if ("Masculino".equals(genero)) {
             return 1;
