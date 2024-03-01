@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.RegistroTDC">
-  <grid id="27dc6" binding="RegistroTarjeta" layout-manager="GridLayoutManager" row-count="7" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="RegistroTdcpn" layout-manager="GridLayoutManager" row-count="7" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="826" height="524"/>
@@ -28,7 +28,7 @@
           <text value="Nombre del Titular"/>
         </properties>
       </component>
-      <component id="26f15" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="26f15" class="javax.swing.JTextField" binding="nombreTit">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -36,6 +36,7 @@
         </constraints>
         <properties>
           <font name="SF Pro Display" size="18" style="0"/>
+          <text value=""/>
         </properties>
       </component>
       <component id="12475" class="javax.swing.JLabel">
@@ -47,7 +48,7 @@
           <text value="Numero de Tarjeta"/>
         </properties>
       </component>
-      <component id="c9937" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+      <component id="c9937" class="javax.swing.JTextField" binding="num_tarjeta">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -84,7 +85,7 @@
           <text value="Direccion de Facturación"/>
         </properties>
       </component>
-      <component id="d79f" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+      <component id="d79f" class="javax.swing.JTextField" binding="cvvtext">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -94,7 +95,7 @@
           <font name="SF Pro Display" size="18" style="0"/>
         </properties>
       </component>
-      <component id="c4a05" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+      <component id="c4a05" class="javax.swing.JTextField" binding="dire_fact">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>

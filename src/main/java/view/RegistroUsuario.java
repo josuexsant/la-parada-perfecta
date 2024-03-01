@@ -47,6 +47,8 @@ public class RegistroUsuario {
 
                     if (registroExitoso){
                         JOptionPane.showMessageDialog(null,"Registro Exitoso");
+
+
                     }else{
                         JOptionPane.showMessageDialog(null,"Error en el registro");
                     }
