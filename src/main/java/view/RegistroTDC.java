@@ -1,5 +1,7 @@
 package view;
 
+import model.Log;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,9 +50,10 @@ public class RegistroTDC {
                 mostrarTdc.setVisible(true);
                 mostrarTdc.setSize(900, 300);
                 mostrarTdc.setLocationRelativeTo(null);
-
+                Log.info("Se muestra la vista que muestra el TDC");
                 String informacionSeleccionada = construirInformacionSeleccionada(NombreSeleccionado,NumeroS,CvvS,TDrir);
                 mostrarTdc.mostrarInformacionSeleccionada(informacionSeleccionada);
+
             }
         };
         finalizarButton.addActionListener(accion);

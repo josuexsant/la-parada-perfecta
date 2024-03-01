@@ -43,7 +43,7 @@ public class CreateConnection {
                 this.port + "/" + this.database;
         conn = DriverManager.getConnection(jdbcUrl, this.username,
                 this.password);
-        System.out.println("    -> Successfully connected");
+        Log.success("Conectado a la base de datos");
         return conn;
     }
 }
