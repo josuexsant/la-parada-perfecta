@@ -9,15 +9,18 @@ import java.util.logging.Logger;
 import java.sql.Date;
 
 public class TDC {
+
+    private int id_usuario;
     private String numero_tarjeta;
-    private Date fecha_expiracion;
+    private String fecha_expiracion;
     private String cvv;
     private String nombre_titular;
     private String direccion_facturacion;
 
     private static CreateConnection createConn = new CreateConnection();
 
-    public TDC(String numero_tarjeta, Date fecha_expiracion, String cvv, String nombre_titular, String direccion_facturacion){
+    public TDC(int id_usuario, String numero_tarjeta, String fecha_expiracion, String cvv, String nombre_titular, String direccion_facturacion){
+        this.id_usuario=id_usuario;
         this.numero_tarjeta = numero_tarjeta;
         this.fecha_expiracion = fecha_expiracion;
         this.cvv = cvv;
@@ -45,7 +48,7 @@ public class TDC {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     this.numero_tarjeta= resultSet.getString("numero_tarjeta");
-                    this.fecha_expiracion = resultSet.getDate("fecha_expiracion");
+                    this.fecha_expiracion = resultSet.getString("fecha_expiracion");
                     this.cvv = resultSet.getString("cvv");
                     this.nombre_titular = resultSet.getString("nombre_titular");
                     this.direccion_facturacion = resultSet.getString("direccion_facturacion");
@@ -64,11 +67,11 @@ public class TDC {
         return numero_tarjeta;
     }
 
-    public void setFechaExpiracion(Date fecha_expiracion){
+    public void setFechaExpiracion(String fecha_expiracion){
         this.fecha_expiracion = fecha_expiracion;
     }
 
-    public Date getFechaExpiracion(){
+    public String getFechaExpiracion(){
         return fecha_expiracion;
     }
 
@@ -96,21 +99,25 @@ public class TDC {
         return direccion_facturacion;
     }
 
-    public static boolean registrar(TDC tc) throws SQLException{
+    public void setIdUsuario(int id_usuario){
+        this.id_usuario=id_usuario;
+    }
 
-        String query = "INSERT INTO informacion_TDC (numero_tarjeta, fecha_expiracion, cvv, nombre_titular, direccion_facturacion) VALUES (?,?,?,?,?,?,?);";
-        String idUsuarioQuery = "SELECT id FROM informacion_usuario WHERE  = ?;";
+    public int getIdUsuario(){
+        return id_usuario;
+    }
 
+    public boolean registrar() throws SQLException{
+        String query = "INSERT INTO informacion_TDC (id_usuario, numero_tarjeta, fecha_expiracion, cvv, nombre_titular, direccion_facturacion) VALUES (?,?,?,?,?,?);";
         Connection conn = createConn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query);
-        PreparedStatement idPstmt = conn.prepareStatement(idUsuarioQuery);
-
         try{
-            pstmt.setString(3, tc.getNumeroTarjeta());
-            pstmt.setDate(4, tc.getFechaExpiracion());
-            pstmt.setString(5, tc.getCvv());
-            pstmt.setString(6, tc.getNombreTitular());
-            pstmt.setString(7, tc.getDireccionFacturacion());
+            pstmt.setInt(1, this.id_usuario);  // Corregido el índice a 1
+            pstmt.setString(2, this.numero_tarjeta);  // Corregido el índice a 2
+            pstmt.setString(3, this.fecha_expiracion);
+            pstmt.setString(4, this.cvv);
+            pstmt.setString(5, this.nombre_titular);
+            pstmt.setString(6, this.direccion_facturacion);
             pstmt.executeUpdate();
 
             return true;

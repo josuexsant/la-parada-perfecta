@@ -1,6 +1,7 @@
 package controller;
 
 import model.CreateConnection;
+import model.Sesion;
 import model.Usuario;
 import java.sql.SQLException;
 
@@ -64,6 +65,9 @@ public class CtrlUsuario {
         if (usuarioExiste(correoElectronico)){
             int idUsuario = Usuario.obtenerIdUsuario(correoElectronico);
             usuario = new Usuario(idUsuario);
+            Sesion sesion = Sesion._instance();
+            sesion.setUsuario(usuario);
+            System.out.println(sesion.getUsuario().getCorreoElectronico());
             return true;
         }
         return false;
@@ -74,7 +78,7 @@ public class CtrlUsuario {
         return false;
     }
 
-    public static Usuario getUsuario(){
+    public Usuario getUsuario(){
         return usuario;
     }
 }
