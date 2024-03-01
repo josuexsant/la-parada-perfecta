@@ -60,7 +60,7 @@ public class Reserva {
      * Con esta función deberia ser capaz de crear la reserva
      * @return
      */
-    public boolean insertarReserva(Date fecha, Timestamp fechaInicio, Timestamp fechaFin, String placa) throws SQLException {
+    public boolean guardarReserva(Date fecha, Timestamp fechaInicio, Timestamp fechaFin, String placa) throws SQLException {
         String query = "INSERT INTO Reservas (fecha_inicio, fecha_fin, fecha) VALUES (?, ?, ?)";
         Connection conn = createConn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query);

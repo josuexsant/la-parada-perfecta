@@ -1,37 +1,54 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Automovil {
     private int id;
-    private int idUsuario;
+    private Usuario usuario;
     private int idMarca;
     private String placa;
 
-    private static CreateConnection createConn = new CreateConnection();
+    private CreateConnection createConn = new CreateConnection();
 
     // Constructor
-    public Automovil(int id, int idUsuario, int idMarca, String placa) {
+    public Automovil(int id, Usuario usuario, int idMarca, String placa) {
+        usuario = Sesion._instance().getUsuario();
         this.id = id;
-        this.idUsuario = idUsuario;
+        this.usuario = usuario;
         this.idMarca = idMarca;
         this.placa = placa;
     }
-        public void guardarAutomovil() {
-            try (Connection conn = createConn.getConnection()) {
-                String query = "INSERT INTO automoviles (id_usuario, id_marca, placa) VALUES (?, ?, ?)";
-                try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                    pstmt.setInt(1, idUsuario);
-                    pstmt.setInt(2, idMarca);
-                    pstmt.setString(3, placa);
-                    pstmt.executeUpdate();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+
+    public void guardarAutomovil() throws SQLException {
+        Connection conn = createConn.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String query = "INSERT INTO automoviles (id_usuario, id_marca, placa) VALUES (?, ?, ?)";
+            stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, usuario.getId()); // Suponiendo que getId() devuelve el id del usuario
+            stmt.setInt(2, idMarca);
+            stmt.setString(3, placa);
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating automovil failed, no rows affected.");
             }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating automovil failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
         }
+    }
+
+
+
 
 
 
@@ -43,14 +60,6 @@ public class Automovil {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public int getIdMarca() {
