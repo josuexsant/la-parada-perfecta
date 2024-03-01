@@ -1,6 +1,15 @@
 package view;
 
+import controller.CtrlTDC;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
+
 
 public class RegistroTDC {
 
@@ -9,9 +18,10 @@ public class RegistroTDC {
     private JTextField num_tarjeta;
     private JTextField cvvtext;
     private JTextField dire_fact;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
     private JButton finalizarButton;
+    private JTextField Fecha_exptext;
+    private CtrlTDC ctrlTDC;
+
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("RegistroTDC");
@@ -23,3 +33,6 @@ public class RegistroTDC {
         frame.setVisible(true);
     }
 }
+
+
+
