@@ -4,14 +4,14 @@ import java.sql.*;
 
 public class Automovil {
     private int id;
-    private Usuario usuario;
+    private int idUsuario;
     private int idMarca;
     private String placa;
     private CreateConnection createConn = new CreateConnection();
 
-    public Automovil(Usuario usuario, int idMarca, String placa) {
-        usuario = Sesion._instance().getUsuario();
-        this.usuario = usuario;
+    public Automovil(int idUsuario, int idMarca, String placa) {
+
+        this.idUsuario = idUsuario;
         this.idMarca = idMarca;
         this.placa = placa;
     }
@@ -30,7 +30,7 @@ public class Automovil {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     this.id = resultSet.getInt("id");
-                    this.usuario = new Usuario(idUsuario);
+                    this.idUsuario = resultSet.getInt("id_usuario");
                     this.idMarca = resultSet.getInt("id_marca");
                     this.placa = resultSet.getString("placa");
                     this.id = resultSet.getInt("id");
@@ -45,13 +45,12 @@ public class Automovil {
 
     public boolean guardarAutomovil() throws SQLException {
         Connection conn = createConn.getConnection();
-        usuario = Sesion._instance().getUsuario();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
             String query = "INSERT INTO automoviles (id_usuario, id_marca, placa) VALUES (?, ?, ?)";
             stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, usuario.getId()); // Suponiendo que getId() devuelve el id del usuario
+            stmt.setInt(1, idUsuario); // Suponiendo que getId() devuelve el id del usuario
             stmt.setInt(2, idMarca);
             stmt.setString(3, placa);
             int affectedRows = stmt.executeUpdate();
