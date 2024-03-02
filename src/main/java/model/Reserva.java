@@ -2,13 +2,8 @@ package model;
 import controller.CtrlAutomovil;
 import controller.CtrlUsuario;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,24 +46,49 @@ public class Reserva {
                 placas.add(rs.getString("placa"));
             }
         }
-
         return placas;
     }
 
     /**
      * @author: Fernando Quiroz
-     * Con esta función deberia ser capaz de crear la reserva
-     * @return
+     * Este metodo guarda un objeto Reserva dentro de la base de datos
+     * @return: true si se logro hacer el INSERT y false si no se logro hacer.
      */
-    public boolean insertarReserva(Date fecha, Timestamp fechaInicio, Timestamp fechaFin, String placa) throws SQLException {
-        String query = "INSERT INTO Reservas (fecha_inicio, fecha_fin, fecha) VALUES (?, ?, ?)";
+    public boolean guardarReserva() throws SQLException {
         Connection conn = createConn.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setTimestamp(1, fechaInicio);
-        pstmt.setTimestamp(2, fechaFin);
-        pstmt.setDate(3, fecha);
-        int rowsAffected = pstmt.executeUpdate();
-        return rowsAffected > 0;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String query = "INSERT INTO Reservas (id_automovil, fecha, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, idAutomovil);
+            stmt.setDate(2, new java.sql.Date(fecha.getTime()));
+            stmt.setTimestamp(3, fechaInicio);
+            stmt.setTimestamp(4, fechaFin);
+            stmt.setInt(5, idCajon);
+            stmt.setInt(6, idUsuario);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating reserva failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating reserva failed, no ID obtained.");
+                }
+            }
+            Log.success("Se guardo la reserva con el ID: " + this.id);
+            return true; // Se pudo guardar la reserva exitosamente
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.error("No se pudo guarda la reserva");
+            return false; // Hubo un error al guardar la reserva
+        } finally {
+            conn.close();
+        }
     }
 
     public int getId() {

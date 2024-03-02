@@ -1,6 +1,7 @@
 package controller;
 
 import model.CreateConnection;
+import model.Log;
 import model.Sesion;
 import model.Usuario;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ public class CtrlUsuario {
         Usuario p = new Usuario(nombre, password, apellidoPaterno, apellidoPaterno, numeroTelefono, correoElectronico, idGenero, idCiudad);
 
         if(usuarioExiste(correoElectronico)){
-            System.out.println("El correo electronico ya esta registado");
+            Log.warn("El correo electronico ya esta registado");
         }else {
 
             p.setNombre(nombre);
@@ -28,10 +29,10 @@ public class CtrlUsuario {
 
             try {
                 if (Usuario.registrar(p)) {
-                    System.out.println("Registro de usuario exitoso");
+                    Log.success("Registro de usuario exitoso");
                     return true;
                 } else {
-                    System.out.println("Registro de usuario fallido");
+                    Log.error("Registro de usuario fallido");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -40,20 +41,17 @@ public class CtrlUsuario {
         return false;
     }
 
-
-
-
     public boolean iniciarSesion(String correoElectronico, String password){
         try {
             if(validarCorreoElectronico(correoElectronico)){
                 if(validarPassword(password)){
-                    System.out.println("Inicio de sesión exitoso");
+                    Log.success("Inicio de sesión exitoso");
                     return true;
                 }else {
-                    System.out.println("Contraseña incorrecta");
+                    Log.error("Contraseña incorrecta");
                 }
             }else {
-                System.out.println("Correo electrónico no válido");
+                Log.error("Correo electrónico no válido");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -67,7 +65,7 @@ public class CtrlUsuario {
             usuario = new Usuario(idUsuario);
             Sesion sesion = Sesion._instance();
             sesion.setUsuario(usuario);
-            System.out.println(sesion.getUsuario().getCorreoElectronico());
+            Log.trace("Sesion activa: " + sesion.getUsuario().getCorreoElectronico());
             return true;
         }
         return false;
