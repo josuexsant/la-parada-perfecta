@@ -12,7 +12,7 @@ class AutomovilTest {
     @Test
     void guardarAutomovil() {
         ctrlUsuario.iniciarSesion("josuexsanta@example.com","1234");
-        automovil = new Automovil(Sesion._instance().getUsuario(),1,"ABC-12-12");
+        automovil = new Automovil(Sesion._instance().getUsuario().getId(),1,"ABC-12-12");
         try {
            assertEquals(true, automovil.guardarAutomovil());
         }catch (SQLException e){

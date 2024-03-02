@@ -7,7 +7,7 @@ public class Automovil {
     private int idUsuario;
     private int idMarca;
     private String placa;
-    private CreateConnection createConn = new CreateConnection();
+    private static CreateConnection createConn = new CreateConnection();
 
     public Automovil(int idUsuario, int idMarca, String placa) {
 
@@ -73,6 +73,29 @@ public class Automovil {
         }
     }
 
+    public static int getIdConMatricula(String placa) throws SQLException {
+        Connection conn = createConn.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        int idAutomovil = -1; // Valor por defecto si no se encuentra el automóvil
+
+        try {
+            String query = "SELECT id FROM automoviles WHERE placa = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, placa);
+
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                idAutomovil = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
+        }
+
+        return idAutomovil;
+    }
 
     public int getId() {
         return id;
