@@ -1,5 +1,6 @@
 package view;
 
+import controller.CtrlReserva;
 import model.Log;
 
 import javax.swing.*;
