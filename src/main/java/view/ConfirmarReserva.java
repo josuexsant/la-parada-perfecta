@@ -24,18 +24,6 @@ public class ConfirmarReserva extends JFrame {
         Log.info("Muestra la informaciòn de la reserva");
     }
 
-    public void MostrarInicio(){
-        JFrame frame = new JFrame("Inicio");
-        frame.setContentPane(new ConfirmarReserva().CReserva);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
-        Log.info("Se inicio vista Confirmar la reserva");
-
-    }
-
     public void BMenu(){
         ActionListener accion = new ActionListener() {
             @Override
@@ -47,6 +35,7 @@ public class ConfirmarReserva extends JFrame {
                 VMenu.setSize(300, 300);
                 VMenu.setLocationRelativeTo(null);
                 Log.info("Se inicio vista Menù");
+                dispose();
 
             }
         };

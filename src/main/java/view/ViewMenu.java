@@ -30,6 +30,7 @@ public class ViewMenu extends JFrame{
                 RegistroFrame.setVisible(true);
                 RegistroFrame.setSize(900, 300);
                 RegistroFrame.setLocationRelativeTo(null);
+                dispose();
             }
         };
         crearReservaButton.addActionListener(accion);
