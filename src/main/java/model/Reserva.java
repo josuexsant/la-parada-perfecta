@@ -1,6 +1,4 @@
 package model;
-import controller.CtrlAutomovil;
-import controller.CtrlUsuario;
 
 import java.sql.*;
 
@@ -17,12 +15,12 @@ public class Reserva {
     private int idUsuario;
     private static CreateConnection createConn = new CreateConnection();
 
-    public Reserva(int id, int idAutomovil, Date fecha, Timestamp fechaInicio, Timestamp fechaFin, int idCajon, int idUsuario) {
+    public Reserva(int id, int idAutomovil, java.util.Date fecha, java.util.Date fechaInicio, java.util.Date fechaFin, int idCajon, int idUsuario) {
         this.id = id;
         this.idAutomovil = idAutomovil;
-        this.fecha = fecha;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.fecha = new Date(fecha.getTime());
+        this.fechaInicio = new Timestamp(fechaInicio.getTime());
+        this.fechaFin = new Timestamp(fechaFin.getTime());
         this.idCajon = idCajon;
         this.idUsuario = idUsuario;
     }
@@ -59,7 +57,7 @@ public class Reserva {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String query = "INSERT INTO Reservas (id_automovil, fecha, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO reservaciones (id_automovil, fecha, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, idAutomovil);
             stmt.setDate(2, new java.sql.Date(fecha.getTime()));
