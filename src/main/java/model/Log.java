@@ -16,7 +16,7 @@ public class Log {
         int hours   = (int) ((millis / (1000*60*60)) % 24);
         int minutes = (int) ((millis / (1000*60)) % 60);
         int seconds = (int) (millis / 1000) % 60 ;
-        return (hours-6) + ":"+ minutes+":"+seconds + " : " + YELLOW +"[LOG]"+ RESET+" : ";
+        return (hours+6) + ":"+ minutes+":"+seconds + " : " + YELLOW +"[LOG]"+ RESET+" : ";
     }
     public static void info(String msg){
         System.out.println(getHora() + CYAN + "[INFO]"+ RESET + " : " + msg);

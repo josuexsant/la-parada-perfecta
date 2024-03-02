@@ -7,20 +7,45 @@ public class Automovil {
     private Usuario usuario;
     private int idMarca;
     private String placa;
-
     private CreateConnection createConn = new CreateConnection();
 
-    // Constructor
-    public Automovil(int id, Usuario usuario, int idMarca, String placa) {
+    public Automovil(Usuario usuario, int idMarca, String placa) {
         usuario = Sesion._instance().getUsuario();
-        this.id = id;
         this.usuario = usuario;
         this.idMarca = idMarca;
         this.placa = placa;
     }
 
-    public void guardarAutomovil() throws SQLException {
+    public Automovil(int idUsuario) {
+        String query = "SELECT" +
+                "id," +
+                "id_usuario," +
+                "id_marca," +
+                "placa" +
+                "FROM automoviles" +
+                "WHERE id_usuario = ?";
+        try (Connection conn = createConn.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, idUsuario);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    this.id = resultSet.getInt("id");
+                    this.usuario = new Usuario(idUsuario);
+                    this.idMarca = resultSet.getInt("id_marca");
+                    this.placa = resultSet.getString("placa");
+                    this.id = resultSet.getInt("id");
+                    Log.debug("Se cargo correctamente el objeto automovil");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public boolean guardarAutomovil() throws SQLException {
         Connection conn = createConn.getConnection();
+        usuario = Sesion._instance().getUsuario();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
@@ -40,19 +65,15 @@ public class Automovil {
                     throw new SQLException("Creating automovil failed, no ID obtained.");
                 }
             }
+            return true; // Se pudo guardar el automóvil exitosamente
         } catch (SQLException e) {
             e.printStackTrace();
+            return false; // Hubo un error al guardar el automóvil
         } finally {
             conn.close();
         }
     }
 
-
-
-
-
-
-    // Getters y setters para los atributos
 
     public int getId() {
         return id;
@@ -77,7 +98,4 @@ public class Automovil {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-
-
-
 }
