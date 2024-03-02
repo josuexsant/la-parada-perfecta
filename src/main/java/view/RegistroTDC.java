@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RegistroTDC {
+public class RegistroTDC extends JFrame{
 
     private JPanel RegistroTarjeta;
     private JTextField TxtNombre;
@@ -50,6 +50,7 @@ public class RegistroTDC {
                 mostrarTdc.setVisible(true);
                 mostrarTdc.setSize(900, 300);
                 mostrarTdc.setLocationRelativeTo(null);
+                dispose();
                 Log.info("Se muestra la vista que muestra el TDC");
                 String informacionSeleccionada = construirInformacionSeleccionada(NombreSeleccionado,NumeroS,CvvS,TDrir);
                 mostrarTdc.mostrarInformacionSeleccionada(informacionSeleccionada);

@@ -106,12 +106,14 @@ public class ResgitroReserva extends JFrame {
                 String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
                 String nombreSeleccionado = txtnombreUsuario.getText();
 
+
                 ConfirmarReserva confirmarReservaFrame = new ConfirmarReserva();
                 confirmarReservaFrame.setTitle("Confirmar Reserva");
                 confirmarReservaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 confirmarReservaFrame.setVisible(true);
                 confirmarReservaFrame.setSize(900, 300);
                 confirmarReservaFrame.setLocationRelativeTo(null);
+                dispose();
 
                 String informacionSeleccionada = construirInformacionSeleccionada(nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada);
 

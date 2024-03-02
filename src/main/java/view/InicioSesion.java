@@ -6,8 +6,6 @@ import model.Log;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class InicioSesion extends JFrame{
 
@@ -19,10 +17,6 @@ public class InicioSesion extends JFrame{
     private JButton ingresarButton;
     private JPasswordField passwordField1;
     private CtrlUsuario ctrlUsuario;
-
-    private JFrame getFrame(){
-        return this;
-    }
 
     public InicioSesion() {
 
@@ -44,6 +38,7 @@ public class InicioSesion extends JFrame{
                     inicioMenuFrame.setVisible(true);
                     inicioMenuFrame.setSize(300, 300);
                     inicioMenuFrame.setLocationRelativeTo(null);
+                    dispose();
                     Log.success("Sesion Exitosa");
                 } else {
                     // Inicio de sesión fallido, mostrar un mensaje de error
@@ -57,24 +52,25 @@ public class InicioSesion extends JFrame{
         registrarseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 RegistroUsuario registroUsuario = new RegistroUsuario();
                 registroUsuario.mostrarRegistro();
+                dispose();
             }
         });
 
     }
 
-
     public void mostrarInicio() {
-        JFrame frame = new JFrame("Inicio");
-        frame.setContentPane(new InicioSesion().Inicio);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
+        setContentPane(Inicio);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(true);
+        setVisible(true);
         Log.info("Se inicia la vista Inicio de sesion");
     }
+
 
 
 }

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class RegistroUsuario {
+public class RegistroUsuario extends JFrame{
     private JPanel RegistroUsuariopanel;
     private JTextField nombretext;
     private JTextField apellidoPaternotext;
@@ -70,6 +70,7 @@ public class RegistroUsuario {
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
+        dispose();
         Log.info("Se carga interfaz de registro de usuario");
     }
 
