@@ -1,4 +1,6 @@
 package view;
+import controller.CtrlReserva;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -19,19 +21,11 @@ public class ResgitroReserva extends JFrame {
     private JButton confirmarButton;
     private JComboBox<String> MesBox;
     private JLabel LabelHSalida;
-
-    public void MostrarInicio(){
-        JFrame frame = new JFrame("Inicio");
-        frame.setContentPane(new ResgitroReserva().ReservaP);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
-    }
+    private CtrlReserva ctrlReserva;
 
     public ResgitroReserva(){
-       super ("Crear reserva");
+        ctrlReserva = new CtrlReserva();
+
         setContentPane(ReservaP);
         RegistroHora();
         MesBox.addActionListener(new ActionListener() {
@@ -105,7 +99,9 @@ public class ResgitroReserva extends JFrame {
                 String horaLlegadaSeleccionada = (String) HoraLlegada.getSelectedItem();
                 String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
                 String nombreSeleccionado = txtnombreUsuario.getText();
+                String matriculaSeleccionada = (String)MatriculaBox.getSelectedItem();
 
+                ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
 
                 ConfirmarReserva confirmarReservaFrame = new ConfirmarReserva();
                 confirmarReservaFrame.setTitle("Confirmar Reserva");
