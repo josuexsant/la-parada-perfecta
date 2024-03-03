@@ -23,8 +23,9 @@ public class RegistroUsuario {
     private CtrlUsuario ctrlUsuario;
 
 
+    public RegistroUsuario() {
 
-    public RegistroUsuario(){
+
         ctrlUsuario = new CtrlUsuario();
 
 
@@ -40,18 +41,21 @@ public class RegistroUsuario {
                 int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
                 int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
-                Usuario nuevoUsuario = new Usuario(nombre,password,apellidoPaterno,apellidoMaterno,telefono,correo,idGenero,idCiudad);
+                Usuario nuevoUsuario = new Usuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad);
 
                 try {
-                    boolean registroExitoso= Usuario.registrar(nuevoUsuario);
+                    boolean registroExitoso = Usuario.registrar(nuevoUsuario);
 
-                    if (registroExitoso){
-                        JOptionPane.showMessageDialog(null,"Registro Exitoso");
-                    }else{
-                        JOptionPane.showMessageDialog(null,"Error en el registro");
+                    if (registroExitoso) {
+                        JOptionPane.showMessageDialog(null, "Registro Exitoso");
+
+                        RegistroTDC registroTDC = new RegistroTDC();
+                        registroTDC.main(null);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error en el registro");
                     }
 
-                }catch ( SQLException ex){
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
 
@@ -60,19 +64,9 @@ public class RegistroUsuario {
         });
     }
 
-    public void mostrarRegistro() {
-        JFrame frame = new JFrame("RegistroUsuario");
-        frame.setContentPane(new RegistroUsuario().RegistroUsuariopanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
-    }
-
 
     private int obtenerIdGenero(String genero) {
-         if ("Masculino".equals(genero)) {
+        if ("Masculino".equals(genero)) {
             return 1;
         } else if ("Femenino".equals(genero)) {
             return 2;
@@ -81,17 +75,32 @@ public class RegistroUsuario {
         }
     }
 
-    private int obtenerIdCiudad(String ciudades){
+    private int obtenerIdCiudad(String ciudades) {
         if ("Puebla".equals(ciudades)) {
             return 20;
         } else if ("México".equals(ciudades)) {
             return 14;
         } else if ("Veracruz".equals(ciudades)) {
-            return 29;            
+            return 29;
         } else if ("Nayarit".equals(ciudades)) {
             return 17;
-        }else {
+        } else {
             return 0;
         }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("RegistroUsuario");
+                frame.setContentPane(new RegistroUsuario().RegistroUsuariopanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setResizable(true);
+                frame.setVisible(true);
+            }
+        });
     }
 }

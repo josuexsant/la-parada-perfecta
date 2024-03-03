@@ -54,8 +54,9 @@ public class InicioSesion extends JFrame{
         registrarseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RegistroUsuario registroUsuario = new RegistroUsuario();
-                registroUsuario.mostrarRegistro();
+                RegistroUsuario registroUsuario =new RegistroUsuario();
+                registroUsuario.main(null);
+
             }
         });
 
