@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class ViewMenu extends JFrame{
     private JPanel  PMenu;
@@ -24,7 +25,12 @@ public class ViewMenu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose();
-                ResgitroReserva RegistroFrame = new ResgitroReserva();
+                ResgitroReserva RegistroFrame = null;
+                try {
+                    RegistroFrame = new ResgitroReserva();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 RegistroFrame.setTitle("Confirmar Reserva");
                 RegistroFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 RegistroFrame.setVisible(true);
