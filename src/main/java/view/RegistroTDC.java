@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import  controller.CtrlTDC;
-import  model.TDC;
+
 
 public class RegistroTDC {
 
@@ -79,17 +79,9 @@ public class RegistroTDC {
                 String mes = (String) mesBox.getSelectedItem();
                 String año = (String) Añobox.getSelectedItem();
 
-                TDC tarjeta = new TDC(0,NumeroS,FechExp,CvvS,NombreSeleccionado,TDrir);
-
-
                 CtrlTDC controladorTDC = new CtrlTDC();
-                boolean registroExitoso;
-                try {
-                    registroExitoso= tarjeta.registrar();
-                }catch (SQLException e){
-                    registroExitoso = false;
-                    e.printStackTrace();
-                }
+                boolean registroExitoso = controladorTDC.registrarTDC(NumeroS,FechExp,CvvS,NombreSeleccionado,TDrir);
+
 
                 if (registroExitoso){
                     JOptionPane.showMessageDialog(null,"Registro de Tarjeta exitoso");
