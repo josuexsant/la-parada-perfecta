@@ -52,15 +52,16 @@ public class InicioSesion extends JFrame{
         registrarseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 RegistroUsuario registroUsuario = new RegistroUsuario();
                 registroUsuario.mostrarRegistro();
                 dispose();
             }
         });
-
     }
 
+    /**
+     * Vista para inicio de sesión
+     */
     public void mostrarInicio() {
         setContentPane(Inicio);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,7 +71,4 @@ public class InicioSesion extends JFrame{
         setVisible(true);
         Log.info("Se inicia la vista Inicio de sesion");
     }
-
-
-
 }

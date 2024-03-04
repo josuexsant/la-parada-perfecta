@@ -1,22 +1,20 @@
 package controller;
-
-import model.CreateConnection;
 import model.Log;
 import model.Sesion;
 import model.Usuario;
 import java.sql.SQLException;
-
 import static model.Usuario.usuarioExiste;
 
 public class CtrlUsuario {
     private static Usuario usuario;
+    public Sesion sesion;
 
     public boolean registrarUsuario(String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad) throws SQLException {
         Usuario p = new Usuario(nombre, password, apellidoPaterno, apellidoPaterno, numeroTelefono, correoElectronico, idGenero, idCiudad);
 
-        if(usuarioExiste(correoElectronico)){
+        if (usuarioExiste(correoElectronico)) {
             Log.warn("El correo electronico ya esta registado");
-        }else {
+        } else {
 
             p.setNombre(nombre);
             p.setPassword(password);
@@ -29,11 +27,11 @@ public class CtrlUsuario {
 
             try {
                 if (Usuario.registrar(p)) {
+                    iniciarSesion(correoElectronico, password);
                     Log.success("Registro de usuario exitoso");
                     return true;
-                } else {
-                    Log.error("Registro de usuario fallido");
                 }
+                Log.error("Registro de usuario fallido");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -41,17 +39,25 @@ public class CtrlUsuario {
         return false;
     }
 
-    public boolean iniciarSesion(String correoElectronico, String password){
+    /**
+     * Este metodo consta de dos pasos, validar el correo y validar contraseña, una vez que ambos
+     * metodos han sido validados entonces se toma en usuario que se inicializo en validarCorreoelectronico()
+     * y se toma como la sesion activa en el sistema, para ellos usamos un Singleton Sesion para acceder
+     * a un único usuario en toda la aplicacion desde cualquier parte
+     * @param correoElectronico: String que es dada por el usuario
+     * @param password: String que es dada por el usuario
+     * @return: true en caso de concluir los dos pasos.
+     */
+    public boolean iniciarSesion(String correoElectronico, String password) {
         try {
-            if(validarCorreoElectronico(correoElectronico)){
-                if(validarPassword(password)){
+            if (validarCorreoElectronico(correoElectronico)) {
+                if (validarPassword(password)) {
+                    sesion = Sesion._instance();
+                    sesion.setUsuario(usuario); //SESION ACTIVA
                     Log.success("Inicio de sesión exitoso");
+                    Log.trace("Sesion activa: " + sesion.getUsuario().getCorreoElectronico());
                     return true;
-                }else {
-                    Log.error("Contraseña incorrecta");
                 }
-            }else {
-                Log.error("Correo electrónico no válido");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,24 +65,44 @@ public class CtrlUsuario {
         return false;
     }
 
-    public boolean validarCorreoElectronico(String correoElectronico) throws SQLException{
-        if (usuarioExiste(correoElectronico)){
+    /**
+     * Este metodo valida un correo electronico, una vez que fue validado se inicializa el atributo usuario
+     * para que en el siguiente paso se pueda acceder a usuario.getPassword y validar la contraseña, en caso
+     * de que el correo no este registrado no se puede pasar al siguiente paso.
+     * @param correoElectronico: Es un String que debe coicidir exactamente con el correo registrado en la base.
+     * @throws SQLException
+     */
+    public boolean validarCorreoElectronico(String correoElectronico) throws SQLException {
+        if (usuarioExiste(correoElectronico)) {
             int idUsuario = Usuario.obtenerIdUsuario(correoElectronico);
             usuario = new Usuario(idUsuario);
-            Sesion sesion = Sesion._instance();
-            sesion.setUsuario(usuario);
-            Log.trace("Sesion activa: " + sesion.getUsuario().getCorreoElectronico());
+            Log.trace("Usuario a validar: " + usuario.getCorreoElectronico());
+            Log.info("Correo valido");
             return true;
         }
-        return false;
-    }
-    public boolean validarPassword(String password) throws SQLException{
-        if (usuario.getPassword().equals(password))
-            return true;
+        Log.error("Correo no registrado");
         return false;
     }
 
-    public Usuario getUsuario(){
-        return usuario;
+    /**
+     * Este metodo usa el atributo usuario que se inicializo en el paso anterior "validarCorreoElectronico()",
+     * usa el metodo de modelo.Usuario.getPassword() para compara la String que el usuario coloque en el campo
+     * y la compara con la base de datos.
+     * En caso de no validar la contraseña entonces tomara el atritubo usuario y lo volvera null para que el
+     * proceso vuelva a empezar.
+     * @param password: Un String que debe coincidir con la password registrada en la tabla "passwords"
+     * @return true en caso de que los campos id_usuario y passwords guardados en la tabla "passwords"
+     * sean los mismos.
+     * @throws SQLException
+     */
+    public boolean validarPassword(String password) throws SQLException {
+        if (usuario.getPassword().equals(password)){
+            Log.info("Contraseña valida");
+            return true;
+        }
+        usuario = null; // Si no se puede validar la contraseña en usuario vuelve a null
+        Log.error("Contraseña incorrecta");
+        Log.trace("Usuario vuelve a null");
+        return false;
     }
 }
