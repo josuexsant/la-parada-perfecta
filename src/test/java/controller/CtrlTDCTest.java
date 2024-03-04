@@ -21,7 +21,6 @@ class CtrlTDCTest {
     void registrarTDC() {
         // Registro de usuario exitoso
         ctrlUsuario.iniciarSesion("josuexsanta@example.com","1234");
-        System.out.println(ctrlUsuario.getUsuario().getNombre());
         assertEquals(true, ctrlTDC.registrarTDC( "1234123412341234","1234-12-24", "123","Viri", "Ejemplo de direccion"));
         System.out.println("+ Tarjeta de credito registrada con exito");
     }

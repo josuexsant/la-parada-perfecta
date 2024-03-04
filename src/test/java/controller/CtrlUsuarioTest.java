@@ -44,6 +44,7 @@ class CtrlUsuarioTest {
         System.out.println("+ Correo no registrado y contraseña incorrecta");
     }
 
+    //TO-DO: Arreglar este test, ya no se usar getUsuario, ahora es sesion.getUsuario
     @Test
     @DisplayName("Validación de correos")
     void validarCorreoElectronico() {
@@ -51,7 +52,6 @@ class CtrlUsuarioTest {
         try {
             assertEquals(true, ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com"));
             System.out.println("Correo registrado validado. (josuexsanta@example.com)");
-            System.out.println(ctrlUsuario.getUsuario().getNombre());
         }catch (SQLException e){
             e.printStackTrace();
         }
