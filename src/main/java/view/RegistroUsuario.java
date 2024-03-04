@@ -27,7 +27,6 @@ public class RegistroUsuario extends JFrame {
     public RegistroUsuario() {
         ctrlUsuario = new CtrlUsuario();
 
-
         siguienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,11 +39,8 @@ public class RegistroUsuario extends JFrame {
                 int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
                 int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
-                Usuario nuevoUsuario = new Usuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad);
-
                 try {
-                    boolean registroExitoso = Usuario.registrar(nuevoUsuario);
-                    if (registroExitoso) {
+                    if(ctrlUsuario.registrarUsuario(nombre,password,apellidoPaterno,apellidoMaterno,telefono,correo,idGenero,idCiudad)) {
                         JOptionPane.showMessageDialog(null, "Registro Exitoso");
                         // FIXME Cuando se registra el usuario se debe de cerrar la ventana de registro
                         ViewMenu inicioMenuFrame = new ViewMenu();
@@ -57,7 +53,6 @@ public class RegistroUsuario extends JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "Error en el registro");
                     }
-
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
