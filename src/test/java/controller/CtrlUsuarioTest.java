@@ -15,7 +15,7 @@ class CtrlUsuarioTest {
     @Test
     @DisplayName("Registro de usuarios") void registrarUsuario() throws SQLException {
         // Registro de usuario exitoso
-        assertEquals(true, ctrlUsuario.registrarUsuario("Fernando", "2222", "Quiroz", "Castillo", "9999999999", "fer@example.com", 1, 1));
+        assertEquals(true, ctrlUsuario.registrarUsuario("Fernando", "2222", "Quiroz", "Castillo", "9999999999", "fer2@example.com", 1, 1));
         System.out.println("+ Usuario registrado con exito");
 
         // Informacion de usuario duplicada (Correo electronico)
