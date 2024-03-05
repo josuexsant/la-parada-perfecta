@@ -32,7 +32,7 @@ public class CtrlAutomovil {
         return placas;
     }
 
-    public String obtnerNombre(){
+    public String obtenerNombre(){
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         String nombre = usuario.getNombre();

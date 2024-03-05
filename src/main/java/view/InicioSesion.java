@@ -16,10 +16,12 @@ public class InicioSesion extends JFrame{
     private JButton ingresarButton;
     private JPasswordField passwordField1;
     private CtrlUsuario ctrlUsuario;
+    private ViewMenu menu;
 
     public InicioSesion() {
 
         ctrlUsuario = new CtrlUsuario();
+        menu = new ViewMenu();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -33,23 +35,14 @@ public class InicioSesion extends JFrame{
                 if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                     // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                     JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-                    // TODO Hay que convertir todo este codigo en un metodo en ViewMenu
-                    ViewMenu inicioMenuFrame = new ViewMenu();
-                    inicioMenuFrame.setTitle("Inicio");
-                    inicioMenuFrame.setVisible(true);
-                    inicioMenuFrame.setSize(300, 300);
-                    inicioMenuFrame.setLocationRelativeTo(null);
+                    menu.mostrarInicioMenuFrame();
                     dispose();
                     Log.success("Sesion Exitosa");
                 } else {
                     if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                         // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                         JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-                        ViewMenu inicioMenuFrame = new ViewMenu();
-                        inicioMenuFrame.setTitle("Inicio");
-                        inicioMenuFrame.setVisible(true);
-                        inicioMenuFrame.setSize(300, 300);
-                        inicioMenuFrame.setLocationRelativeTo(null);
+                        menu.mostrarInicioMenuFrame();
                         dispose();
                         Log.success("Sesión Exitosa");
                     } else {

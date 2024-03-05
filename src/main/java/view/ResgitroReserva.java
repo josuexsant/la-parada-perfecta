@@ -25,6 +25,7 @@ public class ResgitroReserva extends JFrame {
     private JComboBox<String> MatriculaBox;
     private JButton confirmarButton;
     private JComboBox<String> MesBox;
+    private JLabel nombreUsuario;
     private JLabel LabelHSalida;
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
@@ -43,6 +44,7 @@ public class ResgitroReserva extends JFrame {
         MesSeleccionado();
         RegistroFecha();
         llenarPlacaAutomovil();
+        establecerNombre();
         Confirmar();
     }
 
@@ -109,6 +111,10 @@ public class ResgitroReserva extends JFrame {
     private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida, String matriculaSeleccionada) {
         return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br>",nombre, mes, dia, horaLlegada, horaSalida,matriculaSeleccionada);
     }
+    public void establecerNombre(){
+        ctrlAutomovil.obtenerNombre();
+        nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
+    }
 
     private void Confirmar() {
         ActionListener accion = new ActionListener() {
@@ -118,7 +124,7 @@ public class ResgitroReserva extends JFrame {
                 int diaSeleccionado = Integer.parseInt((String) DiaBox.getSelectedItem());
                 String horaLlegadaSeleccionada = (String) HoraLlegada.getSelectedItem();
                 String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
-                String nombreSeleccionado = txtnombreUsuario.getText();
+                String nombreSeleccionado = nombreUsuario.getText();
                 String matriculaSeleccionada = (String)MatriculaBox.getSelectedItem();
 
                 ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
@@ -127,7 +133,7 @@ public class ResgitroReserva extends JFrame {
                 confirmarReservaFrame.setTitle("Confirmar Reserva");
                 confirmarReservaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 confirmarReservaFrame.setVisible(true);
-                confirmarReservaFrame.setSize(900, 300);
+                confirmarReservaFrame.setSize(850, 350);
                 confirmarReservaFrame.setLocationRelativeTo(null);
                 dispose();
 
