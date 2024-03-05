@@ -1,7 +1,6 @@
 package view;
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
-import model.CreateConnection;
 import model.Log;
 
 import java.awt.event.ActionEvent;
@@ -26,7 +25,9 @@ public class ResgitroReserva extends JFrame {
     private JButton confirmarButton;
     private JComboBox<String> MesBox;
     private JLabel nombreUsuario;
+    private JButton CancelarButton;
     private JLabel LabelHSalida;
+    private ViewMenu menu;
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
 
@@ -35,10 +36,6 @@ public class ResgitroReserva extends JFrame {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
 
-
-        setContentPane(ReservaP);
-        RegistroHora();
-
         setContentPane(ReservaP);
         RegistroHora();
         MesSeleccionado();
@@ -46,6 +43,7 @@ public class ResgitroReserva extends JFrame {
         llenarPlacaAutomovil();
         establecerNombre();
         Confirmar();
+        Cancelar();
     }
 
     public void llenarPlacaAutomovil(){
@@ -116,6 +114,21 @@ public class ResgitroReserva extends JFrame {
         nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
     }
 
+    public void Cancelar(){
+
+        menu = new ViewMenu();
+
+        ActionListener accion = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                menu.mostrarInicioMenuFrame();
+                dispose();
+            }
+        };
+        CancelarButton.addActionListener(accion);
+        dispose();
+    }
+
     private void Confirmar() {
         ActionListener accion = new ActionListener() {
             @Override
@@ -126,6 +139,11 @@ public class ResgitroReserva extends JFrame {
                 String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
                 String nombreSeleccionado = nombreUsuario.getText();
                 String matriculaSeleccionada = (String)MatriculaBox.getSelectedItem();
+
+                if(matriculaSeleccionada == null){
+                    Log.error("No hay una matricula registrada");
+                    JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
+                }else{
 
                 ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
 
@@ -145,6 +163,7 @@ public class ResgitroReserva extends JFrame {
                 double costoTotal = calcularCosto(horasSeleccionadas);
                 informacionSeleccionada += String.format("\nCosto Total: $%.2f", costoTotal);
                 confirmarReservaFrame.mostrarInformacionSeleccionada(informacionSeleccionada);
+            }
             }
         };
         confirmarButton.addActionListener(accion);

@@ -20,23 +20,26 @@ public class ViewMenu extends JFrame{
         CrearReserva();
     }
     public void mostrarInicioMenuFrame() {
+
         setTitle("Inicio");
         setVisible(true);
         setSize(300, 300);
         setLocationRelativeTo(null);
+
     }
 
     private void CrearReserva(){
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
+
                 ResgitroReserva RegistroFrame = null;
                 try {
                     RegistroFrame = new ResgitroReserva();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                dispose();
                 RegistroFrame.setTitle("Confirmar Reserva");
                 RegistroFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 RegistroFrame.setVisible(true);
