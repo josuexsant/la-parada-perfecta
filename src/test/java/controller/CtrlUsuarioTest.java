@@ -15,7 +15,7 @@ class CtrlUsuarioTest {
     @Test
     @DisplayName("Registro de usuarios") void registrarUsuario() throws SQLException {
         // Registro de usuario exitoso
-        assertEquals(true, ctrlUsuario.registrarUsuario("Fernando", "2222", "Quiroz", "Castillo", "9999999999", "fer@example.com", 1, 1));
+        assertEquals(true, ctrlUsuario.registrarUsuario("Fernando", "2222", "Quiroz", "Castillo", "9999999999", "fer2@example.com", 1, 1));
         System.out.println("+ Usuario registrado con exito");
 
         // Informacion de usuario duplicada (Correo electronico)
@@ -44,6 +44,7 @@ class CtrlUsuarioTest {
         System.out.println("+ Correo no registrado y contraseña incorrecta");
     }
 
+    //TO-DO: Arreglar este test, ya no se usar getUsuario, ahora es sesion.getUsuario
     @Test
     @DisplayName("Validación de correos")
     void validarCorreoElectronico() {
@@ -51,7 +52,6 @@ class CtrlUsuarioTest {
         try {
             assertEquals(true, ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com"));
             System.out.println("Correo registrado validado. (josuexsanta@example.com)");
-            System.out.println(ctrlUsuario.getUsuario().getNombre());
         }catch (SQLException e){
             e.printStackTrace();
         }

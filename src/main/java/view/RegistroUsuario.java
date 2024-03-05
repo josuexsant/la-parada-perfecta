@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class RegistroUsuario extends JFrame{
+public class RegistroUsuario extends JFrame {
     private JPanel RegistroUsuariopanel;
     private JTextField nombretext;
     private JTextField apellidoPaternotext;
@@ -24,10 +24,8 @@ public class RegistroUsuario extends JFrame{
     private CtrlUsuario ctrlUsuario;
 
 
-
-    public RegistroUsuario(){
+    public RegistroUsuario() {
         ctrlUsuario = new CtrlUsuario();
-
 
         siguienteButton.addActionListener(new ActionListener() {
             @Override
@@ -41,19 +39,18 @@ public class RegistroUsuario extends JFrame{
                 int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
                 int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
-                Usuario nuevoUsuario = new Usuario(nombre,password,apellidoPaterno,apellidoMaterno,telefono,correo,idGenero,idCiudad);
-
                 try {
-                    boolean registroExitoso= Usuario.registrar(nuevoUsuario);
-                    if (registroExitoso){
-
-                        JOptionPane.showMessageDialog(null,"Registro Exitoso");
-                        Log.info("");
-                    }else{
-                        JOptionPane.showMessageDialog(null,"Error en el registro");
+                    if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
+                        JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                        // FIXME Cuando se registra el usuario se debe de cerrar la ventana de registro
+                        RegistroTDC registroTDC = new RegistroTDC();
+                        registroTDC.mostrarRegistroTDC();
+                        dispose();
+                        Log.info("Registro de usuario");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error en el registro");
                     }
-
-                }catch ( SQLException ex){
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
 
@@ -76,7 +73,7 @@ public class RegistroUsuario extends JFrame{
 
 
     private int obtenerIdGenero(String genero) {
-         if ("Masculino".equals(genero)) {
+        if ("Masculino".equals(genero)) {
             return 1;
         } else if ("Femenino".equals(genero)) {
             return 2;
@@ -85,16 +82,16 @@ public class RegistroUsuario extends JFrame{
         }
     }
 
-    private int obtenerIdCiudad(String ciudades){
+    private int obtenerIdCiudad(String ciudades) {
         if ("Puebla".equals(ciudades)) {
             return 20;
         } else if ("México".equals(ciudades)) {
             return 14;
         } else if ("Veracruz".equals(ciudades)) {
-            return 29;            
+            return 29;
         } else if ("Nayarit".equals(ciudades)) {
             return 17;
-        }else {
+        } else {
             return 0;
         }
     }

@@ -47,6 +47,7 @@ public class TDC {
             statement.setInt(1, idTDC);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    this.id_usuario = resultSet.getInt("id_usuario");
                     this.numero_tarjeta= resultSet.getString("numero_tarjeta");
                     this.fecha_expiracion = resultSet.getString("fecha_expiracion");
                     this.cvv = resultSet.getString("cvv");

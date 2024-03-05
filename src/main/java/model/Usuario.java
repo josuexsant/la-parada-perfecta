@@ -160,6 +160,7 @@ public class Usuario {
             infoPstmt.setInt(6, usr.getIdGenero());
             infoPstmt.setInt(7, usr.getIdCiudad());
 
+            //FIXME Cuando un usuario agrega un numero, debemos de mostrar un mensaje de error
             infoPstmt.executeUpdate();
 
             // Obtener el id_usuario recién insertado

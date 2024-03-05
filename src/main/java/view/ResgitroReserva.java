@@ -22,7 +22,7 @@ public class ResgitroReserva extends JFrame {
     private JComboBox<String> DiaBox;
     private JLabel LabelDia;
     private JLabel MesLabel;
-    private JComboBox MatriculaBox;
+    private JComboBox<String> MatriculaBox;
     private JButton confirmarButton;
     private JComboBox<String> MesBox;
     private JLabel LabelHSalida;
@@ -97,6 +97,7 @@ public class ResgitroReserva extends JFrame {
                 break;
         }
     }
+
     private double calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
