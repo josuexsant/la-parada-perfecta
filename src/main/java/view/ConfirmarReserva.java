@@ -14,30 +14,27 @@ public class ConfirmarReserva extends JFrame {
     private JLabel confirmarReservaLabel;
     private JLabel labelInfo;
     private JButton MenuButton;
+    private ViewMenu menu;
 
     public ConfirmarReserva(){
         setContentPane(CReserva);
         dispose();
         BMenu();
     }
+
     public void mostrarInformacionSeleccionada(String informacion) {
         labelInfo.setText("<html>" + informacion + "</html>");
         Log.info("Muestra la informaciòn de la reserva");
     }
 
     public void BMenu(){
+        menu = new ViewMenu();
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ViewMenu VMenu = new ViewMenu();
-                VMenu.setTitle("Regresar al menu");
-                VMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                VMenu.setVisible(true);
-                VMenu.setSize(300, 300);
-                VMenu.setLocationRelativeTo(null);
+                menu.mostrarInicioMenuFrame();
                 Log.info("Se inicio vista Menù");
                 dispose();
-
             }
         };
         MenuButton.addActionListener(accion);

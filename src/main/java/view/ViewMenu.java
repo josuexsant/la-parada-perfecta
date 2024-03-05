@@ -19,6 +19,12 @@ public class ViewMenu extends JFrame{
         setContentPane(PnMenu);
         CrearReserva();
     }
+    public void mostrarInicioMenuFrame() {
+        setTitle("Inicio");
+        setVisible(true);
+        setSize(300, 300);
+        setLocationRelativeTo(null);
+    }
 
     private void CrearReserva(){
         ActionListener accion = new ActionListener() {

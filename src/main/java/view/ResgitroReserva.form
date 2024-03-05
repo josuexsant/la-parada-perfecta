@@ -100,17 +100,6 @@
           <text value="Día:"/>
         </properties>
       </component>
-      <component id="c26cf" class="javax.swing.JTextField" binding="txtnombreUsuario">
-        <constraints>
-          <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="100" height="30"/>
-          </grid>
-        </constraints>
-        <properties>
-          <columns value="10"/>
-          <text value=""/>
-        </properties>
-      </component>
       <component id="2d724" class="javax.swing.JComboBox" binding="HoraLlegada">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -180,6 +169,15 @@
         </constraints>
         <properties>
           <font name="SF Pro Display" size="18" style="0"/>
+        </properties>
+      </component>
+      <component id="b26af" class="javax.swing.JLabel" binding="nombreUsuario">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto" size="18" style="0"/>
+          <text value="Label"/>
         </properties>
       </component>
     </children>
