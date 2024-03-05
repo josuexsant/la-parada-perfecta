@@ -40,16 +40,13 @@ public class RegistroUsuario extends JFrame {
                 int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
                 try {
-                    if(ctrlUsuario.registrarUsuario(nombre,password,apellidoPaterno,apellidoMaterno,telefono,correo,idGenero,idCiudad)) {
+                    if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
                         JOptionPane.showMessageDialog(null, "Registro Exitoso");
                         // FIXME Cuando se registra el usuario se debe de cerrar la ventana de registro
-                        ViewMenu inicioMenuFrame = new ViewMenu();
-                        inicioMenuFrame.setTitle("Inicio");
-                        inicioMenuFrame.setVisible(true);
-                        inicioMenuFrame.setSize(300, 300);
-                        inicioMenuFrame.setLocationRelativeTo(null);
+                        RegistroTDC registroTDC = new RegistroTDC();
+                        registroTDC.mostrarRegistroTDC();
                         dispose();
-                        Log.info("Registro completado");
+                        Log.info("Registro de usuario");
                     } else {
                         JOptionPane.showMessageDialog(null, "Error en el registro");
                     }

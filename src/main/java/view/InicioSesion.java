@@ -33,6 +33,7 @@ public class InicioSesion extends JFrame{
                 if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                     // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                     JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+                    // TODO Hay que convertir todo este codigo en un metodo en ViewMenu
                     ViewMenu inicioMenuFrame = new ViewMenu();
                     inicioMenuFrame.setTitle("Inicio");
                     inicioMenuFrame.setVisible(true);
@@ -47,7 +48,6 @@ public class InicioSesion extends JFrame{
                 }
             }
         });
-
 
         registrarseButton.addActionListener(new ActionListener() {
             @Override
