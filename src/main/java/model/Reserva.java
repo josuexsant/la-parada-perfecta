@@ -9,8 +9,8 @@ public class Reserva {
     private int id;
     private int idAutomovil;
     private String fecha;
-    private String fechaInicio;
-    private String fechaFin;
+    private String horaInicio;
+    private String horaFin;
     private int idCajon;
     private int idUsuario;
     private static CreateConnection createConn = new CreateConnection();
@@ -19,8 +19,8 @@ public class Reserva {
         this.id = id;
         this.idAutomovil = idAutomovil;
         this.fecha = fecha;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.horaInicio = fechaInicio;
+        this.horaFin = fechaFin;
         this.idCajon = idCajon;
         this.idUsuario = idUsuario;
     }
@@ -61,8 +61,8 @@ public class Reserva {
             stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, idAutomovil);
             stmt.setString(2, fecha);
-            stmt.setString(3, fechaInicio);
-            stmt.setString(4, fechaFin);
+            stmt.setString(3, horaInicio);
+            stmt.setString(4, horaFin);
             stmt.setInt(5, idCajon);
             stmt.setInt(6, idUsuario);
 
@@ -113,20 +113,20 @@ public class Reserva {
         this.fecha = fecha;
     }
 
-    public String getFechaInicio() {
-        return fechaInicio;
+    public String getHoraInicio() {
+        return horaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
-    public String getFechaFin() {
-        return fechaFin;
+    public String getHoraFin() {
+        return horaFin;
     }
 
-    public void setFechaFin(String fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
     }
 
     public int getIdCajon() {

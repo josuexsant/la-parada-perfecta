@@ -18,7 +18,7 @@ public class CtrlReserva {
      * @author: Josue Santamaria
      *
      */
-    public void crearReserva(int dia, int mes, String horaLlegada, String horaSalida, String matricula) {
+    public void crearReserva(int dia, int mes, String horaInicio, String horaFin, String matricula) {
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
@@ -29,33 +29,11 @@ public class CtrlReserva {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        Calendar cal = Calendar.getInstance();
-        int año = cal.get(Calendar.YEAR);
-
-        // Crear una fecha con el mes, día y año
-        cal.set(año, mes - 1, dia);
-
-        // Crear un formato para la hora y el minuto
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        Date dateInicio = null;
-        Date dateFin = null;
+        String fecha = "2024-"+"-"+mes+"-"+dia;
+        reserva = new Reserva(0, idAutomovil,fecha, horaInicio + ":00", horaFin +":00", idCajon, idUsuario);
         try {
-            dateInicio = sdf.parse(horaLlegada);
-            dateFin = sdf.parse(horaSalida);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Establecer la hora y el minuto en el objeto Calendar
-        cal.setTime(dateInicio);
-        Timestamp timestampInicio = new Timestamp(cal.getTimeInMillis());
-
-        cal.setTime(dateFin);
-        Timestamp timestampFin = new Timestamp(cal.getTimeInMillis());
-        reserva = new Reserva(0, idAutomovil, timestampInicio, timestampInicio, timestampFin, idCajon, idUsuario);
-        try {
-
             reserva.guardarReserva();
+            Log.success("Se guardo la reserva");
         }catch (SQLException e){
             e.printStackTrace();
         }
