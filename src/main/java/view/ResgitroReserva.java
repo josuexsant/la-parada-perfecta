@@ -1,13 +1,13 @@
 package view;
+import controller.CtrlAutomovil;
 import controller.CtrlReserva;
 import model.CreateConnection;
 import model.Log;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.LinkedList;
 import javax.swing.*;
 public class ResgitroReserva extends JFrame {
 
@@ -27,35 +27,32 @@ public class ResgitroReserva extends JFrame {
     private JComboBox<String> MesBox;
     private JLabel LabelHSalida;
     private CtrlReserva ctrlReserva;
-    private static CreateConnection createConn = new CreateConnection();
-    DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+    private CtrlAutomovil ctrlAutomovil;
+
 
     public ResgitroReserva() throws SQLException {
         ctrlReserva = new CtrlReserva();
+        ctrlAutomovil = new CtrlAutomovil();
+
 
         setContentPane(ReservaP);
         RegistroHora();
-        try {
-            Statement statement = createConn.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT placa FROM automoviles");
 
-            while (resultSet.next()) {
-                String item = resultSet.getString("placa");
-                MatriculaBox.addItem(item);
-            }
-
-            resultSet.close();
-            statement.close();
-
-        }catch (SQLException e){
-            e.printStackTrace();
-            Log.error("No se establecio conexión");
-        }
+        setContentPane(ReservaP);
+        RegistroHora();
         MesSeleccionado();
         RegistroFecha();
+        llenarPlacaAutomovil();
         Confirmar();
     }
 
+    public void llenarPlacaAutomovil(){
+        LinkedList<String> placas = ctrlAutomovil.getAuto();
+        for (String placa : placas) {
+            MatriculaBox.addItem(placa);
+        }
+
+    }
     public void MesSeleccionado(){
         MesBox.addActionListener(new ActionListener() {
             @Override
