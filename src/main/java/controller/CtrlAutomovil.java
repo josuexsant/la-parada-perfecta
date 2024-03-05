@@ -1,16 +1,43 @@
 package controller;
 
 import model.Automovil;
+import model.Sesion;
+import model.Usuario;
+import view.ResgitroReserva;
 
+import javax.swing.*;
 import java.util.LinkedList;
 
 public class CtrlAutomovil {
+    private static ResgitroReserva resgitroReserva;
     private static Automovil automovil;
+    // private static Automovil automovil = new Automovil();
 
     public void registrarAutomovil(){
 
     }
 
+
+    public LinkedList<String> getAuto(){
+        Sesion sesion = Sesion._instance();
+        Usuario usuario = sesion.getUsuario();
+        int idUsuario = usuario.getId();
+
+        LinkedList<String> placas = Automovil.getPlacas(idUsuario);
+
+        for (String placa : placas) {
+            System.out.println(placa);
+        }
+
+        return placas;
+    }
+
+    public String obtnerNombre(){
+        Sesion sesion = Sesion._instance();
+        Usuario usuario = sesion.getUsuario();
+        String nombre = usuario.getNombre();
+        return nombre;
+    }
     public static Automovil getAutomovil() {
         return automovil;
     }

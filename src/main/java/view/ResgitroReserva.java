@@ -1,8 +1,13 @@
 package view;
+import controller.CtrlAutomovil;
 import controller.CtrlReserva;
+import model.CreateConnection;
+import model.Log;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.LinkedList;
 import javax.swing.*;
 public class ResgitroReserva extends JFrame {
 
@@ -22,12 +27,33 @@ public class ResgitroReserva extends JFrame {
     private JComboBox<String> MesBox;
     private JLabel LabelHSalida;
     private CtrlReserva ctrlReserva;
+    private CtrlAutomovil ctrlAutomovil;
 
-    public ResgitroReserva(){
+
+    public ResgitroReserva() throws SQLException {
         ctrlReserva = new CtrlReserva();
+        ctrlAutomovil = new CtrlAutomovil();
+
 
         setContentPane(ReservaP);
         RegistroHora();
+
+        setContentPane(ReservaP);
+        RegistroHora();
+        MesSeleccionado();
+        RegistroFecha();
+        llenarPlacaAutomovil();
+        Confirmar();
+    }
+
+    public void llenarPlacaAutomovil(){
+        LinkedList<String> placas = ctrlAutomovil.getAuto();
+        for (String placa : placas) {
+            MatriculaBox.addItem(placa);
+        }
+
+    }
+    public void MesSeleccionado(){
         MesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,10 +62,7 @@ public class ResgitroReserva extends JFrame {
                 RegistroDia(mesSeleccionado);
             }
         });
-        RegistroFecha();
-        Confirmar();
     }
-
     public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
             HoraLlegada.addItem(String.format("%s:00",f));
@@ -75,10 +98,7 @@ public class ResgitroReserva extends JFrame {
         }
     }
 
-
-
     private double calcularCosto(int horasSeleccionadas) {
-        // Puedes ajustar la tarifa por hora según tus necesidades
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
             throw new IllegalArgumentException("Las horas seleccionadas deben ser positivas.");
@@ -86,11 +106,9 @@ public class ResgitroReserva extends JFrame {
         double costoTotal = horasSeleccionadas * tarifaPorHora;
         return costoTotal;
     }
-
-    private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida) {
-        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br>",nombre, mes, dia, horaLlegada, horaSalida);
+    private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida, String matriculaSeleccionada) {
+        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br>",nombre, mes, dia, horaLlegada, horaSalida,matriculaSeleccionada);
     }
-
 
     private void Confirmar() {
         ActionListener accion = new ActionListener() {
@@ -113,7 +131,7 @@ public class ResgitroReserva extends JFrame {
                 confirmarReservaFrame.setLocationRelativeTo(null);
                 dispose();
 
-                String informacionSeleccionada = construirInformacionSeleccionada(nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada);
+                String informacionSeleccionada = construirInformacionSeleccionada(nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada,matriculaSeleccionada);
 
                 int horaInicio = Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]);
                 int horaFin = Integer.parseInt(horaSalidaSeleccionada.split(":")[0]);
@@ -125,6 +143,4 @@ public class ResgitroReserva extends JFrame {
         };
         confirmarButton.addActionListener(accion);
     }
-
-
 }

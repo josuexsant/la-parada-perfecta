@@ -1,7 +1,7 @@
 package model;
 
 import java.sql.*;
-
+import java.util.LinkedList;
 public class Automovil {
     private int id;
     private int idUsuario;
@@ -41,6 +41,25 @@ public class Automovil {
             e.printStackTrace();
         }
 
+    }
+
+    public static LinkedList<String> getPlacas(int id_Usuario) {
+        LinkedList<String> placas = new LinkedList<>();
+        try {
+            Connection conn = createConn.getConnection();
+            String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id_Usuario);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String placa = rs.getString("placa");
+                placas.add(placa);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return placas;
     }
 
     public boolean guardarAutomovil() throws SQLException {
