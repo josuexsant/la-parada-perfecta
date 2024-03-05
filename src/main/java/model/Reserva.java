@@ -8,19 +8,19 @@ import java.util.List;
 public class Reserva {
     private int id;
     private int idAutomovil;
-    private Date fecha;
-    private Timestamp fechaInicio;
-    private Timestamp fechaFin;
+    private String fecha;
+    private String horaInicio;
+    private String horaFin;
     private int idCajon;
     private int idUsuario;
     private static CreateConnection createConn = new CreateConnection();
 
-    public Reserva(int id, int idAutomovil, java.util.Date fecha, java.util.Date fechaInicio, java.util.Date fechaFin, int idCajon, int idUsuario) {
+    public Reserva(int id, int idAutomovil, String fecha, String fechaInicio, String fechaFin, int idCajon, int idUsuario) {
         this.id = id;
         this.idAutomovil = idAutomovil;
-        this.fecha = new Date(fecha.getTime());
-        this.fechaInicio = new Timestamp(fechaInicio.getTime());
-        this.fechaFin = new Timestamp(fechaFin.getTime());
+        this.fecha = fecha;
+        this.horaInicio = fechaInicio;
+        this.horaFin = fechaFin;
         this.idCajon = idCajon;
         this.idUsuario = idUsuario;
     }
@@ -60,9 +60,9 @@ public class Reserva {
             String query = "INSERT INTO reservaciones (id_automovil, fecha, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, idAutomovil);
-            stmt.setDate(2, new java.sql.Date(fecha.getTime()));
-            stmt.setTimestamp(3, fechaInicio);
-            stmt.setTimestamp(4, fechaFin);
+            stmt.setString(2, fecha);
+            stmt.setString(3, horaInicio);
+            stmt.setString(4, horaFin);
             stmt.setInt(5, idCajon);
             stmt.setInt(6, idUsuario);
 
@@ -105,28 +105,28 @@ public class Reserva {
         this.idAutomovil = idAutomovil;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Timestamp getFechaInicio() {
-        return fechaInicio;
+    public String getHoraInicio() {
+        return horaInicio;
     }
 
-    public void setFechaInicio(Timestamp fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
-    public Timestamp getFechaFin() {
-        return fechaFin;
+    public String getHoraFin() {
+        return horaFin;
     }
 
-    public void setFechaFin(Timestamp fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
     }
 
     public int getIdCajon() {
