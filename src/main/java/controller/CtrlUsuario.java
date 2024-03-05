@@ -15,7 +15,6 @@ public class CtrlUsuario {
         if (usuarioExiste(correoElectronico)) {
             Log.warn("El correo electronico ya esta registado");
         } else {
-
             p.setNombre(nombre);
             p.setPassword(password);
             p.setApellidoPaterno(apellidoPaterno);
@@ -28,7 +27,7 @@ public class CtrlUsuario {
             try {
                 if (Usuario.registrar(p)) {
                     iniciarSesion(correoElectronico, password);
-                    Log.success("Registro de usuario exitoso");
+                    Log.success("Usuario creado en el controler");
                     return true;
                 }
                 Log.error("Registro de usuario fallido");
