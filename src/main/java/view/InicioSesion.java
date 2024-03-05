@@ -2,7 +2,6 @@ package view;
 
 import controller.CtrlUsuario;
 import model.Log;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +29,7 @@ public class InicioSesion extends JFrame{
                 String correoElectronico = textField2.getText();
                 String password = new String(passwordField1.getPassword());
 
+
                 if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                     // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                     JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
@@ -42,9 +42,21 @@ public class InicioSesion extends JFrame{
                     dispose();
                     Log.success("Sesion Exitosa");
                 } else {
-                    // Inicio de sesión fallido, mostrar un mensaje de error
-                    JOptionPane.showMessageDialog(null, "Inicio de sesión fallido");
-                    Log.error("Fallo en el inicio de sesion");
+                    if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
+                        // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
+                        JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+                        ViewMenu inicioMenuFrame = new ViewMenu();
+                        inicioMenuFrame.setTitle("Inicio");
+                        inicioMenuFrame.setVisible(true);
+                        inicioMenuFrame.setSize(300, 300);
+                        inicioMenuFrame.setLocationRelativeTo(null);
+                        dispose();
+                        Log.success("Sesión Exitosa");
+                    } else {
+                        // Inicio de sesión fallido, mostrar un mensaje de error
+                        JOptionPane.showMessageDialog(null, "Inicio de sesión fallido");
+                        Log.error("Fallo en el inicio de sesión");
+                    }
                 }
             }
         });
