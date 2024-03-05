@@ -81,6 +81,7 @@ public class RegistroTDC {
                     mostrarTdc.setVisible(true);
                     mostrarTdc.setSize(900, 300);
                     mostrarTdc.setLocationRelativeTo(null);
+
                     String informacionSeleccionada = construirInformacionSeleccionada(NombreSeleccionado, NumeroS, año, mes, CvvS, TDrir);
                     mostrarTdc.mostrarInformacionSeleccionada(informacionSeleccionada);
                     ViewMenu inicioMenuFrame = new ViewMenu();
@@ -88,6 +89,7 @@ public class RegistroTDC {
                     inicioMenuFrame.setVisible(true);
                     inicioMenuFrame.setSize(300, 300);
                     inicioMenuFrame.setLocationRelativeTo(null);
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al registrar la tarjeta");
                 }
