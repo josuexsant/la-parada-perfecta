@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class ViewMenu extends JFrame{
+    private JPanel PMenu;
     private JPanel pnMenu;
     private JButton crearReservaButton;
     private JButton modificarReservaButton;

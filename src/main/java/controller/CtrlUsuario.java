@@ -49,7 +49,7 @@ public class CtrlUsuario {
      */
     public boolean iniciarSesion(String correoElectronico, String password) {
         try {
-            if (validarCorreoElectronico(correoElectronico)) {
+            if (validarEmail(correoElectronico)) {
                 if (validarPassword(password)) {
                     sesion = Sesion._instance();
                     sesion.setUsuario(usuario); //SESION ACTIVA
@@ -71,7 +71,7 @@ public class CtrlUsuario {
      * @param correoElectronico: Es un String que debe coicidir exactamente con el correo registrado en la base.
      * @throws SQLException
      */
-    public boolean validarCorreoElectronico(String correoElectronico) throws SQLException {
+    public boolean validarEmail(String correoElectronico) throws SQLException {
         if (usuarioExiste(correoElectronico)) {
             int idUsuario = Usuario.obtenerIdUsuario(correoElectronico);
             usuario = new Usuario(idUsuario);
