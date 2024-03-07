@@ -14,9 +14,5 @@ public class MostrarTDC extends JFrame {
     public void mostrarInformacionSeleccionada(String informacion) {
         labelInfo.setText("<html>" + informacion + "</html>");
         Log.info("Registro de TDC con exito");
-
     }
-
-
-
 }

@@ -2,35 +2,33 @@ package view;
 
 import controller.CtrlUsuario;
 import model.Log;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InicioSesion extends JFrame{
+public class InicioSesion extends JFrame {
 
-    private JPanel Inicio;
-    private JLabel Correo;
-    private JLabel Contraseña;
+    private JPanel inicio;
+    private JLabel email;
+    private JLabel password;
     private JButton registrarseButton;
-    private JTextField textField2;
+    private JTextField emailText;
     private JButton ingresarButton;
-    private JPasswordField passwordField1;
+    private JPasswordField passwordText;
     private CtrlUsuario ctrlUsuario;
     private ViewMenu menu;
 
     public InicioSesion() {
-
         ctrlUsuario = new CtrlUsuario();
         menu = new ViewMenu();
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String correoElectronico = textField2.getText();
-                String password = new String(passwordField1.getPassword());
-
+                String correoElectronico = emailText.getText();
+                String password = new String(passwordText.getPassword());
 
                 if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                     // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
@@ -58,17 +56,14 @@ public class InicioSesion extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 RegistroUsuario registroUsuario = new RegistroUsuario();
-                registroUsuario.mostrarRegistro();
+                registroUsuario.mostrarInterfaz();
                 dispose();
             }
         });
     }
 
-    /**
-     * Vista para inicio de sesión
-     */
-    public void mostrarInicio() {
-        setContentPane(Inicio);
+    public void mostrarInterfaz() {
+        setContentPane(inicio);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
