@@ -5,7 +5,6 @@ import model.Sesion;
 import model.Usuario;
 import view.ResgitroReserva;
 
-import javax.swing.*;
 import java.util.LinkedList;
 
 public class CtrlAutomovil {
@@ -18,12 +17,12 @@ public class CtrlAutomovil {
     }
 
 
-    public LinkedList<String> getAuto(){
+    public LinkedList<String> getMatriculas(){
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
 
-        LinkedList<String> placas = Automovil.getPlacas(idUsuario);
+        LinkedList<String> placas = Automovil.matriculasPorID(idUsuario);
 
         for (String placa : placas) {
             System.out.println(placa);

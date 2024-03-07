@@ -1,11 +1,9 @@
 package controller;
 
-import model.CreateConnection;
 import model.Sesion;
 import model.TDC;
 import model.Usuario;
 
-import java.sql.Date;
 import java.sql.SQLException;
 
 public class CtrlTDC {

@@ -10,7 +10,7 @@ public class Cajon {
     private int id;
     private int piso;
     private Estado estado;
-    private static CreateConnection createConn = new CreateConnection();
+    private static DBManager dbManager = new DBManager();
 
     // Constructor
     public Cajon(int id, int piso, Estado estado) {
@@ -20,7 +20,7 @@ public class Cajon {
     }
 
     public void guardarCajon() throws SQLException {
-            Connection conn = createConn.getConnection();
+            Connection conn = dbManager.getConnection();
             String query = "INSERT INTO cajones (id, piso, estado) VALUES (?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
@@ -32,7 +32,7 @@ public class Cajon {
     public static LinkedList<Cajon> getLugaresDisponibles(){
         LinkedList<Cajon> cajonesDisponibles = new LinkedList<>();
         try {
-            Connection conn = createConn.getConnection();
+            Connection conn = dbManager.getConnection();
             String query = "SELECT id, piso, estado FROM cajones WHERE estado = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, Estado.DISPONIBLE.name()); // Filtra los cajones disponibles
@@ -52,7 +52,7 @@ public class Cajon {
 
 
     public void setPiso(int piso) throws SQLException {
-        try (Connection conn = createConn.getConnection()) {
+        try (Connection conn = dbManager.getConnection()) {
             String query = "UPDATE cajones SET piso = ? WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 pstmt.setInt(1, piso);
@@ -64,7 +64,7 @@ public class Cajon {
     }
 
     public void setEstado(Estado estado) throws SQLException {
-        try (Connection conn = createConn.getConnection()) {
+        try (Connection conn = dbManager.getConnection()) {
             String query = "UPDATE cajones SET estado = ? WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 pstmt.setString(1, estado.name());
@@ -80,7 +80,7 @@ public class Cajon {
     }
 
     public int getPiso() {
-        try (Connection conn = createConn.getConnection()) {
+        try (Connection conn = dbManager.getConnection()) {
             String query = "SELECT piso FROM cajones WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 pstmt.setInt(1, id);
@@ -97,7 +97,7 @@ public class Cajon {
     }
 
     public Estado getEstado() {
-        try (Connection conn = createConn.getConnection()) {
+        try (Connection conn = dbManager.getConnection()) {
             String query = "SELECT estado FROM cajones WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 pstmt.setInt(1, id);
@@ -115,7 +115,7 @@ public class Cajon {
 
     public static LinkedList<Cajon> getCajones() {
         LinkedList<Cajon> cajones = new LinkedList<>();
-        try (Connection conn = createConn.getConnection()) {
+        try (Connection conn = dbManager.getConnection()) {
             String query = "SELECT id, piso, estado FROM cajones";
             try (PreparedStatement pstmt = conn.prepareStatement(query);
                  ResultSet rs = pstmt.executeQuery()) {

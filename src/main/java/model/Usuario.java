@@ -17,7 +17,7 @@ public class Usuario {
     private String correoElectronico;
     private int idGenero;
     private int idCiudad;
-    private static CreateConnection createConn = new CreateConnection();
+    private static DBManager dbManager = new DBManager();
 
     public Usuario(String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad) {
         this.nombre = nombre;
@@ -48,7 +48,7 @@ public class Usuario {
                 "    JOIN ciudades c ON iu.id_ciudades = c.id " +
                 "WHERE " +
                 "    iu.id = ?";
-        try (Connection conn = createConn.getConnection();
+        try (Connection conn = dbManager.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, idUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -145,7 +145,7 @@ public class Usuario {
         String passwordQuery = "INSERT INTO passwords (password, id_usuario) VALUES (?, ?);";
         String idUsuarioQuery = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?;";
 
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement infoPstmt = conn.prepareStatement(infoQuery);
         PreparedStatement passwordPstmt = conn.prepareStatement(passwordQuery);
         PreparedStatement idPstmt = conn.prepareStatement(idUsuarioQuery);
@@ -201,7 +201,7 @@ public class Usuario {
 
     public static boolean usuarioExiste(String correoElectronico) throws SQLException {
         String query = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?";
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, correoElectronico);
         ResultSet rs = pstmt.executeQuery();
@@ -211,7 +211,7 @@ public class Usuario {
 
     public static int obtenerIdUsuario(String correoElectronico) throws SQLException {
         String query = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?";
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, correoElectronico);
         ResultSet rs = pstmt.executeQuery();

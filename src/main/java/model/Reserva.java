@@ -13,7 +13,7 @@ public class Reserva {
     private String horaFin;
     private int idCajon;
     private int idUsuario;
-    private static CreateConnection createConn = new CreateConnection();
+    private static DBManager dbManager = new DBManager();
 
     public Reserva(int id, int idAutomovil, String fecha, String fechaInicio, String fechaFin, int idCajon, int idUsuario) {
         this.id = id;
@@ -34,7 +34,7 @@ public class Reserva {
         List<String> placas = new ArrayList<>();
         String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
 
-        try (Connection conn = createConn.getConnection();
+        try (Connection conn = dbManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, idUsuario);
@@ -53,7 +53,7 @@ public class Reserva {
      * @return: true si se logro hacer el INSERT y false si no se logro hacer.
      */
     public boolean guardarReserva() throws SQLException {
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {

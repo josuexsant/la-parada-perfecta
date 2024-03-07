@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.Date;
 
 public class TDC {
 
@@ -17,7 +16,7 @@ public class TDC {
     private String nombre_titular;
     private String direccion_facturacion;
 
-    private static CreateConnection createConn = new CreateConnection();
+    private static DBManager dbManager = new DBManager();
 
     public TDC(int id_usuario, String numero_tarjeta, String fecha_expiracion, String cvv, String nombre_titular, String direccion_facturacion){
         this.id_usuario=id_usuario;
@@ -42,7 +41,7 @@ public class TDC {
                 "    JOIN informacion_usuario iu ON tc.id_usuario = iu.id " +
                 "WHERE " +
                 "    tc.id = ?";
-        try (Connection conn = createConn.getConnection();
+        try (Connection conn = dbManager.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, idTDC);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -110,7 +109,7 @@ public class TDC {
 
     public boolean registrar() throws SQLException{
         String query = "INSERT INTO informacion_TDC (id_usuario, numero_tarjeta, fecha_expiracion, cvv, nombre_titular, direccion_facturacion) VALUES (?,?,?,?,?,?);";
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query);
         try{
             pstmt.setInt(1, this.id_usuario);  // Corregido el índice a 1

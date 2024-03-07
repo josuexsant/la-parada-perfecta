@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class ViewMenu extends JFrame{
-    private JPanel  PMenu;
-    private JPanel  PnMenu;
+    private JPanel pnMenu;
     private JButton crearReservaButton;
     private JButton modificarReservaButton;
     private JButton eliminarReservaButton;
@@ -16,29 +15,29 @@ public class ViewMenu extends JFrame{
     private JButton verMatriculaButton;
 
     public ViewMenu(){
-        setContentPane(PnMenu);
+        setContentPane(pnMenu);
         CrearReserva();
     }
-    public void mostrarInicioMenuFrame() {
 
+    public void mostrarInicioMenuFrame() {
         setTitle("Inicio");
         setVisible(true);
         setSize(300, 300);
         setLocationRelativeTo(null);
-
     }
 
     private void CrearReserva(){
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                ResgitroReserva RegistroFrame;
 
-                ResgitroReserva RegistroFrame = null;
                 try {
                     RegistroFrame = new ResgitroReserva();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
                 dispose();
                 RegistroFrame.setTitle("Confirmar Reserva");
                 RegistroFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,9 +49,4 @@ public class ViewMenu extends JFrame{
         };
         crearReservaButton.addActionListener(accion);
     }
-
-
-
-
-
 }
