@@ -12,7 +12,6 @@ public class CtrlTDC {
     private TDC tdc;
     private Sesion sesion;
     private Usuario usuario;
-    private final CreateConnection createConn = new CreateConnection();
 
     public boolean registrarTDC(String numero_tarjeta, String fecha_expiracion, String cvv, String nombre_titular, String direccion_facturacion){
         sesion = Sesion._instance();
