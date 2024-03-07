@@ -7,18 +7,18 @@ import controller.CtrlTDC;
 import model.Log;
 
 public class RegistroTDC {
-    private JPanel RegistroTarjeta;
-    private JTextField TxtNombre;
-    private JTextField TNumero;
-    private JTextField TCvv;
-    private JTextField TDir;
+    private JPanel registroTarjeta;
+    private JTextField nombreText;
+    private JTextField numeroText;
+    private JTextField cvvText;
+    private JTextField direccionText;
     private JButton finalizarButton;
     private JComboBox<String> mesBox;
-    private JComboBox<String> Añobox;
+    private JComboBox<String> yearBox;
 
-    public void mostrarRegistroTDC() {
+    public void mostrarInterfaz() {
         JFrame frame = new JFrame("RegistroTDC");
-        frame.setContentPane(new RegistroTDC().RegistroTarjeta);
+        frame.setContentPane(new RegistroTDC().registroTarjeta);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -28,7 +28,7 @@ public class RegistroTDC {
 
     public RegistroTDC() {
         llenarMesBox();
-        llenarAñoBox();
+        llenarYearBox();
         mesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,7 +36,7 @@ public class RegistroTDC {
                 int mesSeleccionado = Integer.parseInt(mesString);
             }
         });
-        Confirmar();
+        confirmar();
     }
 
     //metodo para rellenar mesBox
@@ -46,9 +46,9 @@ public class RegistroTDC {
         }
     }
 
-    private void llenarAñoBox() {
+    private void llenarYearBox() {
         for (int año = 2024; año <= 2040; año++) {
-            Añobox.addItem(String.valueOf(año));
+            yearBox.addItem(String.valueOf(año));
         }
     }
 
@@ -57,17 +57,17 @@ public class RegistroTDC {
         return String.format("Nombre de usuario: %s <br><br> Numero : %s <br><br> Fecha de Expiracion: %s <br><br> CVV: %s <br><br> Direccion: %s <br><br>", nombre, Numero, fechaExp, Cvv, TDir);
     }
 
-    private void Confirmar() {
+    private void confirmar() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String NombreSeleccionado = TxtNombre.getText();
-                String NumeroS = TNumero.getText();
-                String CvvS = TCvv.getText();
-                String TDrir = TDir.getText();
-                String FechExp = (String) Añobox.getSelectedItem() + "-" + mesBox.getSelectedItem() + "-01";
+                String NombreSeleccionado = nombreText.getText();
+                String NumeroS = numeroText.getText();
+                String CvvS = cvvText.getText();
+                String TDrir = direccionText.getText();
+                String FechExp = (String) yearBox.getSelectedItem() + "-" + mesBox.getSelectedItem() + "-01";
                 String mes = (String) mesBox.getSelectedItem();
-                String año = (String) Añobox.getSelectedItem();
+                String año = (String) yearBox.getSelectedItem();
 
                 CtrlTDC controladorTDC = new CtrlTDC();
                 boolean registroExitoso = controladorTDC.registrarTDC(NumeroS, FechExp, CvvS, NombreSeleccionado, TDrir);

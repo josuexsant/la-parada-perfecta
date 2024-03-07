@@ -2,7 +2,6 @@ package view;
 
 import controller.CtrlUsuario;
 import model.Log;
-import model.Usuario;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,17 +9,16 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class RegistroUsuario extends JFrame {
-    private JPanel RegistroUsuariopanel;
+    private JPanel registroUsuariopanel;
     private JTextField nombretext;
     private JTextField apellidoPaternotext;
     private JTextField apellidoMaternotext;
     private JTextField telefonotext;
     private JTextField correotext;
     private JComboBox genero;
-    private JPasswordField contraseña;
+    private JPasswordField passwordText;
     private JComboBox ciudades;
     private JButton siguienteButton;
-
     private CtrlUsuario ctrlUsuario;
 
 
@@ -31,7 +29,7 @@ public class RegistroUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombre = nombretext.getText();
-                String password = new String(contraseña.getPassword());
+                String password = new String(passwordText.getPassword());
                 String apellidoMaterno = apellidoMaternotext.getText();
                 String apellidoPaterno = apellidoPaternotext.getText();
                 String telefono = telefonotext.getText();
@@ -45,7 +43,7 @@ public class RegistroUsuario extends JFrame {
                         // FIXME Cuando se registra el usuario se debe de cerrar la ventana de registro
                         dispose();
                         RegistroTDC registroTDC = new RegistroTDC();
-                        registroTDC.mostrarRegistroTDC();
+                        registroTDC.mostrarInterfaz();
                         dispose();
                         Log.info("Registro de usuario");
                     } else {
@@ -54,15 +52,13 @@ public class RegistroUsuario extends JFrame {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
-
             }
         });
     }
 
-    public void mostrarRegistro() {
+    public void mostrarInterfaz() {
         JFrame frame = new JFrame("RegistroUsuario");
-        frame.setContentPane(new RegistroUsuario().RegistroUsuariopanel);
+        frame.setContentPane(new RegistroUsuario().registroUsuariopanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -71,7 +67,6 @@ public class RegistroUsuario extends JFrame {
         dispose();
         Log.info("Se carga interfaz de registro de usuario");
     }
-
 
     private int obtenerIdGenero(String genero) {
         if ("Masculino".equals(genero)) {

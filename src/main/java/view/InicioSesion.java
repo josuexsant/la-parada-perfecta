@@ -56,13 +56,13 @@ public class InicioSesion extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 RegistroUsuario registroUsuario = new RegistroUsuario();
-                registroUsuario.mostrarRegistro();
+                registroUsuario.mostrarInterfaz();
                 dispose();
             }
         });
     }
 
-    public void mostrarInicio() {
+    public void mostrarInterfaz() {
         setContentPane(inicio);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
