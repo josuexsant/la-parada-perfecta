@@ -50,7 +50,7 @@ class CtrlUsuarioTest {
     void validarCorreoElectronico() {
         //Un correo registrado en la base de datos:
         try {
-            assertEquals(true, ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com"));
+            assertEquals(true, ctrlUsuario.validarEmail("josuexsanta@example.com"));
             System.out.println("Correo registrado validado. (josuexsanta@example.com)");
         }catch (SQLException e){
             e.printStackTrace();
@@ -58,7 +58,7 @@ class CtrlUsuarioTest {
 
         //Un correo no registrado:
         try {
-            assertEquals(false, ctrlUsuario.validarCorreoElectronico("un_correo_no_registrado@example.com"));
+            assertEquals(false, ctrlUsuario.validarEmail("un_correo_no_registrado@example.com"));
             System.out.println("Correo no registrado no validado. (un_correo_no_registrado@example.com)");
         }catch (SQLException e){
             e.printStackTrace();
@@ -66,7 +66,7 @@ class CtrlUsuarioTest {
 
         //Un correo sin el dominio:
         try {
-            assertEquals(false, ctrlUsuario.validarCorreoElectronico("josuexsanta"));
+            assertEquals(false, ctrlUsuario.validarEmail("josuexsanta"));
             System.out.println("Correo sin dominio no validado. (josuexsanta)");
         }catch (SQLException e){
             e.printStackTrace();
@@ -78,7 +78,7 @@ class CtrlUsuarioTest {
     void validarPassword() {
         // Contraseña correcta
         try{
-            ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com");
+            ctrlUsuario.validarEmail("josuexsanta@example.com");
             assertEquals(true, ctrlUsuario.validarPassword("1234"));
             System.out.println("Contraseña correcta validada.");
         }catch (SQLException e){
@@ -87,7 +87,7 @@ class CtrlUsuarioTest {
 
         //Contraseña incorrecta
         try{
-            ctrlUsuario.validarCorreoElectronico("josuexsanta@example.com");
+            ctrlUsuario.validarEmail("josuexsanta@example.com");
             assertEquals(false, ctrlUsuario.validarPassword("0000"));
             System.out.println("Contraseña incorrecta no validada");
         }catch (SQLException e){
