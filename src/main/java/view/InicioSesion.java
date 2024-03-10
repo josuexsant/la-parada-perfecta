@@ -30,6 +30,12 @@ public class InicioSesion extends JFrame {
                 String correoElectronico = emailText.getText();
                 String password = new String(passwordText.getPassword());
 
+                // Obliga al usuario a ingresar datos en la ventana de inicio de sesión
+                if(correoElectronico.isEmpty() || password.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Ingrese un correo ó contraseña validos");
+                    return;
+                }
+
                 if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                     // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                     JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
