@@ -1,5 +1,4 @@
 package view;
-
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
 import model.Log;
@@ -9,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import javax.swing.*;
-
 public class ResgitroReserva extends JFrame {
 
     private JTextField txtnombreUsuario;
@@ -39,24 +37,23 @@ public class ResgitroReserva extends JFrame {
         ctrlAutomovil = new CtrlAutomovil();
 
         setContentPane(ReservaP);
-        getHoraBox();
-        getMesBox();
-        getFechaBox();
-        llenarMatriculas();
-        setNombreField();
+        RegistroHora();
+        MesSeleccionado();
+        RegistroFecha();
+        llenarPlacaAutomovil();
+        establecerNombre();
         Confirmar();
         Cancelar();
     }
 
-    public void llenarMatriculas() {
+    public void llenarPlacaAutomovil(){
         LinkedList<String> placas = ctrlAutomovil.getMatriculas();
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
 
     }
-
-    public void getMesBox() {
+    public void MesSeleccionado(){
         MesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,15 +63,14 @@ public class ResgitroReserva extends JFrame {
             }
         });
     }
-
-    public void getHoraBox() {
+    public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
-            HoraLlegada.addItem(String.format("%s:00", f));
+            HoraLlegada.addItem(String.format("%s:00",f));
             HoraSalida.addItem(String.format("%s:00", f));
         }
     }
 
-    public void getFechaBox() {
+    public void RegistroFecha() {
         MesBox.removeAllItems();
         for (int mes = 1; mes <= 12; mes++) {
             MesBox.addItem(Integer.toString(mes));
@@ -84,21 +80,12 @@ public class ResgitroReserva extends JFrame {
     public void RegistroDia(int mes) {
         DiaBox.removeAllItems();
         switch (mes) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
                 for (int f = 1; f <= 31; f++) {
                     DiaBox.addItem(Integer.toString(f));
                 }
                 break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
+            case 4: case 6: case 9: case 11:
                 for (int f = 1; f <= 30; f++) {
                     DiaBox.addItem(Integer.toString(f));
                 }
@@ -120,16 +107,13 @@ public class ResgitroReserva extends JFrame {
         return costoTotal;
     }
 
-    private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida, String matriculaSeleccionada) {
-        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br>", nombre, mes, dia, horaLlegada, horaSalida, matriculaSeleccionada);
-    }
-
-    public void setNombreField() {
+    public void establecerNombre(){
         ctrlAutomovil.obtenerNombre();
         nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
     }
 
-    public void Cancelar() {
+    public void Cancelar(){
+
         menu = new ViewMenu();
 
         ActionListener accion = new ActionListener() {
@@ -158,7 +142,6 @@ public class ResgitroReserva extends JFrame {
                     Log.error("No hay una matricula registrada");
                     JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
                 } else {
-
                     ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
 
                     ConfirmarReserva confirmarReservaFrame = new ConfirmarReserva();
@@ -169,17 +152,19 @@ public class ResgitroReserva extends JFrame {
                     confirmarReservaFrame.setLocationRelativeTo(null);
                     dispose();
 
-                    String informacionSeleccionada = construirInformacionSeleccionada(nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
-
                     int horaInicio = Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]);
                     int horaFin = Integer.parseInt(horaSalidaSeleccionada.split(":")[0]);
                     int horasSeleccionadas = horaFin - horaInicio;
                     double costoTotal = calcularCosto(horasSeleccionadas);
-                    informacionSeleccionada += String.format("\nCosto Total: $%.2f", costoTotal);
-                    confirmarReservaFrame.mostrarInformacionSeleccionada(informacionSeleccionada);
+
+                    String informacionSeleccionada = String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br> Costo Total: $%.2f", nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada, costoTotal);
+
+                    confirmarReservaFrame.mostrarReserva(informacionSeleccionada);
                 }
             }
         };
         confirmarButton.addActionListener(accion);
     }
+
+
 }

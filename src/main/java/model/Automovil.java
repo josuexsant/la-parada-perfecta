@@ -7,7 +7,7 @@ public class Automovil {
     private int idUsuario;
     private int idMarca;
     private String placa;
-    private static DBManager dbManager = new DBManager();
+    private static DBManager createConn = new DBManager();
 
     public Automovil(int idUsuario, int idMarca, String placa) {
 
@@ -24,7 +24,7 @@ public class Automovil {
                 "placa" +
                 "FROM automoviles" +
                 "WHERE id_usuario = ?";
-        try (Connection conn = dbManager.getConnection();
+        try (Connection conn = createConn.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, idUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -43,10 +43,10 @@ public class Automovil {
 
     }
 
-    public static LinkedList<String> matriculasPorID(int id_Usuario) {
+    public static LinkedList<String> getPlacas(int id_Usuario) {
         LinkedList<String> placas = new LinkedList<>();
         try {
-            Connection conn = dbManager.getConnection();
+            Connection conn = createConn.getConnection();
             String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id_Usuario);
@@ -63,7 +63,7 @@ public class Automovil {
     }
 
     public boolean guardarAutomovil() throws SQLException {
-        Connection conn = dbManager.getConnection();
+        Connection conn = createConn.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
@@ -92,8 +92,10 @@ public class Automovil {
         }
     }
 
+
+
     public static int getIdConMatricula(String placa) throws SQLException {
-        Connection conn = dbManager.getConnection();
+        Connection conn = createConn.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         int idAutomovil = -1; // Valor por defecto si no se encuentra el automóvil
