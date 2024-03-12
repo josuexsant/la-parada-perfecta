@@ -15,6 +15,7 @@ public class CtrlReserva {
     Reserva reserva;
     Automovil automovil;
 
+
     /**
      * @author: Josue Santamaria
      *
@@ -40,29 +41,31 @@ public class CtrlReserva {
         }
     }
 
-    public static LinkedList<String> getReservasAsStringList(int idUsuario) {
+    public LinkedList<String> obtenerReservas() {
+        Sesion sesion = Sesion._instance();
+        Usuario usuario = sesion.getUsuario();
+        int idUsuario = usuario.getId();
         LinkedList<Reserva> reservas = Reserva.getReservas(idUsuario);
-        return convertReservasToStringList(reservas);
+        return reservasString(reservas);
     }
 
-    private static LinkedList<String> convertReservasToStringList(LinkedList<Reserva> reservas) {
+    public LinkedList<String> reservasString(LinkedList<Reserva> reservas) {
         LinkedList<String> reservasStrings = new LinkedList<>();
 
         for (Reserva reserva : reservas) {
-            String reservaString = "Reserva[id=" + reserva.getId() +
-                    ", automovil=" + reserva.getIdAutomovil() +
-                    ", fecha=" + reserva.getFecha() +
-                    ", fechaInicio=" + reserva.getHoraInicio() +
-                    ", fechaFin=" + reserva.getHoraFin() +
-                    ", cajon=" + reserva.getIdCajon() +
-                    ", usuario=" + reserva.getIdUsuario() + "]";
+            String reservaString = "-Id=" + reserva.getId() +
+                    ", -Automovil: " + reserva.getIdAutomovil() +
+                    ", -Fecha: " + reserva.getFecha() +
+                    ", -Fecha Inicio: " + reserva.getHoraInicio() +
+                    ", -Fecha Fin:" + reserva.getHoraFin() +
+                    ", -Cajon: " + reserva.getIdCajon() +
+                    ", -Usuario: " + reserva.getIdUsuario() ;
             reservasStrings.add(reservaString);
         }
-
         return reservasStrings;
     }
 
+    public void eliminarReservaSelccionada(int id){
 
-
-
+    }
 }

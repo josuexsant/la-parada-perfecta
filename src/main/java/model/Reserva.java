@@ -162,7 +162,7 @@ public class Reserva {
         }
     }
 
-    public void eliminarReserva(int idReserva) {
+    public static boolean eliminarReserva(int idReserva) {
         try (Connection conn = dbManager.getConnection()) {
             String query = "DELETE FROM reservaciones WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -172,15 +172,16 @@ public class Reserva {
 
                 if (filasAfectadas > 0) {
                     System.out.println("Reserva eliminada con éxito.");
+                    return true;
                 } else {
                     System.out.println("No se encontró ninguna reserva con el ID especificado.");
+                    return false;
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar la reserva.", e);
         }
     }
-
 
 
     public int getId() {
