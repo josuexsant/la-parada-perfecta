@@ -25,6 +25,7 @@ public class Reserva {
         this.idUsuario = idUsuario;
     }
 
+
     /**
      * @author: Fernando Quiroz
      * Con esta función deberia ser capaz de mostrar todas las placas del usuario en la interfaz
@@ -88,6 +89,8 @@ public class Reserva {
             conn.close();
         }
     }
+
+
 
     public int getId() {
         return id;
