@@ -1,6 +1,7 @@
 package view;
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
+import controller.CtrlUsuario;
 import model.Log;
 
 import java.awt.event.ActionEvent;
@@ -30,6 +31,7 @@ public class ResgitroReserva extends JFrame {
     private ViewMenu menu;
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
+    private CtrlUsuario ctrlUsuario;
 
 
     public ResgitroReserva() throws SQLException {

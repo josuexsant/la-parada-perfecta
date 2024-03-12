@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 public class CtrlReserva {
     Sesion sesion;
@@ -38,4 +39,30 @@ public class CtrlReserva {
             e.printStackTrace();
         }
     }
+
+    public static LinkedList<String> getReservasAsStringList(int idUsuario) {
+        LinkedList<Reserva> reservas = Reserva.getReservas(idUsuario);
+        return convertReservasToStringList(reservas);
+    }
+
+    private static LinkedList<String> convertReservasToStringList(LinkedList<Reserva> reservas) {
+        LinkedList<String> reservasStrings = new LinkedList<>();
+
+        for (Reserva reserva : reservas) {
+            String reservaString = "Reserva[id=" + reserva.getId() +
+                    ", automovil=" + reserva.getIdAutomovil() +
+                    ", fecha=" + reserva.getFecha() +
+                    ", fechaInicio=" + reserva.getHoraInicio() +
+                    ", fechaFin=" + reserva.getHoraFin() +
+                    ", cajon=" + reserva.getIdCajon() +
+                    ", usuario=" + reserva.getIdUsuario() + "]";
+            reservasStrings.add(reservaString);
+        }
+
+        return reservasStrings;
+    }
+
+
+
+
 }
