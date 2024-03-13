@@ -49,7 +49,6 @@ public class Reserva {
             statement.setInt(1, idReserva);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    // TODO no se settea el id
                     this.id = resultSet.getInt("id");
                     this.idAutomovil = resultSet.getInt("id_automovil");
                     this.fecha = String.valueOf(resultSet.getDate("fecha"));
@@ -81,8 +80,6 @@ public class Reserva {
     }
 
     public void setIdAutomovil(int idAutomovil) {
-        // TODO query UPDATE id_automovil
-
         this.idAutomovil = idAutomovil;
     }
 
@@ -222,7 +219,7 @@ public class Reserva {
         }
     }
 
-    public void modificarReserva() throws SQLException{
+    public void guardarReservaModificada() throws SQLException{
         String query = "UPDATE reservaciones " +
                 "SET id_automovil = ?, " +
                 "fecha = ?, " +
@@ -242,12 +239,9 @@ public class Reserva {
             pstmt.setInt(6, idUsuario);
             pstmt.setInt(7, id);
             pstmt.executeUpdate();
-
-
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }finally {
-            // Cierra los PreparedStatements y la conexión en el bloque finally
             if (pstmt != null) {
                 pstmt.close();
             }

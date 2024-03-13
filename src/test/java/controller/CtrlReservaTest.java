@@ -21,14 +21,24 @@ class CtrlReservaTest {
         ctrlReserva.crearReserva(12,10,"12:00","13:00","ABC-12-12");
     }
 
-
     @Test
-    void modificarReserva() throws SQLException {
+    public void testModificarReserva() {
         CtrlUsuario ctrlUsuario = new CtrlUsuario();
         ctrlUsuario.iniciarSesion("josuexsanta@example.com","1234");
         CtrlReserva ctrlReserva = new CtrlReserva();
-        assertEquals(true, ctrlReserva.modificarReserva( 55, 01, 03, "05", "09", "ABC-12-12"));
+        int idReserva = 55;
+        int dia = 12;
+        int mes = 3;
+        String horaInicio = "10:00";
+        String horaFin = "12:00";
+        String matricula = "ABC123";
+
+        CtrlReserva instancia = new CtrlReserva();
+        boolean resultado = instancia.modificarReserva(idReserva, dia, mes, horaInicio, horaFin, matricula);
+
+        assertTrue(resultado);
     }
+
 
 
 }
