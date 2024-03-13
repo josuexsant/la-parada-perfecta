@@ -10,19 +10,13 @@ import java.util.LinkedList;
 public class CtrlAutomovil {
     private static ResgitroReserva resgitroReserva;
     private static Automovil automovil;
-    // private static Automovil automovil = new Automovil();
-
-    public void registrarAutomovil(){
-
-    }
-
 
     public LinkedList<String> getMatriculas(){
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
 
-        LinkedList<String> placas = Automovil.matriculasPorID(idUsuario);
+        LinkedList<String> placas = Automovil.getPlacas(idUsuario);
 
         for (String placa : placas) {
             System.out.println(placa);
@@ -35,8 +29,12 @@ public class CtrlAutomovil {
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         String nombre = usuario.getNombre();
-        return nombre;
+        String apellidoP = usuario.getApellidoPaterno();
+        String apellidoM = usuario.getApellidoMaterno();
+        String nombreCompleto = nombre + " " + apellidoP + " " + apellidoM;
+        return nombreCompleto;
     }
+
     public static Automovil getAutomovil() {
         return automovil;
     }
@@ -48,4 +46,6 @@ public class CtrlAutomovil {
     public LinkedList<Automovil> automovilesRegistrados(){
         return null;
     }
+
+
 }
