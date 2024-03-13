@@ -19,6 +19,7 @@ public class    CtrlUsuario {
             p.setPassword(password);
             p.setApellidoPaterno(apellidoPaterno);
             p.setApellidoMaterno(apellidoMaterno);
+            // FIXME Crear una condiccional sobre el telefono para que acepte solamente numeros
             p.setNumeroTelefono(numeroTelefono);
             p.setIdGenero(idGenero);
             p.setIdCiudad(idCiudad);
@@ -104,4 +105,12 @@ public class    CtrlUsuario {
         Log.trace("Usuario vuelve a null");
         return false;
     }
+
+    public String getnombreC() throws SQLException {
+        int idUsuario = usuario.getId();
+        String nombreCompleto = usuario.nombreCompleto(idUsuario);
+        return nombreCompleto;
+    }
+
+
 }

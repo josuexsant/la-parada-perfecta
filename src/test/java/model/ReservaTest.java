@@ -1,12 +1,8 @@
 package model;
 
-import model.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class ReservaTest {
 
@@ -18,8 +14,6 @@ class ReservaTest {
         Log.debug(reserva.getHoraInicio());
         Log.debug(reserva.getFecha());
         Log.debug(reserva.getHoraFin());
-
-
-
     }
 }
+

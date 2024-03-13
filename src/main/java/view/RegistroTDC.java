@@ -24,6 +24,7 @@ public class RegistroTDC {
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
+
     }
 
     public RegistroTDC() {
@@ -75,20 +76,22 @@ public class RegistroTDC {
                 if (registroExitoso) {
                     JOptionPane.showMessageDialog(null, "Registro de Tarjeta exitoso");
                     Log.info("Tarjeta registrada");
+
+
                     MostrarTDC mostrarTdc = new MostrarTDC();
                     mostrarTdc.setTitle("Confirmar Reserva");
                     mostrarTdc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     mostrarTdc.setVisible(true);
-                    mostrarTdc.setSize(900, 300);
+                    mostrarTdc.setSize(300, 250);
                     mostrarTdc.setLocationRelativeTo(null);
 
                     String informacionSeleccionada = construirInformacionSeleccionada(NombreSeleccionado, NumeroS, año, mes, CvvS, TDrir);
                     mostrarTdc.mostrarInformacionSeleccionada(informacionSeleccionada);
+
+
                     ViewMenu inicioMenuFrame = new ViewMenu();
-                    inicioMenuFrame.setTitle("Inicio");
-                    inicioMenuFrame.setVisible(true);
-                    inicioMenuFrame.setSize(300, 300);
-                    inicioMenuFrame.setLocationRelativeTo(null);
+                    inicioMenuFrame.mostrarInicioMenuFrame();
+
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al registrar la tarjeta");

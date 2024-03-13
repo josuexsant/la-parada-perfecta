@@ -2,11 +2,16 @@ package model;
 
 import java.sql.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 public class Reserva {
     private int id;
@@ -30,7 +35,7 @@ public class Reserva {
 
     public Reserva(int idReserva) {
         String query = "SELECT " +
-                "    r.id, " +
+                "    r.id," +
                 "    r.id_automovil, " +
                 "    r.fecha, " +
                 "    r.fecha_inicio, " +
@@ -63,71 +68,12 @@ public class Reserva {
         }
     }
 
-    public Reserva() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getIdAutomovil() {
-        return idAutomovil;
-    }
-
-    public void setIdAutomovil(int idAutomovil) {
-        this.idAutomovil = idAutomovil;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(String horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public String getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(String horaFin) {
-        this.horaFin = horaFin;
-    }
-
-    public int getIdCajon() {
-        return idCajon;
-    }
-
-    public void setIdCajon(int idCajon) {
-        this.idCajon = idCajon;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     /**
      * @author: Fernando Quiroz
      * Con esta función deberia ser capaz de mostrar todas las placas del usuario en la interfaz
      * @return
      */
+
     public List<String> mostrarPlacasPorIdUsuario(int idUsuario) throws SQLException {
         List<String> placas = new ArrayList<>();
         String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
@@ -150,7 +96,6 @@ public class Reserva {
      * Este metodo guarda un objeto Reserva dentro de la base de datos
      * @return: true si se logro hacer el INSERT y false si no se logro hacer.
      */
-
     public static LinkedList<Reserva> getReservas(int id_Usuario){
         LinkedList<Reserva> reservaciones = new LinkedList<>();
         try {
@@ -249,6 +194,104 @@ public class Reserva {
                 conn.close();
             }
         }
+
+    public static boolean eliminarReserva(int idReserva) {
+        try (Connection conn = dbManager.getConnection()) {
+            String query = "DELETE FROM reservaciones WHERE id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, idReserva);
+
+                int filasAfectadas = pstmt.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Reserva eliminada con éxito.");
+                    return true;
+                } else {
+                    System.out.println("No se encontró ninguna reserva con el ID especificado.");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar la reserva.", e);
+        }
+    }
+
+    public boolean eliminar() {
+        try {
+            Connection conn = dbManager.getConnection();
+            String query = "DELETE FROM reservaciones WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, this.id);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("Reserva eliminada con éxito.");
+                return true;
+            } else {
+                System.out.println("No se encontró ninguna reserva con el ID especificado.");
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar la reserva.", e);
+        }
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIdAutomovil() {
+        return idAutomovil;
+    }
+
+    public void setIdAutomovil(int idAutomovil) {
+        this.idAutomovil = idAutomovil;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public int getIdCajon() {
+        return idCajon;
+    }
+
+    public void setIdCajon(int idCajon) {
+        this.idCajon = idCajon;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
 
