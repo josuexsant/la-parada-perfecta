@@ -41,7 +41,7 @@ public class CtrlReserva {
         }
     }
 
-    public LinkedList<String> obtenerReservas() {
+    public LinkedList<String> obtenerReservas() throws SQLException {
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
@@ -49,23 +49,24 @@ public class CtrlReserva {
         return reservasString(reservas);
     }
 
-    public LinkedList<String> reservasString(LinkedList<Reserva> reservas) {
+    public LinkedList<String> reservasString(LinkedList<Reserva> reservas) throws SQLException {
         LinkedList<String> reservasStrings = new LinkedList<>();
 
         for (Reserva reserva : reservas) {
-            String reservaString = "-Id=" + reserva.getId() +
-                    ", -Automovil: " + reserva.getIdAutomovil() +
-                    ", -Fecha: " + reserva.getFecha() +
-                    ", -Fecha Inicio: " + reserva.getHoraInicio() +
-                    ", -Fecha Fin:" + reserva.getHoraFin() +
-                    ", -Cajon: " + reserva.getIdCajon() +
-                    ", -Usuario: " + reserva.getIdUsuario() ;
+            String reservaString = "-Id: " + reserva.getId() +
+                    "  ,-Automovil: " +  Automovil.obtenerMarca(reserva.getIdAutomovil()) +
+                    "  ,-Fecha: " + reserva.getFecha() +
+                    "  ,-Fecha Inicio: " + reserva.getHoraInicio() +
+                    "  ,-Fecha Fin:" + reserva.getHoraFin() +
+                    "  ,-Cajon: " + reserva.getIdCajon() +
+                    "  ,-Usuario: " + reserva.getIdUsuario() ;
             reservasStrings.add(reservaString);
         }
         return reservasStrings;
     }
 
     public void eliminarReservaSelccionada(int id){
-
+        Reserva reserva = new Reserva(id);
+        reserva.eliminar();
     }
 }

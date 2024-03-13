@@ -6,6 +6,7 @@ import model.Sesion;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,14 +40,24 @@ class CtrlReservaTest {
     }
 
     @Test
-    void testGetReservasAsStringList() {
+    void testGetReservasAsStringList() throws SQLException {
         CtrlReserva ctrlReserva1 = new CtrlReserva();
         LinkedList<Reserva> reservacioncitas = Reserva.getReservas(69);
         LinkedList<String> vistaReservas = ctrlReserva1.reservasString(reservacioncitas);
-        for (String elemento : vistaReservas ){
+        for (String elemento : vistaReservas ) {
             System.out.println(elemento);
         }
-
     }
+
+    @Test
+    void EliminarReserva(){
+        CtrlReserva ctrlReserva1 = new CtrlReserva();
+        int id = 54;
+        ctrlReserva1.eliminarReservaSelccionada(id);
+    }
+
+
+
+
 
 }

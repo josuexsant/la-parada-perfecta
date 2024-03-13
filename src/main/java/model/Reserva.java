@@ -32,6 +32,7 @@ public class Reserva {
 
     public Reserva(int idReserva) {
         String query = "SELECT " +
+                "    r.id," +
                 "    r.id_automovil, " +
                 "    r.fecha, " +
                 "    r.fecha_inicio, " +
@@ -50,6 +51,7 @@ public class Reserva {
             statement.setInt(1, idReserva);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    this.id = resultSet.getInt("id");
                     this.idAutomovil = resultSet.getInt("id_automovil");
                     this.fecha = String.valueOf(resultSet.getDate("fecha"));
                     this.horaInicio = String.valueOf(resultSet.getTimestamp("fecha_inicio"));
@@ -183,6 +185,26 @@ public class Reserva {
         }
     }
 
+    public boolean eliminar() {
+        try {
+            Connection conn = dbManager.getConnection();
+            String query = "DELETE FROM reservaciones WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, this.id);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("Reserva eliminada con éxito.");
+                return true;
+            } else {
+                System.out.println("No se encontró ninguna reserva con el ID especificado.");
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar la reserva.", e);
+        }
+    }
 
     public int getId() {
         return id;
