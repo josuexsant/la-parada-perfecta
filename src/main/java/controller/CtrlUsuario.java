@@ -5,7 +5,7 @@ import model.Usuario;
 import java.sql.SQLException;
 import static model.Usuario.usuarioExiste;
 
-public class CtrlUsuario {
+public class    CtrlUsuario {
     private static Usuario usuario;
     public Sesion sesion;
 

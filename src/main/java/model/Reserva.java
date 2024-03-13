@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -65,7 +68,6 @@ public class Reserva {
         }
     }
 
-
     /**
      * @author: Fernando Quiroz
      * Con esta función deberia ser capaz de mostrar todas las placas del usuario en la interfaz
@@ -94,8 +96,6 @@ public class Reserva {
      * Este metodo guarda un objeto Reserva dentro de la base de datos
      * @return: true si se logro hacer el INSERT y false si no se logro hacer.
      */
-
-
     public static LinkedList<Reserva> getReservas(int id_Usuario){
         LinkedList<Reserva> reservaciones = new LinkedList<>();
         try {
@@ -163,6 +163,37 @@ public class Reserva {
             conn.close();
         }
     }
+
+    public void guardarReservaModificada() throws SQLException{
+        String query = "UPDATE reservaciones " +
+                "SET id_automovil = ?, " +
+                "fecha = ?, " +
+                "fecha_inicio = ?, " +
+                "fecha_fin = ?, " +
+                "id_cajon = ?, " +
+                "id_usuario = ? " +
+                "WHERE id = ?";
+        Connection conn = dbManager.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        try {
+            pstmt.setInt(1, idAutomovil);
+            pstmt.setString(2, fecha);
+            pstmt.setString(3, horaInicio);
+            pstmt.setString(4, horaFin);
+            pstmt.setInt(5, idCajon);
+            pstmt.setInt(6, idUsuario);
+            pstmt.setInt(7, id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
 
     public static boolean eliminarReserva(int idReserva) {
         try (Connection conn = dbManager.getConnection()) {
@@ -263,3 +294,4 @@ public class Reserva {
         this.idUsuario = idUsuario;
     }
 }
+
