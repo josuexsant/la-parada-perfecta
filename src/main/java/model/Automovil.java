@@ -43,6 +43,26 @@ public class Automovil {
 
     }
 
+    public static String obtenerMarca(int idMarca) throws SQLException{
+        String marca = null;
+        Connection conn = dbManager.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try{
+            String query = "SELECT m.nombre AS marca FROM automoviles a JOIN marcas m ON a.id_marca = m.id WHERE a.id_marca = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1,idMarca);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                marca = rs.getString("marca");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return marca;
+    }
+
     public static LinkedList<String> matriculasPorID(int id_Usuario) {
         LinkedList<String> placas = new LinkedList<>();
         try {
