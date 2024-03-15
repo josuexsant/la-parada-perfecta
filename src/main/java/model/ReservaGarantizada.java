@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReservaGaranti {
+public class ReservaGarantizada {
 
         private int id;
         private int idAutomovil;
@@ -14,9 +14,9 @@ public class ReservaGaranti {
         private  String fecha_fin;
         private int idCajon;
         private int idUsuario;
-        private static CreateConnection createConn = new CreateConnection();
+        private static DBManager dbManager = new DBManager();
 
-        public ReservaGaranti(int id, int idAutomovil, String fecha_inicio, String fecha_fin, int idCajon, int idUsuario) {
+        public ReservaGarantizada(int id, int idAutomovil, String fecha_inicio, String fecha_fin, int idCajon, int idUsuario) {
             this.id = id;
             this.idAutomovil = idAutomovil;
             this.fecha_inicio = fecha_inicio;
@@ -31,7 +31,7 @@ public class ReservaGaranti {
             List<String> placas = new ArrayList<>();
             String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
 
-            try (Connection conn = createConn.getConnection();
+            try (Connection conn = dbManager.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(query)) {
 
                 pstmt.setInt(1, idUsuario);
@@ -46,7 +46,7 @@ public class ReservaGaranti {
 
 
         public boolean guardarReserva() throws SQLException {
-            Connection conn = createConn.getConnection();
+            Connection conn = dbManager.getConnection();
             PreparedStatement stmt = null;
             ResultSet rs = null;
             try {

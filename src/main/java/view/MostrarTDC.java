@@ -20,7 +20,7 @@ public class MostrarTDC extends JFrame {
     }
 
     public void mostrarMenu(){
-        ViewMenu menu = new ViewMenu();
+        final ViewMenu menu = new ViewMenu();
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

@@ -4,7 +4,7 @@ import java.sql.*;
 
 
 public class CtrlReservaGarantizada {
-    ReservaGaranti ReservaGarantizada;
+    model.ReservaGarantizada ReservaGarantizada;
     Sesion sesion;
     Automovil automovil;
     public void CrearReservaGarantizada(int diainicio,int mesinicio,int diafin,int mesfin,String matricula ){
@@ -21,7 +21,7 @@ public class CtrlReservaGarantizada {
         String fecha_inicio = "2024-" + mesinicio + "-" + diainicio;
         String fecha_fin = "2024-" + mesfin + "-" + diafin;
 
-        ReservaGarantizada = new ReservaGaranti(0, idAutomovil, fecha_inicio, fecha_fin, idCajon, idUsuario);
+        ReservaGarantizada = new ReservaGarantizada(0, idAutomovil, fecha_inicio, fecha_fin, idCajon, idUsuario);
 
         try {
             ReservaGarantizada.guardarReserva();
