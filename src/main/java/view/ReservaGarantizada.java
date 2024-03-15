@@ -2,12 +2,13 @@ package view;
 
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
+import controller.CtrlReservaGarantizada;
 import model.Log;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class ReservaGarantizada extends JFrame {
@@ -26,11 +27,11 @@ public class ReservaGarantizada extends JFrame {
     private JButton CancelarButton;
     private JComboBox MesBoxFin;
     private ViewMenu menu;
-    private CtrlReserva ctrlReserva;
+    private CtrlReservaGarantizada ctrlReservaGarantizada;
     private CtrlAutomovil ctrlAutomovil;
 
     public ReservaGarantizada() {
-        ctrlReserva = new CtrlReserva();
+        ctrlReservaGarantizada = new CtrlReservaGarantizada();
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(ReservaP);
         getMesBoxInicio();
@@ -39,7 +40,8 @@ public class ReservaGarantizada extends JFrame {
         getFechaBoxFin();
         llenarMatriculas();
         setNombreField();
-        Cancelar();
+        confirmar();
+        cancelar();
     }
 
     public void llenarMatriculas() {
@@ -160,7 +162,33 @@ public class ReservaGarantizada extends JFrame {
         nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
     }
 
-    public void Cancelar() {
+    private void confirmar() {
+        ActionListener accion = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int mesInicio = Integer.parseInt((String) MesBoxInicio.getSelectedItem());
+                int mesFin = Integer.parseInt((String) MesBoxFin.getSelectedItem());
+                int diaInicio = Integer.parseInt((String) DiaBoxInicio.getSelectedItem());
+                int diaFin = Integer.parseInt((String) DiaBoxFin.getSelectedItem());
+                String nombre = nombreUsuario.getText();
+                String matricula = (String) MatriculaBox.getSelectedItem();
+
+                if (matricula == null) {
+                    Log.error("No hay una matricula registrada");
+                    JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
+                } else {
+                    ctrlReservaGarantizada.crear(diaInicio,mesInicio,diaFin,mesFin,matricula);
+                    JOptionPane.showMessageDialog(null,"Reserva garantizada creada");
+                    menu.mostrarInicioMenuFrame();
+                    dispose();
+                }
+            }
+        };
+        confirmarButton.addActionListener(accion);
+    }
+
+
+    public void cancelar() {
         menu = new ViewMenu();
 
         ActionListener accion = new ActionListener() {
@@ -173,7 +201,4 @@ public class ReservaGarantizada extends JFrame {
         CancelarButton.addActionListener(accion);
         dispose();
     }
-
-
-
 }

@@ -1,16 +1,12 @@
 package controller;
 
 import model.*;
-
 import java.sql.*;
 
-
 public class CtrlReservaGarantizada {
-    model.ReservaGarantizada ReservaGarantizada;
-    Sesion sesion;
-    Automovil automovil;
+    ReservaGarantizada ReservaGarantizada;
 
-    public void CrearReservaGarantizada(int diainicio, int mesinicio, int diafin, int mesfin, String matricula) {
+    public void crear(int diainicio, int mesinicio, int diafin, int mesfin, String matricula) {
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
