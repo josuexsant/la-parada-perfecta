@@ -7,7 +7,7 @@ public class CtrlReservaGarantizada {
     ReservaGaranti ReservaGarantizada;
     Sesion sesion;
     Automovil automovil;
-    public void CrearReservaGarantizada(int diainicio,int mesinicio,String matricula ){
+    public void CrearReservaGarantizada(int diainicio,int mesinicio,int diafin,int mesfin,String matricula ){
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
@@ -18,9 +18,10 @@ public class CtrlReservaGarantizada {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String fecha = "2024-" + "-" + mesinicio + "-" + diainicio;
+        String fecha_inicio = "2024-" + mesinicio + "-" + diainicio;
+        String fecha_fin = "2024-" + mesfin + "-" + diafin;
 
-        ReservaGarantizada = new ReservaGaranti(0, idAutomovil, fecha, idCajon, idUsuario);
+        ReservaGarantizada = new ReservaGaranti(0, idAutomovil, fecha_inicio, fecha_fin, idCajon, idUsuario);
 
         try {
             ReservaGarantizada.guardarReserva();

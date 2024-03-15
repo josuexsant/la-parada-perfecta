@@ -10,27 +10,23 @@ public class ReservaGaranti {
 
         private int id;
         private int idAutomovil;
-        private String fecha;
-        private String horaInicio;
-        private String horaFin;
+        private String fecha_inicio;
+        private  String fecha_fin;
         private int idCajon;
         private int idUsuario;
         private static CreateConnection createConn = new CreateConnection();
 
-        public ReservaGaranti(int id, int idAutomovil, String fecha, int idCajon, int idUsuario) {
+        public ReservaGaranti(int id, int idAutomovil, String fecha_inicio, String fecha_fin, int idCajon, int idUsuario) {
             this.id = id;
             this.idAutomovil = idAutomovil;
-            this.fecha = fecha;
+            this.fecha_inicio = fecha_inicio;
+            this.fecha_fin = fecha_fin;
             this.idCajon = idCajon;
             this.idUsuario = idUsuario;
         }
 
 
-        /**
-         * @author: Fernando Quiroz
-         * Con esta función deberia ser capaz de mostrar todas las placas del usuario en la interfaz
-         * @return
-         */
+
         public List<String> mostrarPlacasPorIdUsuario(int idUsuario) throws SQLException {
             List<String> placas = new ArrayList<>();
             String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
@@ -48,24 +44,19 @@ public class ReservaGaranti {
             return placas;
         }
 
-        /**
-         * @author: Fernando Quiroz
-         * Este metodo guarda un objeto Reserva dentro de la base de datos
-         * @return: true si se logro hacer el INSERT y false si no se logro hacer.
-         */
+
         public boolean guardarReserva() throws SQLException {
             Connection conn = createConn.getConnection();
             PreparedStatement stmt = null;
             ResultSet rs = null;
             try {
-                String query = "INSERT INTO reservaciones (id_automovil, fecha, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+                String query = "INSERT INTO reservaciones (id_automovil, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?,?)";
                 stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 stmt.setInt(1, idAutomovil);
-                stmt.setString(2, fecha);
-                stmt.setString(3, horaInicio);
-                stmt.setString(4, horaFin);
-                stmt.setInt(5, idCajon);
-                stmt.setInt(6, idUsuario);
+                stmt.setString(2,fecha_inicio);
+                stmt.setString(3, fecha_fin);
+                stmt.setInt(4, idCajon);
+                stmt.setInt(5, idUsuario);
 
                 int affectedRows = stmt.executeUpdate();
                 if (affectedRows == 0) {
@@ -108,28 +99,20 @@ public class ReservaGaranti {
             this.idAutomovil = idAutomovil;
         }
 
-        public String getFecha() {
-            return fecha;
+        public String getFechainicio() {
+            return fecha_inicio;
         }
 
-        public void setFecha(String fecha) {
-            this.fecha = fecha;
+        public void setFechainicio(String fechainicio) {
+            this.fecha_inicio = fechainicio;
         }
 
-        public String getHoraInicio() {
-            return horaInicio;
+        public String getFechafin() {
+            return fecha_fin;
         }
 
-        public void setHoraInicio(String horaInicio) {
-            this.horaInicio = horaInicio;
-        }
-
-        public String getHoraFin() {
-            return horaFin;
-        }
-
-        public void setHoraFin(String horaFin) {
-            this.horaFin = horaFin;
+        public void setFechafin(String fechafin) {
+            this.fecha_fin  = fechafin;
         }
 
         public int getIdCajon() {
