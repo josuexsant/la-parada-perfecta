@@ -7,11 +7,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 
 public class Reserva {
     private int id;
@@ -91,11 +88,7 @@ public class Reserva {
         return placas;
     }
 
-    /**
-     * @author: Fernando Quiroz
-     * Este metodo guarda un objeto Reserva dentro de la base de datos
-     * @return: true si se logro hacer el INSERT y false si no se logro hacer.
-     */
+
     public static LinkedList<Reserva> getReservas(int id_Usuario){
         LinkedList<Reserva> reservaciones = new LinkedList<>();
         try {
@@ -127,6 +120,11 @@ public class Reserva {
         return reservaciones;
     }
 
+    /**
+     * @author: Fernando Quiroz
+     * Este metodo guarda un objeto Reserva dentro de la base de datos
+     * @return: true si se logro hacer el INSERT y false si no se logro hacer.
+     */
     public boolean guardarReserva() throws SQLException {
         Connection conn = dbManager.getConnection();
         PreparedStatement stmt = null;
@@ -164,37 +162,6 @@ public class Reserva {
         }
     }
 
-    public void guardarReservaModificada() throws SQLException{
-        String query = "UPDATE reservaciones " +
-                "SET id_automovil = ?, " +
-                "fecha = ?, " +
-                "fecha_inicio = ?, " +
-                "fecha_fin = ?, " +
-                "id_cajon = ?, " +
-                "id_usuario = ? " +
-                "WHERE id = ?";
-        Connection conn = dbManager.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        try {
-            pstmt.setInt(1, idAutomovil);
-            pstmt.setString(2, fecha);
-            pstmt.setString(3, horaInicio);
-            pstmt.setString(4, horaFin);
-            pstmt.setInt(5, idCajon);
-            pstmt.setInt(6, idUsuario);
-            pstmt.setInt(7, id);
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-
     public static boolean eliminarReserva(int idReserva) {
         try (Connection conn = dbManager.getConnection()) {
             String query = "DELETE FROM reservaciones WHERE id = ?";
@@ -215,7 +182,6 @@ public class Reserva {
             throw new RuntimeException("Error al eliminar la reserva.", e);
         }
     }
-
     public boolean eliminar() {
         try {
             Connection conn = dbManager.getConnection();
@@ -234,6 +200,39 @@ public class Reserva {
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar la reserva.", e);
+        }
+    }
+
+//hacerle un join(idk que comando) para que solo se muestren las del id_usuario
+
+    public void guardarReservaModificada(int idUsuario, int idReserva) throws SQLException {
+        String query = "UPDATE reservaciones " +
+                "SET id_automovil = ?, " +
+                "fecha = ?, " +
+                "fecha_inicio = ?, " +
+                "fecha_fin = ?, " +
+                "id_cajon = ? " +
+                "WHERE id_usuario = ? AND id = ?";
+        Connection conn = dbManager.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        try {
+            pstmt.setInt(1, idAutomovil);
+            pstmt.setString(2, fecha);
+            pstmt.setString(3, horaInicio);
+            pstmt.setString(4, horaFin);
+            pstmt.setInt(5, idCajon);
+            pstmt.setInt(6, idUsuario);
+            pstmt.setInt(7, idReserva);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
     }
 
@@ -294,4 +293,3 @@ public class Reserva {
         this.idUsuario = idUsuario;
     }
 }
-

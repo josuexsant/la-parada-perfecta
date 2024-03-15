@@ -6,6 +6,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.sql.Timestamp;
 import java.util.LinkedList;
 
@@ -39,6 +40,44 @@ public class CtrlReserva {
             e.printStackTrace();
         }
     }
+
+    //Esta funcion la uso en cancelar reserva para obtener una reserva por el indice de la opcion seleccionada
+    public Reserva obtenerReservaPorIndice(int index) throws SQLException {
+        Sesion sesion = Sesion._instance();
+        Usuario usuario = sesion.getUsuario();
+        int idUsuario = usuario.getId();
+        LinkedList<Reserva> reservas = Reserva.getReservas(idUsuario);
+        return reservas.get(index);
+    }
+
+    public LinkedList<String> obtenerReservas() throws SQLException {
+        Sesion sesion = Sesion._instance();
+        Usuario usuario = sesion.getUsuario();
+        int idUsuario = usuario.getId();
+        LinkedList<Reserva> reservas = Reserva.getReservas(idUsuario);
+        return reservasString(reservas);
+    }
+
+    public LinkedList<String> reservasString(LinkedList<Reserva> reservas) throws SQLException {
+        LinkedList<String> reservasStrings = new LinkedList<>();
+
+        for (Reserva reserva : reservas) {
+            String reservaString = "-Id: " + reserva.getId() +
+                    "  ,-Automovil: " +  Automovil.obtenerMarca(reserva.getIdAutomovil()) +
+                    "  ,-Fecha: " + reserva.getFecha() +
+                    "  ,-Fecha Inicio: " + reserva.getHoraInicio() +
+                    "  ,-Fecha Fin:" + reserva.getHoraFin() +
+                    "  ,-Cajon: " + reserva.getIdCajon() +
+                    "  ,-Usuario: " + reserva.getIdUsuario() ;
+            reservasStrings.add(reservaString);
+        }
+        return reservasStrings;
+    }
+    public void eliminarReservaSelccionada(int id){
+        Reserva reserva = new Reserva(id);
+        reserva.eliminarReserva(id);
+    }
+
     public boolean modificarReserva(int idReserva, int dia, int mes, String horaInicio, String horaFin, String matricula) {
         String fecha = "2024-" + dia + "-" + mes;
         String hInicio = horaInicio + ":00";
@@ -66,7 +105,7 @@ public class CtrlReserva {
                 reserva.setHoraFin(hFin);
                 reserva.setIdCajon(idCajon);
                 reserva.setIdUsuario(idUsuario);
-                reserva.guardarReservaModificada();
+                reserva.guardarReservaModificada(idUsuario, idReserva);
             }else{
                 return false;
             }
@@ -75,34 +114,5 @@ public class CtrlReserva {
             return false;
         }
         return false;
-    }
-    public LinkedList<String> obtenerReservas() throws SQLException {
-        Sesion sesion = Sesion._instance();
-        Usuario usuario = sesion.getUsuario();
-        int idUsuario = usuario.getId();
-        LinkedList<Reserva> reservas = Reserva.getReservas(idUsuario);
-        return reservasString(reservas);
-    }
-
-    public LinkedList<String> reservasString(LinkedList<Reserva> reservas) throws SQLException {
-        LinkedList<String> reservasStrings = new LinkedList<>();
-
-        for (Reserva reserva : reservas) {
-            String reservaString = "-Id: " + reserva.getId() +
-                    "  ,-Automovil: " +  Automovil.obtenerMarca(reserva.getIdAutomovil()) +
-                    "  ,-Fecha: " + reserva.getFecha() +
-                    "  ,-Fecha Inicio: " + reserva.getHoraInicio() +
-                    "  ,-Fecha Fin:" + reserva.getHoraFin() +
-                    "  ,-Cajon: " + reserva.getIdCajon() +
-                    "  ,-Usuario: " + reserva.getIdUsuario() ;
-            reservasStrings.add(reservaString);
-        }
-        return reservasStrings;
-    }
-
-    public void eliminarReservaSelccionada(int id){
-        Reserva reserva = new Reserva(id);
-        reserva.eliminar();
-
     }
 }

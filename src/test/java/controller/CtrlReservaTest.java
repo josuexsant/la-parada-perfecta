@@ -76,4 +76,28 @@ class CtrlReservaTest {
         int id = 54;
         ctrlReserva1.eliminarReservaSelccionada(id);
     }
+    @Test
+    @DisplayName("Obtener las reservas de un usuario")
+    void getReserva(){
+        LinkedList<Reserva> reservas = Reserva.getReservas(69);
+        for(Reserva reserva : reservas){
+            Log.debug(String.valueOf(reserva.getId()));
+            Log.debug(reserva.getFecha());
+            Log.debug(String.valueOf(reserva.getIdAutomovil()));
+            Log.debug(reserva.getHoraInicio());
+            Log.debug(reserva.getHoraFin());
+            Log.debug(String.valueOf(reserva.getIdCajon()));
+        }
+    }
+
+    @Test
+    void testGetReservasAsStringList() throws SQLException {
+        CtrlReserva ctrlReserva1 = new CtrlReserva();
+        LinkedList<Reserva> reservacioncitas = Reserva.getReservas(69);
+        LinkedList<String> vistaReservas = ctrlReserva1.reservasString(reservacioncitas);
+        for (String elemento : vistaReservas ){
+            System.out.println(elemento);
+        }
+
+    }
 }
