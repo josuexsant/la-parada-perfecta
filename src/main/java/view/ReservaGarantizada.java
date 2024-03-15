@@ -29,19 +29,16 @@ public class ReservaGarantizada extends JFrame {
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
 
-    public ReservaGarantizada() throws SQLException {
+    public ReservaGarantizada() {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
-
         setContentPane(ReservaP);
-
         getMesBoxInicio();
         getMesBoxFin();
         getFechaBoxInicio();
         getFechaBoxFin();
         llenarMatriculas();
         setNombreField();
-
         Cancelar();
     }
 
@@ -50,7 +47,6 @@ public class ReservaGarantizada extends JFrame {
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
-
     }
 
     public void getMesBoxInicio() {
@@ -73,12 +69,6 @@ public class ReservaGarantizada extends JFrame {
             }
         });
     }
-//    public void getHoraBox() {
-//        for (int f = 0; f <= 23; f++) {
-//            HoraLlegada.addItem(String.format("%s:00", f));
-//            HoraSalida.addItem(String.format("%s:00", f));
-//        }
-//    }
 
     public void getFechaBoxInicio() {
         MesBoxInicio.removeAllItems();

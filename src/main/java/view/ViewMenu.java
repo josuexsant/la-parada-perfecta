@@ -107,13 +107,7 @@ public class ViewMenu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 ReservaGarantizada GarantizadaFrame;
-
-                try {
-                    GarantizadaFrame = new ReservaGarantizada();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-
+                GarantizadaFrame = new ReservaGarantizada();
                 dispose();
                 GarantizadaFrame.setTitle("Confirmar Reserva");
                 GarantizadaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
