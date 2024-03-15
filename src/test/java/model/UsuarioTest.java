@@ -13,7 +13,6 @@ class UsuarioTest {
     @DisplayName("Existencia de cuenta asociada con correo")
     void usuarioExiste() {
         try{
-
             //Correo electronico asociado a cuenta
             assertEquals(true,Usuario.usuarioExiste("josuexsanta@example.com"));
             //Correo electronico no asociado a cuenta

@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,8 +29,10 @@ public class Reserva {
         this.idCajon = idCajon;
         this.idUsuario = idUsuario;
     }
+
     public Reserva(int idReserva) {
         String query = "SELECT " +
+                "    r.id," +
                 "    r.id_automovil, " +
                 "    r.fecha, " +
                 "    r.fecha_inicio, " +
@@ -50,6 +51,7 @@ public class Reserva {
             statement.setInt(1, idReserva);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    this.id = resultSet.getInt("id");
                     this.idAutomovil = resultSet.getInt("id_automovil");
                     this.fecha = String.valueOf(resultSet.getDate("fecha"));
                     this.horaInicio = String.valueOf(resultSet.getTimestamp("fecha_inicio"));
@@ -68,6 +70,7 @@ public class Reserva {
      * Con esta función deberia ser capaz de mostrar todas las placas del usuario en la interfaz
      * @return
      */
+
     public List<String> mostrarPlacasPorIdUsuario(int idUsuario) throws SQLException {
         List<String> placas = new ArrayList<>();
         String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
@@ -83,6 +86,38 @@ public class Reserva {
             }
         }
         return placas;
+    }
+
+
+    public static LinkedList<Reserva> getReservas(int id_Usuario){
+        LinkedList<Reserva> reservaciones = new LinkedList<>();
+        try {
+            Connection conn = dbManager.getConnection();
+            String query = "SELECT * FROM reservaciones WHERE id_usuario = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id_Usuario);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int idReserva = rs.getInt("id");
+                int idAutomovil = rs.getInt("id_automovil");
+                String fecha = rs.getString("fecha");
+                String fechaInicio = rs.getString("fecha_inicio");
+                String fechaFin = rs.getString("fecha_fin");
+                int idCajon = rs.getInt("id_cajon");
+
+                // Crear una instancia de Reserva con los datos obtenidos de la base de datos
+                Reserva reserva = new Reserva(idReserva, idAutomovil, fecha, fechaInicio, fechaFin, idCajon, id_Usuario);
+
+                // Agregar la reserva a la lista
+                reservaciones.add(reserva);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return reservaciones;
     }
 
     /**
@@ -126,37 +161,6 @@ public class Reserva {
             conn.close();
         }
     }
-    public static LinkedList<Reserva> getReservas(int id_Usuario){
-        LinkedList<Reserva> reservaciones = new LinkedList<>();
-        try {
-            Connection conn = dbManager.getConnection();
-            String query = "SELECT * FROM reservaciones WHERE id_usuario = ?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, id_Usuario);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                int idReserva = rs.getInt("id");
-                int idAutomovil = rs.getInt("id_automovil");
-                String fecha = rs.getString("fecha");
-                String fechaInicio = rs.getString("fecha_inicio");
-                String fechaFin = rs.getString("fecha_fin");
-                int idCajon = rs.getInt("id_cajon");
-
-                // Crear una instancia de Reserva con los datos obtenidos de la base de datos
-                Reserva reserva = new Reserva(idReserva, idAutomovil, fecha, fechaInicio, fechaFin, idCajon, id_Usuario);
-
-                // Agregar la reserva a la lista
-                reservaciones.add(reserva);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return reservaciones;
-    }
-
 
     public static boolean eliminarReserva(int idReserva) {
         try (Connection conn = dbManager.getConnection()) {

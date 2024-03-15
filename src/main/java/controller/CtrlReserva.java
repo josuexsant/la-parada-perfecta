@@ -15,10 +15,11 @@ public class CtrlReserva {
     Reserva reserva;
     Automovil automovil;
 
+
     /**
      * @author: Josue Santamaria
-     *
      */
+
     public void crearReserva(int dia, int mes, String horaInicio, String horaFin, String matricula) {
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
@@ -30,12 +31,12 @@ public class CtrlReserva {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String fecha = "2024-"+"-"+mes+"-"+dia;
-        reserva = new Reserva(0, idAutomovil,fecha, horaInicio + ":00", horaFin +":00", idCajon, idUsuario);
+        String fecha = "2024-" + "-" + mes + "-" + dia;
+        reserva = new Reserva(0, idAutomovil, fecha, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
         try {
             reserva.guardarReserva();
             Log.success("Se guardo la reserva");
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

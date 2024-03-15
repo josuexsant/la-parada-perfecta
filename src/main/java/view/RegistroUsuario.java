@@ -40,11 +40,12 @@ public class RegistroUsuario extends JFrame {
                 try {
                     if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
                         JOptionPane.showMessageDialog(null, "Registro Exitoso");
-                        // FIXME Cuando se registra el usuario se debe de cerrar la ventana de registro
+
                         dispose();
                         RegistroTDC registroTDC = new RegistroTDC();
                         registroTDC.mostrarInterfaz();
                         dispose();
+
                         Log.info("Registro de usuario");
                     } else {
                         JOptionPane.showMessageDialog(null, "Error en el registro");

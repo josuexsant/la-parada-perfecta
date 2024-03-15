@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 public class Usuario {
     private int id;
@@ -28,6 +32,10 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.idGenero = idGenero;
         this.idCiudad = idCiudad;
+    }
+
+    public Usuario(){
+
     }
 
     public Usuario(int idUsuario) {
@@ -221,6 +229,30 @@ public class Usuario {
             // Devolver un valor negativo (por ejemplo, -1) si no se encontró el usuario
             return -1;
         }
+    }
+
+    public String nombreCompleto(int id_Usuario) throws SQLException {
+        String nombreCompleto = null;
+        String query = "SELECT nombre, apellido_paterno, apellido_materno " +
+                "FROM informacion_usuario " +
+                "WHERE id = ?";
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id_Usuario);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                String nombre = rs.getString("nombre");
+                String apellidoPaterno = rs.getString("apellido_paterno");
+                String apellidoMaterno = rs.getString("apellido_materno");
+                nombreCompleto = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return nombreCompleto;
     }
 
 
