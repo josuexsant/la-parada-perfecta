@@ -3,34 +3,21 @@ package controller;
 import model.*;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class CtrlReserva {
-    Sesion sesion;
     Reserva reserva;
-    Automovil automovil;
-
 
     /**
      * @author: Josue Santamaria
      */
-
     public void crearReserva(int dia, int mes, String horaInicio, String horaFin, String matricula) {
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
         int idCajon = cajon.getId();
         int idUsuario = Sesion._instance().getUsuario().getId();
-        try {
-            idAutomovil = Automovil.getIdConMatricula(matricula);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        idAutomovil = Automovil.getIdConMatricula(matricula);
         String fecha = "2024-" + "-" + mes + "-" + dia;
         reserva = new Reserva(0, idAutomovil, fecha, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
         try {
@@ -63,17 +50,18 @@ public class CtrlReserva {
 
         for (Reserva reserva : reservas) {
             String reservaString = "-Id: " + reserva.getId() +
-                    "  ,-Automovil: " +  Automovil.obtenerMarca(reserva.getIdAutomovil()) +
+                    "  ,-Automovil: " + Automovil.obtenerMarca(reserva.getIdAutomovil()) +
                     "  ,-Fecha: " + reserva.getFecha() +
                     "  ,-Fecha Inicio: " + reserva.getHoraInicio() +
                     "  ,-Fecha Fin:" + reserva.getHoraFin() +
                     "  ,-Cajon: " + reserva.getIdCajon() +
-                    "  ,-Usuario: " + reserva.getIdUsuario() ;
+                    "  ,-Usuario: " + reserva.getIdUsuario();
             reservasStrings.add(reservaString);
         }
         return reservasStrings;
     }
-    public void eliminarReservaSelccionada(int id){
+
+    public void eliminarReservaSelccionada(int id) {
         Reserva reserva = new Reserva(id);
         reserva.eliminarReserva(id);
     }
@@ -82,37 +70,24 @@ public class CtrlReserva {
         String fecha = "2024-" + dia + "-" + mes;
         String hInicio = horaInicio + ":00";
         String hFin = horaFin + ":00";
-
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
         int idCajon = cajon.getId();
-
         int idUsuario = Sesion._instance().getUsuario().getId();
+        int idAutomovil = Automovil.getIdConMatricula(matricula);
 
-        int idAutomovil = 0;
-        try {
-            idAutomovil = Automovil.getIdConMatricula(matricula);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        try{
-            // Objeto de tipo reserva (existente)
-            reserva = new Reserva(idReserva);
-            if(reserva != null){
-                reserva.setIdAutomovil(idAutomovil);
-                reserva.setFecha(fecha);
-                reserva.setHoraInicio(hInicio);
-                reserva.setHoraFin(hFin);
-                reserva.setIdCajon(idCajon);
-                reserva.setIdUsuario(idUsuario);
-                reserva.guardarReservaModificada(idUsuario, idReserva);
-            }else{
-                return false;
-            }
-        }catch (SQLException ex) {
-            ex.printStackTrace();
+        reserva = new Reserva(idReserva);
+        if (reserva != null) {
+            reserva.setIdAutomovil(idAutomovil);
+            reserva.setFecha(fecha);
+            reserva.setHoraInicio(hInicio);
+            reserva.setHoraFin(hFin);
+            reserva.setIdCajon(idCajon);
+            reserva.setIdUsuario(idUsuario);
+            reserva.modificar(idUsuario, idReserva);
+            return true;
+        } else {
             return false;
         }
-        return false;
     }
 }
