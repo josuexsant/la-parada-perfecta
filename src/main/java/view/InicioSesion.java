@@ -16,6 +16,7 @@ public class InicioSesion extends JFrame {
     private JTextField emailText;
     private JButton ingresarButton;
     private JPasswordField passwordText;
+    private JLabel inicioDeSesiónLabel;
     private CtrlUsuario ctrlUsuario;
     private ViewMenu menu;
 

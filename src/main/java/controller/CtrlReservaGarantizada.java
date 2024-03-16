@@ -1,13 +1,12 @@
 package controller;
+
 import model.*;
 import java.sql.*;
 
-
 public class CtrlReservaGarantizada {
-    model.ReservaGarantizada ReservaGarantizada;
-    Sesion sesion;
-    Automovil automovil;
-    public void CrearReservaGarantizada(int diainicio,int mesinicio,int diafin,int mesfin,String matricula ){
+    ReservaGarantizada ReservaGarantizada;
+
+    public void crear(int diainicio, int mesinicio, int diafin, int mesfin, String matricula) {
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
@@ -26,15 +25,8 @@ public class CtrlReservaGarantizada {
         try {
             ReservaGarantizada.guardarReserva();
             Log.success("Se guardo la reserva");
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
-
-
     }
-
-
 }
