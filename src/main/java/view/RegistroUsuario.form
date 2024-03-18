@@ -43,6 +43,7 @@
         </constraints>
         <properties>
           <font name="SF Pro Display" size="18" style="0"/>
+          <verifyInputWhenFocusTarget value="true"/>
         </properties>
       </component>
       <component id="d6aff" class="javax.swing.JLabel">

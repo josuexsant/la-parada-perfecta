@@ -4,8 +4,11 @@ import controller.CtrlUsuario;
 import model.Log;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import java.awt.event.*;
 import java.sql.SQLException;
 
 public class RegistroUsuario extends JFrame {
@@ -52,6 +55,85 @@ public class RegistroUsuario extends JFrame {
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
+                }
+            }
+        });
+        nombretext.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
+                    JOptionPane.showMessageDialog(null, "Solo poner letras");
+
+                    e.consume(); // Consumir el evento para evitar que se escriba el carácter
+                }
+            }
+        });
+
+        apellidoPaternotext.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
+                    JOptionPane.showMessageDialog(null, "Solo poner letras");
+
+                    e.consume(); // Consumir el evento para evitar que se escriba el carácter
+                }
+            }
+        });
+        apellidoMaternotext.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
+                    JOptionPane.showMessageDialog(null, "Solo poner letras");
+
+                    e.consume(); // Consumir el evento para evitar que se escriba el carácter
+                }
+            }
+        });
+        ((AbstractDocument)telefonotext.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.insert(offset, string);
+
+                if (sb.toString().matches("\\d{0,10}")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.replace(offset, offset + length, text);
+
+                if (sb.toString().matches("\\d{0,10}")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
+        correotext.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                String correo = correotext.getText();
+                if (!correo.matches("^[\\w.-]+@[\\w.-]+\\.com$")) {
+                    JOptionPane.showMessageDialog(null, "Correo electrónico inválido");
+                    correotext.requestFocus();
+                }
+            }
+        });
+
+        passwordText.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                String password = new String(passwordText.getPassword());
+                if (password.length() != 8) {
+                    JOptionPane.showMessageDialog(null, "La contraseña debe tener 8 caracteres");
+                    passwordText.requestFocus();
                 }
             }
         });
