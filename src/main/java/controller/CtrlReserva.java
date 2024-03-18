@@ -20,12 +20,7 @@ public class CtrlReserva {
         idAutomovil = Automovil.getIdConMatricula(matricula);
         String fecha = "2024-" + "-" + mes + "-" + dia;
         reserva = new Reserva(0, idAutomovil, fecha, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
-        try {
-            reserva.guardarReserva();
-            Log.success("Se guardo la reserva");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        reserva.guardar();
     }
 
     //Esta funcion la uso en cancelar reserva para obtener una reserva por el indice de la opcion seleccionada
@@ -63,7 +58,7 @@ public class CtrlReserva {
 
     public void eliminarReservaSelccionada(int id) {
         Reserva reserva = new Reserva(id);
-        reserva.eliminarReserva(id);
+        reserva.eliminar(id);
     }
 
     public boolean modificarReserva(int idReserva, int dia, int mes, String horaInicio, String horaFin, String matricula) {

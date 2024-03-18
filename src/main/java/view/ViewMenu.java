@@ -1,11 +1,13 @@
 package view;
 
+import controller.CtrlUsuario;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class ViewMenu extends JFrame{
+public class ViewMenu extends JFrame {
     private JPanel PMenu;
     private JPanel pnMenu;
     private JButton crearReservaButton;
@@ -15,13 +17,15 @@ public class ViewMenu extends JFrame{
     private JButton modificarMatriculaButton;
     private JButton verMatriculaButton;
     private JButton crearReservaGarantizadaButton;
+    private JButton cerrarSesíonButton;
 
-    public ViewMenu(){
+    public ViewMenu() {
         setContentPane(pnMenu);
         CrearReserva();
         CancelarReserva();
         ModificarReserva();
         ReservaGarantizada();
+        setCerrarSesíonButton();
     }
 
     public void mostrarInicioMenuFrame() {
@@ -31,14 +35,14 @@ public class ViewMenu extends JFrame{
         setLocationRelativeTo(null);
     }
 
-    private void CrearReserva(){
+    private void CrearReserva() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ResgitroReserva RegistroFrame;
+                RegistroReserva RegistroFrame;
 
                 try {
-                    RegistroFrame = new ResgitroReserva();
+                    RegistroFrame = new RegistroReserva();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -55,7 +59,7 @@ public class ViewMenu extends JFrame{
         crearReservaButton.addActionListener(accion);
     }
 
-    private void CancelarReserva(){
+    private void CancelarReserva() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -79,7 +83,7 @@ public class ViewMenu extends JFrame{
         eliminarReservaButton.addActionListener(accion);
     }
 
-    private void ModificarReserva(){
+    private void ModificarReserva() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -102,7 +106,8 @@ public class ViewMenu extends JFrame{
         };
         modificarReservaButton.addActionListener(accion);
     }
-    private void ReservaGarantizada(){
+
+    private void ReservaGarantizada() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -118,5 +123,14 @@ public class ViewMenu extends JFrame{
             }
         };
         crearReservaGarantizadaButton.addActionListener(accion);
+    }
+
+    public void setCerrarSesíonButton() {
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        InicioSesion sesion = new InicioSesion();
+        if (ctrlUsuario.cerrarSesion()) {
+            JOptionPane.showMessageDialog(null, "Sesión cerrada");
+            sesion.mostrarInterfaz();
+        }
     }
 }

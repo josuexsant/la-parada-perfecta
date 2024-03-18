@@ -3,12 +3,10 @@ package controller;
 import model.Automovil;
 import model.Sesion;
 import model.Usuario;
-import view.ResgitroReserva;
+
 import java.util.LinkedList;
 
 public class CtrlAutomovil {
-    private static ResgitroReserva resgitroReserva;
-    private static Automovil automovil;
 
     public LinkedList<String> getMatriculas(){
         Sesion sesion = Sesion._instance();

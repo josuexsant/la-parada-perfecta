@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import javax.swing.*;
-public class ResgitroReserva extends JFrame {
+public class RegistroReserva extends JFrame {
 
     private JTextField txtnombreUsuario;
     private JLabel LabelnombreUsuario;
@@ -34,7 +34,7 @@ public class ResgitroReserva extends JFrame {
     private CtrlUsuario ctrlUsuario;
 
 
-    public ResgitroReserva() throws SQLException {
+    public RegistroReserva() throws SQLException {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
 

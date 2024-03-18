@@ -112,5 +112,8 @@ public class    CtrlUsuario {
         return nombreCompleto;
     }
 
-
+    public boolean cerrarSesion(){
+        sesion.setUsuario(null);
+        return true;
+    }
 }

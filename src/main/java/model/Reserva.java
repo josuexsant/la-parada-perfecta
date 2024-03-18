@@ -91,7 +91,7 @@ public class Reserva {
      * Este metodo guarda un objeto Reserva dentro de la base de datos
      * @return: true si se logro hacer el INSERT y false si no se logro hacer.
      */
-    public boolean guardarReserva() throws SQLException {
+    public boolean guardar() {
         try {
             dbManager = new DBManager();
             Connection conn = dbManager.getConnection();
@@ -124,7 +124,7 @@ public class Reserva {
         }
     }
 
-    public static boolean eliminarReserva(int idReserva) {
+    public static boolean eliminar(int idReserva) {
         dbManager = new DBManager();
         try (Connection conn = dbManager.getConnection()) {
             String query = "DELETE FROM reservaciones WHERE id = ?";
@@ -149,7 +149,6 @@ public class Reserva {
     public boolean eliminar() {
         try {
             dbManager = new DBManager();
-
             Connection conn = dbManager.getConnection();
             String query = "DELETE FROM reservaciones WHERE id = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);

@@ -39,7 +39,7 @@ public class Automovil {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.error(e.getMessage());
         }
 
     }
