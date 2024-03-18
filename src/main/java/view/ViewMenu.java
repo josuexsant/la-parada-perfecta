@@ -126,11 +126,18 @@ public class ViewMenu extends JFrame {
     }
 
     public void setCerrarSesíonButton() {
-        CtrlUsuario ctrlUsuario = new CtrlUsuario();
-        InicioSesion sesion = new InicioSesion();
-        if (ctrlUsuario.cerrarSesion()) {
-            JOptionPane.showMessageDialog(null, "Sesión cerrada");
-            sesion.mostrarInterfaz();
-        }
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CtrlUsuario ctrlUsuario = new CtrlUsuario();
+                InicioSesion sesion = new InicioSesion();
+                if (ctrlUsuario.cerrarSesion()) {
+                    JOptionPane.showMessageDialog(null, "Sesión cerrada");
+                    dispose();
+                    sesion.mostrarInterfaz();
+                }
+            }
+        };
+        cerrarSesíonButton.addActionListener(actionListener);
     }
 }

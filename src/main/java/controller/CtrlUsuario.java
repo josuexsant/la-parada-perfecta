@@ -113,7 +113,8 @@ public class    CtrlUsuario {
     }
 
     public boolean cerrarSesion(){
-        sesion.setUsuario(null);
+        Sesion._instance().setUsuario(null);
+        Log.warn("Sesión cerrada");
         return true;
     }
 }
