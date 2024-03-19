@@ -197,6 +197,67 @@ public class Reserva {
         }
     }
 
+    public boolean esFusionable(Reserva otraReserva){
+        if (this.idUsuario != otraReserva.getIdUsuario()){
+            return false;
+        }
+        if (this.idAutomovil != otraReserva.getIdAutomovil()){
+            return false;
+        }
+
+        if (seSuperpone(this,otraReserva)){
+            fusionarReserva(otraReserva);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean seSuperpone(Reserva reserva1,Reserva reserva2){
+        Timestamp inicio1 = Timestamp.valueOf(reserva1.getFecha() + " " + reserva1.getHoraInicio());
+        Timestamp fin1 =   Timestamp.valueOf(reserva1.getFecha() + " " + reserva1.getHoraFin());
+        Timestamp inicio2 = Timestamp.valueOf(reserva2.getFecha() + " " + reserva2.getHoraInicio());
+        Timestamp fin2 = Timestamp.valueOf(reserva2.getFecha() + " " + reserva2.getHoraFin());
+
+        return inicio1.before(fin2) && inicio2.before(fin1);
+    }
+
+
+    private void fusionarReserva(Reserva otraReserva){
+        Timestamp nuevaHoraInicio = Timestamp.valueOf(this.getFecha() + " " + this.getHoraInicio());
+        Timestamp nuevaHoraFin = Timestamp.valueOf(this.getFecha() + " " + otraReserva.getHoraInicio());
+
+        DBManager dbManager = new DBManager();
+
+        try (Connection conn = dbManager.getConnection()) {
+            String sql = "UPDATE reservaciones SET fecha_inicio = ?, fecha_fin = ? WHERE id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setTimestamp(1,nuevaHoraInicio);
+                pstmt.setTimestamp(2,nuevaHoraFin);
+                pstmt.setInt(3,this.getId());
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    Log.success("la reserva se fusiono extosamente.");
+                }else {
+                    Log.error("La reserva no se pudo fusionar.");
+                }
+
+
+
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            Log.error("No se pudo fusionar las reservas");
+
+        }
+
+    }
+
+
+
+
+
+
     public int getId() {
         return id;
     }
