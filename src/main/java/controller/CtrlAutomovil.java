@@ -29,7 +29,7 @@ public class CtrlAutomovil {
         return nombreCompleto;
     }
 
-    public void crearMatricula(int idMarca, String placa) {
+    public void agregarMatricula(int idMarca, String placa) {
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();

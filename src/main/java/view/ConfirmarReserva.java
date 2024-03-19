@@ -21,7 +21,6 @@ public class ConfirmarReserva extends JFrame {
         mostrarMenu();
     }
 
-
     public void mostrarReserva(String informacion) {
         labelInfo.setText("<html>" + informacion + "</html>");
         Log.info("Muestra la informaciòn de la reserva");

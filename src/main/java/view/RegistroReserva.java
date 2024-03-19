@@ -53,7 +53,6 @@ public class RegistroReserva extends JFrame {
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
-
     }
     public void MesSeleccionado(){
         MesBox.addActionListener(new ActionListener() {
