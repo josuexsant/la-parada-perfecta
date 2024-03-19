@@ -27,6 +27,8 @@ public class RegistroUsuario extends JFrame {
     public RegistroUsuario() {
         ctrlUsuario = new CtrlUsuario();
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         siguienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -142,13 +144,12 @@ public class RegistroUsuario extends JFrame {
     }
 
     public void mostrarInterfaz() {
-        JFrame frame = new JFrame("RegistroUsuario");
-        frame.setContentPane(new RegistroUsuario().registroUsuariopanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        setContentPane(new RegistroUsuario().registroUsuariopanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setVisible(true);
         Log.info("Se carga interfaz de registro de usuario");
     }
 
