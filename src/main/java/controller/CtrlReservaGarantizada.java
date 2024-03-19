@@ -12,11 +12,7 @@ public class CtrlReservaGarantizada {
         Cajon cajon = ctrlCajon.getCajonDisponible();
         int idCajon = cajon.getId();
         int idUsuario = Sesion._instance().getUsuario().getId();
-        try {
-            idAutomovil = Automovil.getIdConMatricula(matricula);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        idAutomovil = Automovil.getIdConMatricula(matricula);
         String fecha_inicio = "2024-" + mesinicio + "-" + diainicio;
         String fecha_fin = "2024-" + mesfin + "-" + diafin;
 

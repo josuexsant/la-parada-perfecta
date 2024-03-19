@@ -2,6 +2,7 @@ package model;
 
 import java.sql.*;
 import java.util.LinkedList;
+
 public class Automovil {
     private int id;
     private int idUsuario;
@@ -38,7 +39,7 @@ public class Automovil {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.error(e.getMessage());
         }
 
     }
@@ -92,50 +93,45 @@ public class Automovil {
         }
     }
 
-    public static int getIdConMatricula(String placa) throws SQLException {
-        Connection conn = dbManager.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        int idAutomovil = -1; // Valor por defecto si no se encuentra el automóvil
-
+    public static int getIdConMatricula(String placa) {
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
+        int idAutomovil = -1;
         try {
+            conn = dbManager.getConnection();
             String query = "SELECT id FROM automoviles WHERE placa = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, placa);
-
             rs = stmt.executeQuery();
-            if (rs.next()) {
+            if (rs.next())
                 idAutomovil = rs.getInt("id");
-            }
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            conn.close();
         }
-
         return idAutomovil;
     }
 
-    public static String obtenerMarca(int idMarca) throws SQLException{
+    public static String obtenerMarca(int idMarca) throws SQLException {
         String marca = null;
         Connection conn = dbManager.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        try{
+        try {
             String query = "SELECT m.nombre AS marca FROM automoviles a JOIN marcas m ON a.id_marca = m.id WHERE a.id_marca = ?";
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1,idMarca);
+            stmt.setInt(1, idMarca);
             rs = stmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 marca = rs.getString("marca");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return marca;
     }
-
 
 
     public int getId() {
