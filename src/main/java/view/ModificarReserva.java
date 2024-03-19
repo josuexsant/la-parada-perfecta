@@ -188,10 +188,7 @@ public class ModificarReserva extends JFrame{
                     dispose();
                     Log.success("Modificacion Exitosa");
                 }
-
-
             }
-
         };
         confirmarButton.addActionListener(accion);
     }
