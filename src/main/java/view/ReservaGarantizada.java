@@ -197,6 +197,6 @@ public class ReservaGarantizada extends JFrame {
             }
         };
         CancelarButton.addActionListener(accion);
-        dispose();
+
     }
 }

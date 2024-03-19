@@ -11,7 +11,7 @@ public class CtrlAutomovilTest {
         CtrlUsuario ctrlUsuario = new CtrlUsuario();
         ctrlUsuario.iniciarSesion("viridianabenitezg@gmail.com","1234");
         CtrlAutomovil ctrlAutomovil = new CtrlAutomovil();
-        ctrlAutomovil.crearMatricula(3, "VIR-13-08");
+        ctrlAutomovil.crearMatricula(1, "VIR-12-00");
     }
 
     @Test

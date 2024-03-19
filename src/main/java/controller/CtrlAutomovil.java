@@ -4,13 +4,11 @@ import model.Automovil;
 import model.Log;
 import model.Sesion;
 import model.Usuario;
-import view.ResgitroReserva;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class CtrlAutomovil {
-    private static ResgitroReserva resgitroReserva;
     private static Automovil automovil;
 
     public LinkedList<String> getMatriculas() {
@@ -56,21 +54,16 @@ public class CtrlAutomovil {
     }
 
     public boolean modificarAutomovil(int nuevoIdMarca, String nuevaPlaca, String matricula) {
-        try {
-            int idAutomovil = Automovil.getIdConMatricula(matricula);
-            Log.debug("id:" + idAutomovil);
-            automovil = new Automovil(idAutomovil);
-            if (automovil != null) {
-                automovil.setIdMarca(nuevoIdMarca);
-                Log.debug(String.valueOf(automovil.getIdMarca()));
-                automovil.setPlaca(nuevaPlaca);
-                Log.debug(automovil.getPlaca());
-                automovil.modificarAutomovil();
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        int idAutomovil = Automovil.getIdConMatricula(matricula);
+        Log.debug("id:" + idAutomovil);
+        automovil = new Automovil(idAutomovil);
+        if (automovil != null) {
+            automovil.setIdMarca(nuevoIdMarca);
+            Log.debug(String.valueOf(automovil.getIdMarca()));
+            automovil.setPlaca(nuevaPlaca);
+            Log.debug(automovil.getPlaca());
+            automovil.modificarAutomovil();
+        } else {
             return false;
         }
         return false;

@@ -2,6 +2,8 @@ package model;
 
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Automovil {
     private int id;
@@ -9,6 +11,9 @@ public class Automovil {
     private int idMarca;
     private String placa;
     private static DBManager dbManager = new DBManager();
+
+    public Automovil() {
+    }
 
     public Automovil(int idUsuario, int idMarca, String placa) {
 
@@ -33,7 +38,7 @@ public class Automovil {
                 }
             }
         } catch (SQLException e) {
-            Log.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 

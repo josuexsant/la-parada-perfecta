@@ -24,7 +24,7 @@ public class RegistroTDC extends  JFrame{
     private JComboBox<String> yearBox;
 
     public void mostrarInterfaz() {
-        setContentPane(new RegistroTDC().registroTarjeta);
+        setContentPane(registroTarjeta);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
@@ -45,7 +45,6 @@ public class RegistroTDC extends  JFrame{
         confirmar();
     }
 
-    //metodo para rellenar mesBox
     private void llenarMesBox() {
         for (int mes = 01; mes <= 12; mes++) {
             mesBox.addItem(String.valueOf(mes));
@@ -89,6 +88,7 @@ public class RegistroTDC extends  JFrame{
                     mostrarTdc.setVisible(true);
                     mostrarTdc.setSize(300, 250);
                     mostrarTdc.setLocationRelativeTo(null);
+
 
                     String informacionSeleccionada = construirInformacionSeleccionada(NombreSeleccionado, NumeroS, año, mes, CvvS, TDrir);
                     mostrarTdc.mostrarInformacionSeleccionada(informacionSeleccionada);

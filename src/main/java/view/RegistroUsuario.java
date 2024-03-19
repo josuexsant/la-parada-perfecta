@@ -43,15 +43,18 @@ public class RegistroUsuario extends JFrame {
 
                 if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
                     JOptionPane.showMessageDialog(null, "Registro Exitoso");
+
                     RegistroTDC registroTDC = new RegistroTDC();
                     registroTDC.mostrarInterfaz();
                     dispose();
+
                     Log.info("Registro de usuario");
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en el registro");
                 }
             }
         });
+
         nombretext.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -90,7 +93,6 @@ public class RegistroUsuario extends JFrame {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isDigit(c) || telefonotext.getText().length() > 10) {
-
                     e.consume(); // Consumir el evento para evitar que se escriba el carácter
                 }
             }
@@ -102,7 +104,6 @@ public class RegistroUsuario extends JFrame {
                 StringBuilder sb = new StringBuilder();
                 sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
                 sb.insert(offset, string);
-
                 if (sb.toString().matches("\\d{0,10}")) {
                     super.insertString(fb, offset, string, attr);
                 }
@@ -113,7 +114,6 @@ public class RegistroUsuario extends JFrame {
                 StringBuilder sb = new StringBuilder();
                 sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
                 sb.replace(offset, offset + length, text);
-
                 if (sb.toString().matches("\\d{0,10}")) {
                     super.replace(fb, offset, length, text, attrs);
                 }
@@ -144,7 +144,7 @@ public class RegistroUsuario extends JFrame {
     }
 
     public void mostrarInterfaz() {
-        setContentPane(new RegistroUsuario().registroUsuariopanel);
+        setContentPane(registroUsuariopanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
