@@ -188,7 +188,6 @@ public class ReservaGarantizada extends JFrame {
 
     public void cancelar() {
         menu = new ViewMenu();
-
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -197,6 +196,6 @@ public class ReservaGarantizada extends JFrame {
             }
         };
         CancelarButton.addActionListener(accion);
-        dispose();
+
     }
 }

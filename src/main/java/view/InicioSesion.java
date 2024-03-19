@@ -23,7 +23,7 @@ public class InicioSesion extends JFrame {
     public InicioSesion() {
         ctrlUsuario = new CtrlUsuario();
         menu = new ViewMenu();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         ingresarButton.addActionListener(new ActionListener() {
             @Override

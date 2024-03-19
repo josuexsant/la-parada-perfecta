@@ -53,7 +53,6 @@ public class RegistroReserva extends JFrame {
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
-
     }
     public void MesSeleccionado(){
         MesBox.addActionListener(new ActionListener() {
@@ -65,6 +64,7 @@ public class RegistroReserva extends JFrame {
             }
         });
     }
+
     public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
             HoraLlegada.addItem(String.format("%s:00",f));
