@@ -1,34 +1,40 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import controller.CtrlTDC;
 import model.Log;
 
-public class RegistroTDC {
-    private JPanel RegistroTarjeta;
-    private JTextField TxtNombre;
-    private JTextField TNumero;
-    private JTextField TCvv;
-    private JTextField TDir;
+public class RegistroTDC extends  JFrame{
+    private JPanel registroTarjeta;
+    private JTextField nombreText;
+    private JTextField numeroText;
+    private JTextField cvvText;
+    private JTextField direccionText;
     private JButton finalizarButton;
     private JComboBox<String> mesBox;
-    private JComboBox<String> Añobox;
+    private JComboBox<String> yearBox;
 
-    public void mostrarRegistroTDC() {
-        JFrame frame = new JFrame("RegistroTDC");
-        frame.setContentPane(new RegistroTDC().RegistroTarjeta);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
+    public void mostrarInterfaz() {
+        setContentPane(new RegistroTDC().registroTarjeta);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(true);
+        setVisible(true);
     }
 
     public RegistroTDC() {
         llenarMesBox();
-        llenarAñoBox();
+        llenarYearBox();
         mesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,7 +42,7 @@ public class RegistroTDC {
                 int mesSeleccionado = Integer.parseInt(mesString);
             }
         });
-        Confirmar();
+        confirmar();
     }
 
     //metodo para rellenar mesBox
@@ -46,9 +52,9 @@ public class RegistroTDC {
         }
     }
 
-    private void llenarAñoBox() {
+    private void llenarYearBox() {
         for (int año = 2024; año <= 2040; año++) {
-            Añobox.addItem(String.valueOf(año));
+            yearBox.addItem(String.valueOf(año));
         }
     }
 
@@ -57,17 +63,17 @@ public class RegistroTDC {
         return String.format("Nombre de usuario: %s <br><br> Numero : %s <br><br> Fecha de Expiracion: %s <br><br> CVV: %s <br><br> Direccion: %s <br><br>", nombre, Numero, fechaExp, Cvv, TDir);
     }
 
-    private void Confirmar() {
+    private void confirmar() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String NombreSeleccionado = TxtNombre.getText();
-                String NumeroS = TNumero.getText();
-                String CvvS = TCvv.getText();
-                String TDrir = TDir.getText();
-                String FechExp = (String) Añobox.getSelectedItem() + "-" + mesBox.getSelectedItem() + "-01";
+                String NombreSeleccionado = nombreText.getText();
+                String NumeroS = numeroText.getText();
+                String CvvS = cvvText.getText();
+                String TDrir = direccionText.getText();
+                String FechExp = (String) yearBox.getSelectedItem() + "-" + mesBox.getSelectedItem() + "-01";
                 String mes = (String) mesBox.getSelectedItem();
-                String año = (String) Añobox.getSelectedItem();
+                String año = (String) yearBox.getSelectedItem();
 
                 CtrlTDC controladorTDC = new CtrlTDC();
                 boolean registroExitoso = controladorTDC.registrarTDC(NumeroS, FechExp, CvvS, NombreSeleccionado, TDrir);
@@ -75,26 +81,88 @@ public class RegistroTDC {
                 if (registroExitoso) {
                     JOptionPane.showMessageDialog(null, "Registro de Tarjeta exitoso");
                     Log.info("Tarjeta registrada");
+
+                    dispose();
                     MostrarTDC mostrarTdc = new MostrarTDC();
                     mostrarTdc.setTitle("Confirmar Reserva");
                     mostrarTdc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     mostrarTdc.setVisible(true);
-                    mostrarTdc.setSize(900, 300);
+                    mostrarTdc.setSize(300, 250);
                     mostrarTdc.setLocationRelativeTo(null);
 
                     String informacionSeleccionada = construirInformacionSeleccionada(NombreSeleccionado, NumeroS, año, mes, CvvS, TDrir);
                     mostrarTdc.mostrarInformacionSeleccionada(informacionSeleccionada);
+
+
                     ViewMenu inicioMenuFrame = new ViewMenu();
-                    inicioMenuFrame.setTitle("Inicio");
-                    inicioMenuFrame.setVisible(true);
-                    inicioMenuFrame.setSize(300, 300);
-                    inicioMenuFrame.setLocationRelativeTo(null);
+                    inicioMenuFrame.mostrarInterfaz();
+                    dispose();
+
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al registrar la tarjeta");
                 }
             }
         };
+
+        nombreText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
+                    e.consume(); // Consumir el evento para evitar que se escriba el carácter
+                }
+            }
+        });
+
+        ((AbstractDocument)numeroText.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.insert(offset, string);
+
+                if (sb.toString().matches("\\d{0,16}")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.replace(offset, offset + length, text);
+
+                if (sb.toString().matches("\\d{0,16}")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
+        ((AbstractDocument)cvvText.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.insert(offset, string);
+
+                if (sb.toString().matches("\\d{0,13}")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.replace(offset, offset + length, text);
+
+                if (sb.toString().matches("\\d{0,3}")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
         finalizarButton.addActionListener(accion);
     }
 }

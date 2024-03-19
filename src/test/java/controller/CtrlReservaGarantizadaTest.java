@@ -2,16 +2,14 @@ package controller;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CtrlReservaGarantizadaTest {
-
+    CtrlUsuario ctrlUsuario;
+    CtrlReservaGarantizada ctrlReservaGarantizada;
     @Test
     void crearReservaGarantizada() {
-        CtrlUsuario ctrlUsuario = new CtrlUsuario();
-        ctrlUsuario.iniciarSesion("josuexsanta@example.com","1234");
-        CtrlReservaGarantizada ctrlReservaGarantizada = new CtrlReservaGarantizada();
-        ctrlReservaGarantizada.CrearReservaGarantizada(02,01,03,02,"ABC-12-12");
-
+        ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("josuexsanta@gmail.com","1234");
+        ctrlReservaGarantizada = new CtrlReservaGarantizada();
+        ctrlReservaGarantizada.crear(5,5,6,7,"ABC-12-12");
     }
 }

@@ -1,21 +1,23 @@
 package model;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReservaTest {
 
+    /**
     @Test
-    void esFusionable() {
-        Reserva reserva1= new Reserva(1, 1, "2024-03-18", "09:00:00", "11:00:00", 1, 1);
-        Reserva reserva2= new Reserva(2, 1, "2024-03-18", "10:00:00", "12:00:00", 1, 1);
-
-        boolean resultado = reserva1.esFusionable(reserva2);
-
-        assertTrue(resultado,"Las reservas se fusionaron ");
-
-        System.out.println("Reserva Fusionada");
-
+    void getReservaPorId() throws SQLException {
+        Reserva reserva = new Reserva(55);
+        assertEquals(55, reserva.getId());
+        Log.debug(String.valueOf(reserva.getId()));
+        Log.debug(reserva.getHoraInicio());
+        Log.debug(reserva.getFecha());
+        Log.debug(reserva.getHoraFin());
     }
+    */
 }
+

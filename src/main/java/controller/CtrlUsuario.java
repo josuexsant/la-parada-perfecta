@@ -5,11 +5,11 @@ import model.Usuario;
 import java.sql.SQLException;
 import static model.Usuario.usuarioExiste;
 
-public class CtrlUsuario {
+public class    CtrlUsuario {
     private static Usuario usuario;
     public Sesion sesion;
 
-    public boolean registrarUsuario(String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad) throws SQLException {
+    public boolean registrarUsuario(String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad){
         Usuario p = new Usuario(nombre, password, apellidoPaterno, apellidoPaterno, numeroTelefono, correoElectronico, idGenero, idCiudad);
 
         if (usuarioExiste(correoElectronico)) {
@@ -19,6 +19,7 @@ public class CtrlUsuario {
             p.setPassword(password);
             p.setApellidoPaterno(apellidoPaterno);
             p.setApellidoMaterno(apellidoMaterno);
+            // FIXME Crear una condiccional sobre el telefono para que acepte solamente numeros
             p.setNumeroTelefono(numeroTelefono);
             p.setIdGenero(idGenero);
             p.setIdCiudad(idCiudad);
@@ -49,7 +50,7 @@ public class CtrlUsuario {
      */
     public boolean iniciarSesion(String correoElectronico, String password) {
         try {
-            if (validarCorreoElectronico(correoElectronico)) {
+            if (validarEmail(correoElectronico)) {
                 if (validarPassword(password)) {
                     sesion = Sesion._instance();
                     sesion.setUsuario(usuario); //SESION ACTIVA
@@ -71,7 +72,7 @@ public class CtrlUsuario {
      * @param correoElectronico: Es un String que debe coicidir exactamente con el correo registrado en la base.
      * @throws SQLException
      */
-    public boolean validarCorreoElectronico(String correoElectronico) throws SQLException {
+    public boolean validarEmail(String correoElectronico) throws SQLException {
         if (usuarioExiste(correoElectronico)) {
             int idUsuario = Usuario.obtenerIdUsuario(correoElectronico);
             usuario = new Usuario(idUsuario);
@@ -103,5 +104,17 @@ public class CtrlUsuario {
         Log.error("Contraseña incorrecta");
         Log.trace("Usuario vuelve a null");
         return false;
+    }
+
+    public String getnombreC() throws SQLException {
+        int idUsuario = usuario.getId();
+        String nombreCompleto = usuario.nombreCompleto(idUsuario);
+        return nombreCompleto;
+    }
+
+    public boolean cerrarSesion(){
+        Sesion._instance().setUsuario(null);
+        Log.warn("Sesión cerrada");
+        return true;
     }
 }

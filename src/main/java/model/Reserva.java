@@ -2,10 +2,6 @@ package model;
 
 import java.sql.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 public class Reserva {
     private int id;
     private int idAutomovil;
@@ -14,7 +10,7 @@ public class Reserva {
     private String horaFin;
     private int idCajon;
     private int idUsuario;
-    private static CreateConnection createConn = new CreateConnection();
+    private static DBManager dbManager;
 
     public Reserva(int id, int idAutomovil, String fecha, String fechaInicio, String fechaFin, int idCajon, int idUsuario) {
         this.id = id;
@@ -26,27 +22,67 @@ public class Reserva {
         this.idUsuario = idUsuario;
     }
 
+    public Reserva(int idReserva) {
+        String query = "SELECT " +
+                "    r.id," +
+                "    r.id_automovil, " +
+                "    r.fecha, " +
+                "    r.fecha_inicio, " +
+                "    r.fecha_fin, " +
+                "    r.id_cajon, " +
+                "    r.id_usuario " +
+                "FROM " +
+                "    reservaciones r " +
+                "    JOIN informacion_usuario iu ON r.id_usuario = iu.id " +
+                "    JOIN automoviles au ON r.id_automovil = au.id " +
+                "    JOIN cajones ca ON r.id_cajon = ca.id " +
+                "WHERE " +
+                "    r.id = ?";
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, idReserva);
+            ResultSet resultSet = statement.executeQuery();
 
-    /**
-     * @author: Fernando Quiroz
-     * Con esta función deberia ser capaz de mostrar todas las placas del usuario en la interfaz
-     * @return
-     */
-    public List<String> mostrarPlacasPorIdUsuario(int idUsuario) throws SQLException {
-        List<String> placas = new ArrayList<>();
-        String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
+            if (resultSet.next()) {
+                this.id = resultSet.getInt("id");
+                this.idAutomovil = resultSet.getInt("id_automovil");
+                this.fecha = String.valueOf(resultSet.getDate("fecha"));
+                this.horaInicio = String.valueOf(resultSet.getTimestamp("fecha_inicio"));
+                this.horaFin = String.valueOf(resultSet.getTimestamp("fecha_fin"));
+                this.idCajon = resultSet.getInt("id_cajon");
+                this.idUsuario = resultSet.getInt("id_usuario");
+            }
+        } catch (SQLException e) {
+            Log.error(e.getMessage());
+        }
+    }
 
-        try (Connection conn = createConn.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, idUsuario);
+    public static LinkedList<Reserva> getReservas(int id_Usuario) {
+        String query = "SELECT * FROM reservaciones WHERE id_usuario = ?";
+        LinkedList<Reserva> reservaciones = new LinkedList<>();
+        try {
+            dbManager = new DBManager();
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id_Usuario);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                placas.add(rs.getString("placa"));
+                int idReserva = rs.getInt("id");
+                int idAutomovil = rs.getInt("id_automovil");
+                String fecha = rs.getString("fecha");
+                String fechaInicio = rs.getString("fecha_inicio");
+                String fechaFin = rs.getString("fecha_fin");
+                int idCajon = rs.getInt("id_cajon");
+
+                Reserva reserva = new Reserva(idReserva, idAutomovil, fecha, fechaInicio, fechaFin, idCajon, id_Usuario);
+                reservaciones.add(reserva);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return placas;
+        return reservaciones;
     }
 
     /**
@@ -54,11 +90,13 @@ public class Reserva {
      * Este metodo guarda un objeto Reserva dentro de la base de datos
      * @return: true si se logro hacer el INSERT y false si no se logro hacer.
      */
-    public boolean guardarReserva() throws SQLException {
-        Connection conn = createConn.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+    public boolean guardar() {
         try {
+            dbManager = new DBManager();
+            Connection conn = dbManager.getConnection();
+            PreparedStatement stmt;
+            ResultSet generatedKeys;
+
             String query = "INSERT INTO reservaciones (id_automovil, fecha, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, idAutomovil);
@@ -69,27 +107,93 @@ public class Reserva {
             stmt.setInt(6, idUsuario);
 
             int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Creating reserva failed, no rows affected.");
-            }
+            if (affectedRows == 0)
+                Log.error("No se guardo la reserva");
 
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    id = generatedKeys.getInt(1);
-                } else {
-                    throw new SQLException("Creating reserva failed, no ID obtained.");
-                }
-            }
+            generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next())
+                id = generatedKeys.getInt(1);
+
             Log.success("Se guardo la reserva con el ID: " + this.id);
+            conn.close();
             return true; // Se pudo guardar la reserva exitosamente
         } catch (SQLException e) {
-            e.printStackTrace();
-            Log.error("No se pudo guarda la reserva");
+            Log.error(e.getMessage());
             return false; // Hubo un error al guardar la reserva
-        } finally {
-            conn.close();
         }
+    }
 
+    public static boolean eliminar(int idReserva) {
+        dbManager = new DBManager();
+        try (Connection conn = dbManager.getConnection()) {
+            String query = "DELETE FROM reservaciones WHERE id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, idReserva);
+
+                int filasAfectadas = pstmt.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Reserva eliminada con éxito.");
+                    return true;
+                } else {
+                    System.out.println("No se encontró ninguna reserva con el ID especificado.");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar la reserva.", e);
+        }
+    }
+
+    public boolean eliminar() {
+        try {
+            dbManager = new DBManager();
+            Connection conn = dbManager.getConnection();
+            String query = "DELETE FROM reservaciones WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, this.id);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("Reserva eliminada con éxito.");
+                return true;
+            } else {
+                System.out.println("No se encontró ninguna reserva con el ID especificado.");
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar la reserva.", e);
+        }
+    }
+
+    public void modificar(int idUsuario, int idReserva) {
+        String query = "UPDATE reservaciones " +
+                "SET id_automovil = ?, " +
+                "fecha = ?, " +
+                "fecha_inicio = ?, " +
+                "fecha_fin = ?, " +
+                "id_cajon = ? " +
+                "WHERE id_usuario = ? AND id = ?";
+        try {
+            dbManager = new DBManager();
+            PreparedStatement pstmt;
+            Connection conn = dbManager.getConnection();
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idAutomovil);
+            pstmt.setString(2, fecha);
+            pstmt.setString(3, horaInicio);
+            pstmt.setString(4, horaFin);
+            pstmt.setInt(5, idCajon);
+            pstmt.setInt(6, idUsuario);
+            pstmt.setInt(7, idReserva);
+            pstmt.executeUpdate();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Log.error(ex.getMessage());
+        }
     }
 
     public boolean esFusionable(Reserva otraReserva){

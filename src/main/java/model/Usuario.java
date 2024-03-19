@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 public class Usuario {
     private int id;
@@ -17,7 +21,7 @@ public class Usuario {
     private String correoElectronico;
     private int idGenero;
     private int idCiudad;
-    private static CreateConnection createConn = new CreateConnection();
+    private static DBManager dbManager = new DBManager();
 
     public Usuario(String nombre, String password, String apellidoPaterno, String apellidoMaterno, String numeroTelefono, String correoElectronico, int idGenero, int idCiudad) {
         this.nombre = nombre;
@@ -28,6 +32,10 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.idGenero = idGenero;
         this.idCiudad = idCiudad;
+    }
+
+    public Usuario(){
+
     }
 
     public Usuario(int idUsuario) {
@@ -48,7 +56,7 @@ public class Usuario {
                 "    JOIN ciudades c ON iu.id_ciudades = c.id " +
                 "WHERE " +
                 "    iu.id = ?";
-        try (Connection conn = createConn.getConnection();
+        try (Connection conn = dbManager.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, idUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -145,7 +153,7 @@ public class Usuario {
         String passwordQuery = "INSERT INTO passwords (password, id_usuario) VALUES (?, ?);";
         String idUsuarioQuery = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?;";
 
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement infoPstmt = conn.prepareStatement(infoQuery);
         PreparedStatement passwordPstmt = conn.prepareStatement(passwordQuery);
         PreparedStatement idPstmt = conn.prepareStatement(idUsuarioQuery);
@@ -199,19 +207,24 @@ public class Usuario {
 
 
 
-    public static boolean usuarioExiste(String correoElectronico) throws SQLException {
+    public static boolean usuarioExiste(String correoElectronico){
         String query = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?";
-        Connection conn = createConn.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, correoElectronico);
-        ResultSet rs = pstmt.executeQuery();
-        return rs.next();
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, correoElectronico);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+        }catch (SQLException e){
+            Log.error(e.getMessage());
+            return false;
+        }
     }
 
 
     public static int obtenerIdUsuario(String correoElectronico) throws SQLException {
         String query = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?";
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, correoElectronico);
         ResultSet rs = pstmt.executeQuery();
@@ -221,6 +234,30 @@ public class Usuario {
             // Devolver un valor negativo (por ejemplo, -1) si no se encontró el usuario
             return -1;
         }
+    }
+
+    public String nombreCompleto(int id_Usuario) throws SQLException {
+        String nombreCompleto = null;
+        String query = "SELECT nombre, apellido_paterno, apellido_materno " +
+                "FROM informacion_usuario " +
+                "WHERE id = ?";
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id_Usuario);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                String nombre = rs.getString("nombre");
+                String apellidoPaterno = rs.getString("apellido_paterno");
+                String apellidoMaterno = rs.getString("apellido_materno");
+                nombreCompleto = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return nombreCompleto;
     }
 
 

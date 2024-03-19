@@ -2,12 +2,13 @@ package model;
 
 import java.sql.*;
 import java.util.LinkedList;
+
 public class Automovil {
     private int id;
     private int idUsuario;
     private int idMarca;
     private String placa;
-    private static CreateConnection createConn = new CreateConnection();
+    private static DBManager dbManager = new DBManager();
 
     public Automovil(int idUsuario, int idMarca, String placa) {
 
@@ -24,7 +25,7 @@ public class Automovil {
                 "placa" +
                 "FROM automoviles" +
                 "WHERE id_usuario = ?";
-        try (Connection conn = createConn.getConnection();
+        try (Connection conn = dbManager.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, idUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -38,7 +39,7 @@ public class Automovil {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.error(e.getMessage());
         }
 
     }
@@ -46,7 +47,7 @@ public class Automovil {
     public static LinkedList<String> getPlacas(int id_Usuario) {
         LinkedList<String> placas = new LinkedList<>();
         try {
-            Connection conn = createConn.getConnection();
+            Connection conn = dbManager.getConnection();
             String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id_Usuario);
@@ -63,7 +64,7 @@ public class Automovil {
     }
 
     public boolean guardarAutomovil() throws SQLException {
-        Connection conn = createConn.getConnection();
+        Connection conn = dbManager.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
@@ -92,29 +93,46 @@ public class Automovil {
         }
     }
 
-    public static int getIdConMatricula(String placa) throws SQLException {
-        Connection conn = createConn.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        int idAutomovil = -1; // Valor por defecto si no se encuentra el automóvil
-
+    public static int getIdConMatricula(String placa) {
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
+        int idAutomovil = -1;
         try {
+            conn = dbManager.getConnection();
             String query = "SELECT id FROM automoviles WHERE placa = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, placa);
+            rs = stmt.executeQuery();
+            if (rs.next())
+                idAutomovil = rs.getInt("id");
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idAutomovil;
+    }
 
+    public static String obtenerMarca(int idMarca) throws SQLException {
+        String marca = null;
+        Connection conn = dbManager.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT m.nombre AS marca FROM automoviles a JOIN marcas m ON a.id_marca = m.id WHERE a.id_marca = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, idMarca);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                idAutomovil = rs.getInt("id");
+                marca = rs.getString("marca");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            conn.close();
         }
-
-        return idAutomovil;
+        return marca;
     }
+
 
     public int getId() {
         return id;

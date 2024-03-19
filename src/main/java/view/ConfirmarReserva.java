@@ -1,6 +1,5 @@
 package view;
 
-import controller.CtrlReserva;
 import model.Log;
 
 import javax.swing.*;
@@ -19,20 +18,21 @@ public class ConfirmarReserva extends JFrame {
     public ConfirmarReserva(){
         setContentPane(CReserva);
         dispose();
-        BMenu();
+        mostrarMenu();
     }
 
-    public void mostrarInformacionSeleccionada(String informacion) {
+
+    public void mostrarReserva(String informacion) {
         labelInfo.setText("<html>" + informacion + "</html>");
         Log.info("Muestra la informaciòn de la reserva");
     }
 
-    public void BMenu(){
+    public void mostrarMenu(){
         menu = new ViewMenu();
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 Log.info("Se inicio vista Menù");
                 dispose();
             }

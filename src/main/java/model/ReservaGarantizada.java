@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReservaGaranti {
+public class ReservaGarantizada {
 
         private int id;
         private int idAutomovil;
@@ -14,9 +14,9 @@ public class ReservaGaranti {
         private  String fecha_fin;
         private int idCajon;
         private int idUsuario;
-        private static CreateConnection createConn = new CreateConnection();
+        private static DBManager dbManager = new DBManager();
 
-        public ReservaGaranti(int id, int idAutomovil, String fecha_inicio, String fecha_fin, int idCajon, int idUsuario) {
+        public ReservaGarantizada(int id, int idAutomovil, String fecha_inicio, String fecha_fin, int idCajon, int idUsuario) {
             this.id = id;
             this.idAutomovil = idAutomovil;
             this.fecha_inicio = fecha_inicio;
@@ -25,32 +25,12 @@ public class ReservaGaranti {
             this.idUsuario = idUsuario;
         }
 
-
-
-        public List<String> mostrarPlacasPorIdUsuario(int idUsuario) throws SQLException {
-            List<String> placas = new ArrayList<>();
-            String query = "SELECT placa FROM automoviles WHERE id_usuario = ?";
-
-            try (Connection conn = createConn.getConnection();
-                 PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-                pstmt.setInt(1, idUsuario);
-                ResultSet rs = pstmt.executeQuery();
-
-                while (rs.next()) {
-                    placas.add(rs.getString("placa"));
-                }
-            }
-            return placas;
-        }
-
-
         public boolean guardarReserva() throws SQLException {
-            Connection conn = createConn.getConnection();
+            Connection conn = dbManager.getConnection();
             PreparedStatement stmt = null;
             ResultSet rs = null;
             try {
-                String query = "INSERT INTO reservaciones (id_automovil, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?,?)";
+                String query = "INSERT INTO reservaciones_garantizadas (id_automovil, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?,?)";
                 stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 stmt.setInt(1, idAutomovil);
                 stmt.setString(2,fecha_inicio);

@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-public class CreateConnection {
+public class DBManager {
     static Properties props = new Properties();
     String hostname = null;
     String port = null;
@@ -17,7 +17,7 @@ public class CreateConnection {
     String username = null;
     String password = null;
 
-    public CreateConnection() {
+    public DBManager() {
         try (InputStream in = Files.newInputStream(FileSystems.getDefault().getPath(System.getProperty("user.dir") +
                 File.separator + "src/main/db_props.properties.properties"))) {
             props.load(in);
