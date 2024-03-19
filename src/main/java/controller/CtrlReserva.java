@@ -36,7 +36,19 @@ public class CtrlReserva {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
     }
+    public void fusionarReservas(Reserva reserva1, Reserva reserva2) {
+        if (reserva1.esFusionable(reserva2)) {
+            Log.info("Las reservas son fusionables.");
+        } else {
+            Log.info("Las reservas no son fusionables.");
+        }
+    }
+
+
+
 }
 
 
