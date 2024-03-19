@@ -11,10 +11,9 @@ public class ViewMenu extends JFrame{
     private JButton crearReservaButton;
     private JButton modificarReservaButton;
     private JButton eliminarReservaButton;
-    private JButton agregaMatriculaButton;
-    private JButton modificarMatriculaButton;
-    private JButton verMatriculaButton;
+    private JButton gestionMatriculasButton;
     private JButton crearReservaGarantizadaButton;
+    private JButton reservasList;
 
     public ViewMenu(){
         setContentPane(pnMenu);
@@ -22,6 +21,7 @@ public class ViewMenu extends JFrame{
         CancelarReserva();
         ModificarReserva();
         ReservaGarantizada();
+        GestionMatriculas();
     }
 
     public void mostrarInicioMenuFrame() {
@@ -118,5 +118,28 @@ public class ViewMenu extends JFrame{
             }
         };
         crearReservaGarantizadaButton.addActionListener(accion);
+    }
+
+    private void GestionMatriculas(){
+        ActionListener accion = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                GestionMatriculas GestionFrame;
+                try {
+                    GestionFrame = new GestionMatriculas();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                dispose();
+                GestionFrame.setTitle("Gestion de Matriculas");
+                GestionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                GestionFrame.setVisible(true);
+                GestionFrame.setSize(900, 300);
+                GestionFrame.setLocationRelativeTo(null);
+                dispose();
+
+            }
+        };
+        gestionMatriculasButton.addActionListener(accion);
     }
 }

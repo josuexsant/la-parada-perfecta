@@ -100,7 +100,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font size="18" style="0"/>
+        </properties>
       </component>
       <component id="98676" class="javax.swing.JLabel" binding="inicioDeSesiónLabel">
         <constraints>

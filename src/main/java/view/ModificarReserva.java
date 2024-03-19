@@ -67,7 +67,6 @@ public class ModificarReserva extends JFrame{
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
-
     }
 
     public void getMesBox() {

@@ -45,6 +45,7 @@ public class RegistroUsuario extends JFrame {
                         RegistroTDC registroTDC = new RegistroTDC();
                         registroTDC.mostrarInterfaz();
                         dispose();
+                        //Agregar el registro de una matricula
 
                         Log.info("Registro de usuario");
                     } else {

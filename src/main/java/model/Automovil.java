@@ -3,10 +3,10 @@ package model;
 import java.sql.*;
 import java.util.LinkedList;
 public class Automovil {
-    private int id;
+    private static int id;
     private int idUsuario;
     private int idMarca;
-    private String placa;
+    private static String placa;
     private static DBManager dbManager = new DBManager();
 
     public Automovil(int idUsuario, int idMarca, String placa) {
@@ -40,6 +40,10 @@ public class Automovil {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public Automovil() {
 
     }
 
@@ -136,9 +140,26 @@ public class Automovil {
         return marca;
     }
 
+    public static LinkedList<String> obtenerMarcas() {
+        LinkedList<String> marcas = new LinkedList<>();
+        try {
+            Connection conn = dbManager.getConnection();
+            String query = "SELECT nombre FROM marcas";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String marca = rs.getString("nombre");
+                marcas.add(marca);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return marcas;
+    }
 
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
@@ -154,7 +175,7 @@ public class Automovil {
         this.idMarca = idMarca;
     }
 
-    public String getPlaca() {
+    public static String getPlaca() {
         return placa;
     }
 
