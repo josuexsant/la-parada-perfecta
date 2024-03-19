@@ -9,7 +9,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.event.*;
-import java.sql.SQLException;
 
 public class RegistroUsuario extends JFrame {
     private JPanel registroUsuariopanel;
@@ -40,21 +39,14 @@ public class RegistroUsuario extends JFrame {
                 int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
                 int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
-                try {
-                    if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
-                        JOptionPane.showMessageDialog(null, "Registro Exitoso");
-
-                        dispose();
-                        RegistroTDC registroTDC = new RegistroTDC();
-                        registroTDC.mostrarInterfaz();
-                        dispose();
-
-                        Log.info("Registro de usuario");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error en el registro");
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
+                    JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                    RegistroTDC registroTDC = new RegistroTDC();
+                    registroTDC.mostrarInterfaz();
+                    dispose();
+                    Log.info("Registro de usuario");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error en el registro");
                 }
             }
         });
@@ -63,8 +55,7 @@ public class RegistroUsuario extends JFrame {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
-                    JOptionPane.showMessageDialog(null, "Solo poner letras");
-
+                    Log.warn("Caracter no válido");
                     e.consume(); // Consumir el evento para evitar que se escriba el carácter
                 }
             }
@@ -75,24 +66,35 @@ public class RegistroUsuario extends JFrame {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
-                    JOptionPane.showMessageDialog(null, "Solo poner letras");
-
+                    Log.warn("Caracter no válido");
                     e.consume(); // Consumir el evento para evitar que se escriba el carácter
                 }
             }
         });
+
         apellidoMaternotext.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
-                    JOptionPane.showMessageDialog(null, "Solo poner letras");
+                    Log.warn("Caracter no válido");
+                    e.consume(); // Consumir el evento para evitar que se escriba el carácter
+                }
+            }
+        });
+
+        telefonotext.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || telefonotext.getText().length() > 10) {
 
                     e.consume(); // Consumir el evento para evitar que se escriba el carácter
                 }
             }
         });
-        ((AbstractDocument)telefonotext.getDocument()).setDocumentFilter(new DocumentFilter() {
+
+        ((AbstractDocument) telefonotext.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
                 StringBuilder sb = new StringBuilder();
@@ -145,9 +147,8 @@ public class RegistroUsuario extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setVisible(true);
-        dispose();
         Log.info("Se carga interfaz de registro de usuario");
     }
 
@@ -162,16 +163,17 @@ public class RegistroUsuario extends JFrame {
     }
 
     private int obtenerIdCiudad(String ciudades) {
-        if ("Puebla".equals(ciudades)) {
-            return 20;
-        } else if ("México".equals(ciudades)) {
-            return 14;
-        } else if ("Veracruz".equals(ciudades)) {
-            return 29;
-        } else if ("Nayarit".equals(ciudades)) {
-            return 17;
-        } else {
-            return 0;
+        switch (ciudades) {
+            case "Puebla":
+                return 20;
+            case "México":
+                return 14;
+            case "Veracruz":
+                return 29;
+            case "Nayarit":
+                return 17;
+            default:
+                return 0;
         }
     }
 }

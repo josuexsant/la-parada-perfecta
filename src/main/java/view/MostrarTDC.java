@@ -24,7 +24,7 @@ public class MostrarTDC extends JFrame {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 Log.info("Se inicio vista Menù");
                 dispose();
             }

@@ -28,7 +28,7 @@ public class ViewMenu extends JFrame {
         setCerrarSesíonButton();
     }
 
-    public void mostrarInicioMenuFrame() {
+    public void mostrarInterfaz() {
         setTitle("Inicio");
         setVisible(true);
         setSize(300, 300);

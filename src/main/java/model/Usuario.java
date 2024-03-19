@@ -207,13 +207,18 @@ public class Usuario {
 
 
 
-    public static boolean usuarioExiste(String correoElectronico) throws SQLException {
+    public static boolean usuarioExiste(String correoElectronico){
         String query = "SELECT id FROM informacion_usuario WHERE correo_electronico = ?";
-        Connection conn = dbManager.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, correoElectronico);
-        ResultSet rs = pstmt.executeQuery();
-        return rs.next();
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, correoElectronico);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+        }catch (SQLException e){
+            Log.error(e.getMessage());
+            return false;
+        }
     }
 
 

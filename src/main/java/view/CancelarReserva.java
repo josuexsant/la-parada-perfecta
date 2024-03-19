@@ -61,7 +61,7 @@ public class CancelarReserva extends JFrame {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 dispose();
             }
         };
@@ -85,7 +85,7 @@ public class CancelarReserva extends JFrame {
                 int idReserva = reserva.getId();
                 ctrlReserva.eliminarReservaSelccionada(idReserva);
                 JOptionPane.showMessageDialog(null, "Cancelacion exitosa");
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 dispose();
                 Log.success("Cancelacion Exitosa");
                 }
