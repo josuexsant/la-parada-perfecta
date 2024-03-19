@@ -150,7 +150,7 @@ public class ModificarReserva extends JFrame{
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 dispose();
             }
         };
@@ -185,7 +185,7 @@ public class ModificarReserva extends JFrame{
                 } else {
                     ctrlReserva.modificarReserva(idReserva,diaSeleccionado,mesSeleccionado,horaLlegadaSeleccionada,horaSalidaSeleccionada,matriculaSeleccionada);
                     JOptionPane.showMessageDialog(null, "Modificación exitosa");
-                    menu.mostrarInicioMenuFrame();
+                    menu.mostrarInterfaz();
                     dispose();
                     Log.success("Modificacion Exitosa");
                 }

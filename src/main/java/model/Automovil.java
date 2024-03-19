@@ -2,8 +2,6 @@ package model;
 
 import java.sql.*;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Automovil {
     private int id;
@@ -11,9 +9,6 @@ public class Automovil {
     private int idMarca;
     private String placa;
     private static DBManager dbManager = new DBManager();
-
-    public Automovil() {
-    }
 
     public Automovil(int idUsuario, int idMarca, String placa) {
 
@@ -38,10 +33,9 @@ public class Automovil {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.error(e.getMessage());
         }
     }
-
 
     public static LinkedList<String> getPlacas(int id_Usuario) {
         LinkedList<String> placas = new LinkedList<>();
@@ -170,27 +164,23 @@ public class Automovil {
         }
     }
 
-    public static int getIdConMatricula(String placa) throws SQLException {
-        Connection conn = dbManager.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        int idAutomovil = -1; // Valor por defecto si no se encuentra el automóvil
-
+    public static int getIdConMatricula(String placa) {
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
+        int idAutomovil = -1;
         try {
+            conn = dbManager.getConnection();
             String query = "SELECT id FROM automoviles WHERE placa = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, placa);
-
             rs = stmt.executeQuery();
-            if (rs.next()) {
+            if (rs.next())
                 idAutomovil = rs.getInt("id");
-            }
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            conn.close();
         }
-
         return idAutomovil;
     }
 
@@ -213,7 +203,6 @@ public class Automovil {
         }
         return marca;
     }
-
 
     public int getId() {
         return id;

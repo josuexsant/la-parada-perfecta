@@ -1,7 +1,6 @@
 package controller;
 
 import model.Cajon;
-
 import java.util.LinkedList;
 
 public class CtrlCajon {

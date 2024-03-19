@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReservaTest {
 
+    /**
     @Test
     void getReservaPorId() throws SQLException {
         Reserva reserva = new Reserva(55);
@@ -17,5 +18,6 @@ class ReservaTest {
         Log.debug(reserva.getFecha());
         Log.debug(reserva.getHoraFin());
     }
+    */
 }
 

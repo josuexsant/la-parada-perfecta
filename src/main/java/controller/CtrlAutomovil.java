@@ -17,14 +17,8 @@ public class CtrlAutomovil {
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
-
-        LinkedList<String> placas = Automovil.getPlacas(idUsuario);
-
-        for (String placa : placas) {
-            System.out.println(placa);
-        }
-
-        return placas;
+        LinkedList<String> matriculas = Automovil.getPlacas(idUsuario);
+        return matriculas;
     }
 
     public String obtenerNombre() {

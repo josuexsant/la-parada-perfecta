@@ -1,6 +1,5 @@
 package view;
 
-import controller.CtrlReserva;
 import model.Log;
 
 import javax.swing.*;
@@ -33,7 +32,7 @@ public class ConfirmarReserva extends JFrame {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 Log.info("Se inicio vista Menù");
                 dispose();
             }

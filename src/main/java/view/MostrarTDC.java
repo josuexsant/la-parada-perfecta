@@ -19,11 +19,11 @@ public class MostrarTDC extends JFrame {
         Log.info("Registro de TDC con exito");
     }
     public void mostrarMenu(){
-        ViewMenu menu = new ViewMenu();
+        final ViewMenu menu = new ViewMenu();
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 Log.info("Se inicio vista Menù");
                 dispose();
             }
