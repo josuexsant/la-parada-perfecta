@@ -40,14 +40,14 @@ public class InicioSesion extends JFrame {
                 if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                     // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                     JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-                    menu.mostrarInicioMenuFrame();
+                    menu.mostrarInterfaz();
                     dispose();
                     Log.success("Sesion Exitosa");
                 } else {
                     if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
                         // Inicio de sesión exitoso, podrías abrir una nueva ventana o realizar otras acciones
                         JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-                        menu.mostrarInicioMenuFrame();
+                        menu.mostrarInterfaz();
                         dispose();
                         Log.success("Sesión Exitosa");
                     } else {

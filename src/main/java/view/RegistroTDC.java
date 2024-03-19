@@ -1,12 +1,19 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import controller.CtrlTDC;
 import model.Log;
 
-public class RegistroTDC {
+public class RegistroTDC extends  JFrame{
     private JPanel registroTarjeta;
     private JTextField nombreText;
     private JTextField numeroText;
@@ -17,14 +24,12 @@ public class RegistroTDC {
     private JComboBox<String> yearBox;
 
     public void mostrarInterfaz() {
-        JFrame frame = new JFrame("RegistroTDC");
-        frame.setContentPane(new RegistroTDC().registroTarjeta);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
-
+        setContentPane(new RegistroTDC().registroTarjeta);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(true);
+        setVisible(true);
     }
 
     public RegistroTDC() {
@@ -77,7 +82,7 @@ public class RegistroTDC {
                     JOptionPane.showMessageDialog(null, "Registro de Tarjeta exitoso");
                     Log.info("Tarjeta registrada");
 
-
+                    dispose();
                     MostrarTDC mostrarTdc = new MostrarTDC();
                     mostrarTdc.setTitle("Confirmar Reserva");
                     mostrarTdc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +95,8 @@ public class RegistroTDC {
 
 
                     ViewMenu inicioMenuFrame = new ViewMenu();
-                    inicioMenuFrame.mostrarInicioMenuFrame();
+                    inicioMenuFrame.mostrarInterfaz();
+                    dispose();
 
 
                 } else {
@@ -98,6 +104,65 @@ public class RegistroTDC {
                 }
             }
         };
+
+        nombreText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
+                    e.consume(); // Consumir el evento para evitar que se escriba el carácter
+                }
+            }
+        });
+
+        ((AbstractDocument)numeroText.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.insert(offset, string);
+
+                if (sb.toString().matches("\\d{0,16}")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.replace(offset, offset + length, text);
+
+                if (sb.toString().matches("\\d{0,16}")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
+        ((AbstractDocument)cvvText.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.insert(offset, string);
+
+                if (sb.toString().matches("\\d{0,13}")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                StringBuilder sb = new StringBuilder();
+                sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+                sb.replace(offset, offset + length, text);
+
+                if (sb.toString().matches("\\d{0,3}")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
         finalizarButton.addActionListener(accion);
     }
 }

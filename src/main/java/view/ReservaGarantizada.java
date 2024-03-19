@@ -1,12 +1,10 @@
 package view;
 
 import controller.CtrlAutomovil;
-import controller.CtrlReserva;
 import controller.CtrlReservaGarantizada;
 import model.Log;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -179,7 +177,7 @@ public class ReservaGarantizada extends JFrame {
                 } else {
                     ctrlReservaGarantizada.crear(diaInicio,mesInicio,diaFin,mesFin,matricula);
                     JOptionPane.showMessageDialog(null,"Reserva garantizada creada");
-                    menu.mostrarInicioMenuFrame();
+                    menu.mostrarInterfaz();
                     dispose();
                 }
             }
@@ -194,7 +192,7 @@ public class ReservaGarantizada extends JFrame {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInicioMenuFrame();
+                menu.mostrarInterfaz();
                 dispose();
             }
         };
