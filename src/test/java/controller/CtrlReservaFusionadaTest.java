@@ -16,5 +16,6 @@ class CtrlReservaFusionadaTest {
         Reserva reserva2 = new Reserva(2, 1, "2024-03-18", "10:00:00", "12:00:00", 1, 1);
 
         assertTrue(reserva1.esFusionable(reserva2), "Las reservas deberían ser fusionables");
+
     }
 }

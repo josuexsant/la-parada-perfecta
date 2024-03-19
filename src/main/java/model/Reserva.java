@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.util.LinkedList;
 
 public class Reserva {
     private int id;
@@ -225,9 +226,9 @@ public class Reserva {
         Timestamp nuevaHoraInicio = Timestamp.valueOf(this.getFecha() + " " + this.getHoraInicio());
         Timestamp nuevaHoraFin = Timestamp.valueOf(this.getFecha() + " " + otraReserva.getHoraInicio());
 
-        CreateConnection createConnection = new CreateConnection();
+        DBManager dbManager = new DBManager();
 
-        try (Connection conn = createConnection.getConnection()) {
+        try (Connection conn = dbManager.getConnection()) {
             String sql = "UPDATE reservaciones SET fecha_inicio = ?, fecha_fin = ? WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setTimestamp(1,nuevaHoraInicio);

@@ -85,6 +85,7 @@ public class CtrlReserva {
             return false;
         }
     }
+
     public void fusionarReservas(Reserva reserva1, Reserva reserva2) {
         if (reserva1.esFusionable(reserva2)) {
             Log.info("Las reservas son fusionables.");
@@ -92,3 +93,4 @@ public class CtrlReserva {
             Log.info("Las reservas no son fusionables.");
         }
     }
+}
