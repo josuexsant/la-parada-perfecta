@@ -142,7 +142,7 @@ public class Reserva {
             }
         }catch (SQLException e){
             e.printStackTrace();
-            Log.error("Error al fusionar reservas");
+            Log.error("No se pudo fusionar las reservas");
 
         }
 
