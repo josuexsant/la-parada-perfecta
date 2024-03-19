@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import controller.CtrlTDC;
 import model.Log;
 
-public class RegistroTDC {
+public class RegistroTDC extends  JFrame{
     private JPanel registroTarjeta;
     private JTextField nombreText;
     private JTextField numeroText;
@@ -24,13 +24,12 @@ public class RegistroTDC {
     private JComboBox<String> yearBox;
 
     public void mostrarInterfaz() {
-        JFrame frame = new JFrame("RegistroTDC");
-        frame.setContentPane(new RegistroTDC().registroTarjeta);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
+        setContentPane(new RegistroTDC().registroTarjeta);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(true);
+        setVisible(true);
     }
 
     public RegistroTDC() {
@@ -83,7 +82,7 @@ public class RegistroTDC {
                     JOptionPane.showMessageDialog(null, "Registro de Tarjeta exitoso");
                     Log.info("Tarjeta registrada");
 
-
+                    dispose();
                     MostrarTDC mostrarTdc = new MostrarTDC();
                     mostrarTdc.setTitle("Confirmar Reserva");
                     mostrarTdc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,6 +96,7 @@ public class RegistroTDC {
 
                     ViewMenu inicioMenuFrame = new ViewMenu();
                     inicioMenuFrame.mostrarInterfaz();
+                    dispose();
 
 
                 } else {
