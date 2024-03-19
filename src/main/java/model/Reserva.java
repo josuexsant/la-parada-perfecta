@@ -182,6 +182,7 @@ public class Reserva {
             throw new RuntimeException("Error al eliminar la reserva.", e);
         }
     }
+
     public boolean eliminar() {
         try {
             Connection conn = dbManager.getConnection();

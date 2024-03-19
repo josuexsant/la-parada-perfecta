@@ -18,7 +18,6 @@ public class MostrarTDC extends JFrame {
         labelInfo.setText("<html>" + informacion + "</html>");
         Log.info("Registro de TDC con exito");
     }
-
     public void mostrarMenu(){
         ViewMenu menu = new ViewMenu();
         ActionListener accion = new ActionListener() {

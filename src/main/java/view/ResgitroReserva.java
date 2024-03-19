@@ -65,6 +65,7 @@ public class ResgitroReserva extends JFrame {
             }
         });
     }
+
     public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
             HoraLlegada.addItem(String.format("%s:00",f));
