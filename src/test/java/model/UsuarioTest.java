@@ -12,14 +12,10 @@ class UsuarioTest {
     @Test
     @DisplayName("Existencia de cuenta asociada con correo")
     void usuarioExiste() {
-        try{
-            //Correo electronico asociado a cuenta
-            assertEquals(true,Usuario.usuarioExiste("josuexsanta@example.com"));
-            //Correo electronico no asociado a cuenta
-            assertEquals(false,Usuario.usuarioExiste("un_correp_no_registrado@gmail.com"));
-    }catch (SQLException e){
-        e.printStackTrace();
-        }
+        //Correo electronico asociado a cuenta
+        assertEquals(true,Usuario.usuarioExiste("josuexsanta@example.com"));
+        //Correo electronico no asociado a cuenta
+        assertEquals(false,Usuario.usuarioExiste("un_correp_no_registrado@gmail.com"));
     }
 
     @Test
