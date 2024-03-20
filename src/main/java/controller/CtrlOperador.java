@@ -5,7 +5,7 @@ import model.Sesion;
 import java.sql.SQLException;
 import static model.Operador.operadorExiste;
 
-public class ctrlOperador {
+public class CtrlOperador {
     private static Operador operador;
     public Sesion sesion;
 

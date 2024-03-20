@@ -1,5 +1,6 @@
 package view;
 
+import controller.CtrlOperador;
 import controller.CtrlUsuario;
 import model.Log;
 
@@ -33,7 +34,7 @@ public class InicioSesion extends JFrame {
                 String password = new String(passwordText.getPassword());
 
                 // Obliga al usuario a ingresar datos en la ventana de inicio de sesión
-                if(correoElectronico.isEmpty() || password.isEmpty()){
+                if (correoElectronico.isEmpty() || password.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Ingrese un correo ó contraseña validos");
                     return;
                 }
@@ -66,6 +67,26 @@ public class InicioSesion extends JFrame {
                 RegistroUsuario registroUsuario = new RegistroUsuario();
                 registroUsuario.mostrarInterfaz();
                 dispose();
+            }
+        });
+
+        soyOperadorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CtrlOperador ctrlOperador = new CtrlOperador();
+                if (emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Ingrese un correo ó contraseña validos");
+                    return;
+                }
+
+                if (ctrlOperador.iniciarSesion(emailText.getText(), passwordText.getText())) {
+
+                    AsignarTarifa asignarTarifa = new AsignarTarifa();
+                    asignarTarifa.mostrarInterfaz();
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Datos incorrectos");
+                }
             }
         });
     }

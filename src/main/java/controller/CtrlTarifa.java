@@ -20,12 +20,12 @@ public class CtrlTarifa {
 
 
     //visualizar
-    public Map<String, Double> verTarifas() throws SQLException {
+    public Map<String, Double> verTarifas()  {
         return Tarifa.visualizarTarifas();
     }
 
 
-    public boolean modificarTarifa(float precio, String concepto) throws SQLException {
+    public boolean modificarTarifa(float precio, String concepto)  {
         Tarifa tarifa = new Tarifa(concepto);
 
         // Verificar si se pudo crear una instancia Tarifa
@@ -44,7 +44,4 @@ public class CtrlTarifa {
             return false;
         }
     }
-
-
-
 }

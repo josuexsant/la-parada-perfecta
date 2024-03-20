@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-
 public class Tarifa {
     int id;
     float precio;
@@ -47,7 +46,6 @@ public class Tarifa {
     }
 
 
-
     // Método para obtener la lista de conceptos
     public static List<Concepto> getConceptos() {
         List<Concepto> conceptos = new ArrayList<>();
@@ -58,18 +56,21 @@ public class Tarifa {
     }
 
     //visualizar
-    public static Map<String, Double> visualizarTarifas() throws SQLException {
+    public static Map<String, Double> visualizarTarifas() {
         Map<String, Double> tarifasMap = new HashMap<>();
 
         String query = "SELECT concepto, precio FROM Tarifa";
-        try (Connection conn = dbManager.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement statement = conn.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String concepto = resultSet.getString("concepto");
                 double precio = resultSet.getDouble("precio");
                 tarifasMap.put(concepto, precio);
             }
+        } catch (SQLException e) {
+            Log.error(e.getMessage());
         }
 
         return tarifasMap;
@@ -97,11 +98,6 @@ public class Tarifa {
             }
         }
     }
-
-
-
-
-
 
 
     // Getters y setters
