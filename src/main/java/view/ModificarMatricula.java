@@ -25,15 +25,19 @@ public class ModificarMatricula extends JFrame{
     private CtrlAutomovil ctrlAutomovil;
     private Automovil automovil;
 
-    public ModificarMatricula() throws SQLException {
-        gestionMatriculas= new GestionMatriculas();
+    private String matriculaSeleccionada;
+
+    public ModificarMatricula(String matriculaSeleccionada) throws SQLException {
+        this.matriculaSeleccionada = matriculaSeleccionada;
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(modificarPanel);
         obtenerMarcas();
-       // modificar();
+        setMatriculaField();
+        modificar();
     }
-
-
+    public void setMatriculaField() {
+        matriculaField.setText(matriculaSeleccionada);
+    }
 
     public void obtenerMarcas() throws SQLException {
         LinkedList<String> marcas = ctrlAutomovil.getMarcas();
@@ -41,27 +45,24 @@ public class ModificarMatricula extends JFrame{
             marcaComboBox.addItem(marca);
         }
     }
-
-//    public void modificar(){
-//        ctrlAutomovil = new CtrlAutomovil();
-//        automovil = new Automovil();
-//        modificarButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String matriculaNueva = (String) matriculaText.getText();
-//                int marcaSeleccionada = obtenerIdMarca((String) marcaComboBox.getSelectedItem());
-//                //String matriculaSeleccionada =
-//
-//                if(marcaSeleccionada == 0){
-//                    Log.error("Por favor, seleccione una marca");
-//                }else{
-//                    ctrlAutomovil.modificarMatricula(marcaSeleccionada, matriculaNueva, matriculaSeleccionada);
-//                    JOptionPane.showMessageDialog(null, "Registro exitoso");
-//                    dispose();
-//                }
-//            }
-//        });
-//    }
+    public void modificar(){
+        ctrlAutomovil = new CtrlAutomovil();
+        automovil = new Automovil();
+        modificarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String matriculaNueva = (String) matriculaText.getText();
+                int marcaSeleccionada = obtenerIdMarca((String) marcaComboBox.getSelectedItem());
+                if(marcaSeleccionada == 0){
+                    Log.error("Por favor, seleccione una marca");
+                }else{
+                    ctrlAutomovil.modificarMatricula(marcaSeleccionada, matriculaNueva, matriculaSeleccionada);
+                    JOptionPane.showMessageDialog(null, "Modificacion exitosa");
+                    dispose();
+                }
+            }
+        });
+    }
     private int obtenerIdMarca(String marca){
         switch(marca){
             case "Toyota":
@@ -88,7 +89,4 @@ public class ModificarMatricula extends JFrame{
                 return 0;
         }
     }
-
-
-
 }

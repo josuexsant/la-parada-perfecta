@@ -204,7 +204,6 @@ public class Reserva {
         if (this.idAutomovil != otraReserva.getIdAutomovil()){
             return false;
         }
-
         if (seSuperpone(this,otraReserva)){
             fusionarReserva(otraReserva);
             return true;
