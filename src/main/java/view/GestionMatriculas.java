@@ -25,6 +25,7 @@ public class GestionMatriculas extends JFrame {
     public GestionMatriculas() throws SQLException {
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(gestionMatriculasPanel);
+        setLocationRelativeTo(null);
         Modificar();
         AgregarMatricula();
         llenarMatriculas();

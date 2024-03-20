@@ -24,6 +24,7 @@ public class RegistroMatricula extends JFrame{
     public RegistroMatricula() throws SQLException {
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(registroPanel);
+        setLocationRelativeTo(null);
         obtenerMarcas();
         registrar();
     }
@@ -43,10 +44,13 @@ public class RegistroMatricula extends JFrame{
 
                 if(marcaSeleccionada == 0){
                     Log.error("Por favor, seleccione una marca");
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una marca");
                 }else{
                     ctrlAutomovil.agregarMatricula(marcaSeleccionada, matriculaNueva);
                         JOptionPane.showMessageDialog(null, "Registro exitoso");
-                        dispose();
+                         ViewMenu menu = new ViewMenu();
+                         menu.mostrarInterfaz();
+                         dispose();
                     }
             }
         });

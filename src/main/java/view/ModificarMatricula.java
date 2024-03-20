@@ -31,6 +31,7 @@ public class ModificarMatricula extends JFrame{
         this.matriculaSeleccionada = matriculaSeleccionada;
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(modificarPanel);
+        setLocationRelativeTo(null);
         obtenerMarcas();
         setMatriculaField();
         modificar();
@@ -58,6 +59,9 @@ public class ModificarMatricula extends JFrame{
                 }else{
                     ctrlAutomovil.modificarMatricula(marcaSeleccionada, matriculaNueva, matriculaSeleccionada);
                     JOptionPane.showMessageDialog(null, "Modificacion exitosa");
+
+                    ViewMenu menu = new ViewMenu();
+                    menu.mostrarInterfaz();
                     dispose();
                 }
             }
