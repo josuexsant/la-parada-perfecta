@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ctrlOperadorTest {
-    ctrlOperador ctrlOperador = new ctrlOperador();
+    CtrlOperador ctrlOperador = new CtrlOperador();
     Operador operador = new Operador(1);
     @Test
     void iniciarSesion() throws SQLException {
-        ctrlOperador operador = new ctrlOperador();
+        CtrlOperador operador = new CtrlOperador();
 
         boolean resultado =  operador.validarEmail("jfqc@gmail.com");
         assertTrue(resultado);
@@ -20,7 +20,7 @@ class ctrlOperadorTest {
 
     @Test
     void validarEmail() throws SQLException {
-        ctrlOperador operador = new ctrlOperador();
+        CtrlOperador operador = new CtrlOperador();
         boolean resultado =  operador.validarEmail("jfqc@gmail.com");
         assertTrue(resultado);
     }

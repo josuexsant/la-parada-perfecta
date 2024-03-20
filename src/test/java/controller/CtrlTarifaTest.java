@@ -1,8 +1,5 @@
 package controller;
-import model.Operador;
 import model.Concepto;
-import model.Log;
-import model.Tarifa;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -30,7 +27,7 @@ class CtrlTarifaTest {
 
     @Test
     void modificarTarifa() throws SQLException {
-        ctrlOperador ctrlOperador = new ctrlOperador();
+        CtrlOperador ctrlOperador = new CtrlOperador();
         ctrlOperador.iniciarSesion("jfqc@gmail.com", "1234");
         float precio =  120;
         String concepto = "RESERVADO";
