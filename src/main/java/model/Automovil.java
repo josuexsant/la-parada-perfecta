@@ -112,10 +112,9 @@ public class Automovil {
 
     public static boolean eliminarMatricula(String placa) {
         try (Connection conn = dbManager.getConnection()) {
-            String query = "DELETE FROM automoviles WHERE placa = ?";
+            String query = "DELETE FROM automoviles WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, placa);
-
+                pstmt.setInt(1, getIdConMatricula(placa));
                 int filasAfectadas = pstmt.executeUpdate();
 
                 if (filasAfectadas > 0) {
@@ -127,7 +126,8 @@ public class Automovil {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar la matrícula.", e);
+            Log.error(e.getMessage());
+            return false;
         }
     }
 
