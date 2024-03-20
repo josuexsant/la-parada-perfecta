@@ -3,6 +3,7 @@ import controller.CtrlAutomovil;
 import controller.CtrlReserva;
 import controller.CtrlUsuario;
 import model.Log;
+import model.Reserva;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +33,7 @@ public class RegistroReserva extends JFrame {
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
     private CtrlUsuario ctrlUsuario;
-
+    private Reserva reserva;
 
     public RegistroReserva() throws SQLException {
         ctrlReserva = new CtrlReserva();
@@ -64,21 +65,18 @@ public class RegistroReserva extends JFrame {
             }
         });
     }
-
     public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
             HoraLlegada.addItem(String.format("%s:00",f));
             HoraSalida.addItem(String.format("%s:00", f));
         }
     }
-
     public void RegistroFecha() {
         MesBox.removeAllItems();
         for (int mes = 1; mes <= 12; mes++) {
             MesBox.addItem(Integer.toString(mes));
         }
     }
-
     public void RegistroDia(int mes) {
         DiaBox.removeAllItems();
         switch (mes) {
@@ -99,7 +97,6 @@ public class RegistroReserva extends JFrame {
                 break;
         }
     }
-
     private double calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
@@ -108,12 +105,10 @@ public class RegistroReserva extends JFrame {
         double costoTotal = horasSeleccionadas * tarifaPorHora;
         return costoTotal;
     }
-
     public void establecerNombre(){
         ctrlAutomovil.obtenerNombre();
         nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
     }
-
     public void Cancelar(){
 
         menu = new ViewMenu();
@@ -128,7 +123,6 @@ public class RegistroReserva extends JFrame {
         CancelarButton.addActionListener(accion);
         dispose();
     }
-
     private void Confirmar() {
         ActionListener accion = new ActionListener() {
             @Override
@@ -167,6 +161,4 @@ public class RegistroReserva extends JFrame {
         };
         confirmarButton.addActionListener(accion);
     }
-
-
 }

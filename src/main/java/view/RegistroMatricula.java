@@ -2,7 +2,6 @@ package view;
 import controller.CtrlAutomovil;
 import model.Log;
 
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,19 +23,16 @@ public class RegistroMatricula extends JFrame{
 
     public RegistroMatricula() throws SQLException {
         ctrlAutomovil = new CtrlAutomovil();
-        gestionMatriculas = new GestionMatriculas();
         setContentPane(registroPanel);
         obtenerMarcas();
         registrar();
     }
-
     public void obtenerMarcas() throws SQLException {
         LinkedList<String> marcas = ctrlAutomovil.getMarcas();
         for (String marca : marcas) {
             marcaComboBox.addItem(marca);
         }
     }
-
     public void registrar(){
         ctrlAutomovil = new CtrlAutomovil();
         registrarButton.addActionListener(new ActionListener() {
@@ -55,7 +51,6 @@ public class RegistroMatricula extends JFrame{
             }
         });
     }
-
     private int obtenerIdMarca(String marca){
         switch(marca){
             case "Toyota":
@@ -82,7 +77,4 @@ public class RegistroMatricula extends JFrame{
                 return 0;
         }
     }
-
-
-
 }

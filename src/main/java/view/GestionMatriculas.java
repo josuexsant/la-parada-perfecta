@@ -54,22 +54,21 @@ public class GestionMatriculas extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 ModificarMatricula ModificarFrame;
                 try {
-                    ModificarFrame = new ModificarMatricula();
+                    ModificarFrame = new ModificarMatricula((String) matriculasComboBox.getSelectedItem());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                dispose();
+                ModificarFrame.setLocationRelativeTo(null);
                 ModificarFrame.setTitle("Agregar matrícula");
                 ModificarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 ModificarFrame.setVisible(true);
                 ModificarFrame.setSize(900, 300);
-                ModificarFrame.setLocationRelativeTo(null);
                 dispose();
             }
+
         };
         modificarButton.addActionListener(accion);
     }
-
     public void AgregarMatricula(){
         ActionListener accion = new ActionListener() {
             @Override
@@ -91,7 +90,6 @@ public class GestionMatriculas extends JFrame {
         };
         agregarMatriculaButton.addActionListener(accion);
     }
-
     public void eliminarMatricula(){
         ActionListener accion = new ActionListener() {
             @Override
@@ -107,8 +105,4 @@ public class GestionMatriculas extends JFrame {
         };
         eliminarButton.addActionListener(accion);
     }
-
-
-
-
 }
