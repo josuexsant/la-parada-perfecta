@@ -1,75 +1,61 @@
 package view;
-
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
+import controller.CtrlUsuario;
 import model.Log;
-import model.Reserva;
-
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import javax.swing.*;
+public class ResgitroReserva extends JFrame {
 
-
-
-public class ModificarReserva extends JFrame{
-    private JPanel ModificarR;
-    private JPanel JPanelTitulo;
-    private JLabel Titulo;
-    private JList JListReserva;
-    private JComboBox<String>  DiaBox;
-    private JComboBox<String>  MesBox;
-    private JComboBox<String>  HoraLlegada;
-    private JComboBox<String>  HoraSalida;
-    private JComboBox<String>  MatriculaBox;
-    private JButton CancelarButton;
-    private JButton confirmarButton;
+    private JTextField txtnombreUsuario;
+    private JLabel LabelnombreUsuario;
     private JLabel LabelHLlegada;
+    private JComboBox<String> HoraLlegada;
+    private JPanel ReservaP;
+    private JPanel LabelTitulo;
+    private JLabel LabelHoraSalida;
+    private JComboBox<String> HoraSalida;
+    private JComboBox<String> DiaBox;
     private JLabel LabelDia;
     private JLabel MesLabel;
-    private JLabel LabelHoraSalida;
-    private JLabel LabelnombreUsuario;
+    private JComboBox<String> MatriculaBox;
+    private JButton confirmarButton;
+    private JComboBox<String> MesBox;
     private JLabel nombreUsuario;
+    private JButton CancelarButton;
+    private JLabel LabelHSalida;
     private ViewMenu menu;
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
+    private CtrlUsuario ctrlUsuario;
 
-    public ModificarReserva() throws SQLException {
+
+    public ResgitroReserva() throws SQLException {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
 
-        setContentPane(ModificarR);
-        getHoraBox();
-        getMesBox();
-        getFechaBox();
-        llenarMatriculas();
-        setNombreField();
+        setContentPane(ReservaP);
+        RegistroHora();
+        MesSeleccionado();
+        RegistroFecha();
+        llenarPlacaAutomovil();
+        establecerNombre();
         Confirmar();
         Cancelar();
-        InsertarReservas();
     }
-    public void InsertarReservas() throws SQLException {
-        // Obtener el modelo de lista actual de JListReserva
-        DefaultListModel<String> listModel = (DefaultListModel<String>) JListReserva.getModel();
 
-        // Obtener las reservas del controlador
-        LinkedList<String> reservas = ctrlReserva.obtenerReservas();
-
-        // Agregar cada reserva al modelo de lista
-        for (String reserva : reservas) {
-            listModel.addElement(reserva);
-        }
-    }
-    public void llenarMatriculas() {
+    public void llenarPlacaAutomovil(){
         LinkedList<String> placas = ctrlAutomovil.getMatriculas();
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
-    }
 
-    public void getMesBox() {
+    }
+    public void MesSeleccionado(){
         MesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,15 +65,14 @@ public class ModificarReserva extends JFrame{
             }
         });
     }
-
-    public void getHoraBox() {
+    public void RegistroHora(){
         for (int f = 0; f <= 23; f++) {
-            HoraLlegada.addItem(String.format("%s:00", f));
+            HoraLlegada.addItem(String.format("%s:00",f));
             HoraSalida.addItem(String.format("%s:00", f));
         }
     }
 
-    public void getFechaBox() {
+    public void RegistroFecha() {
         MesBox.removeAllItems();
         for (int mes = 1; mes <= 12; mes++) {
             MesBox.addItem(Integer.toString(mes));
@@ -97,21 +82,12 @@ public class ModificarReserva extends JFrame{
     public void RegistroDia(int mes) {
         DiaBox.removeAllItems();
         switch (mes) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
                 for (int f = 1; f <= 31; f++) {
                     DiaBox.addItem(Integer.toString(f));
                 }
                 break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
+            case 4: case 6: case 9: case 11:
                 for (int f = 1; f <= 30; f++) {
                     DiaBox.addItem(Integer.toString(f));
                 }
@@ -133,17 +109,13 @@ public class ModificarReserva extends JFrame{
         return costoTotal;
     }
 
-    private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida, String matriculaSeleccionada) {
-        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br>", nombre, mes, dia, horaLlegada, horaSalida, matriculaSeleccionada);
-    }
-
-
-    public void setNombreField() {
+    public void establecerNombre(){
         ctrlAutomovil.obtenerNombre();
         nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
     }
 
-    public void Cancelar() {
+    public void Cancelar(){
+
         menu = new ViewMenu();
 
         ActionListener accion = new ActionListener() {
@@ -161,16 +133,6 @@ public class ModificarReserva extends JFrame{
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int optionSelected = JListReserva.getSelectedIndex();
-
-
-                Reserva reserva = null;
-                try {
-                    reserva = ctrlReserva.obtenerReservaPorIndice(optionSelected);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-                int idReserva = reserva.getId();
                 int mesSeleccionado = Integer.parseInt((String) MesBox.getSelectedItem());
                 int diaSeleccionado = Integer.parseInt((String) DiaBox.getSelectedItem());
                 String horaLlegadaSeleccionada = (String) HoraLlegada.getSelectedItem();
@@ -182,11 +144,24 @@ public class ModificarReserva extends JFrame{
                     Log.error("No hay una matricula registrada");
                     JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
                 } else {
-                    ctrlReserva.modificarReserva(idReserva,diaSeleccionado,mesSeleccionado,horaLlegadaSeleccionada,horaSalidaSeleccionada,matriculaSeleccionada);
-                    JOptionPane.showMessageDialog(null, "Modificación exitosa");
-                    menu.mostrarInterfaz();
+                    ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+
+                    ConfirmarReserva confirmarReservaFrame = new ConfirmarReserva();
+                    confirmarReservaFrame.setTitle("Confirmar Reserva");
+                    confirmarReservaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    confirmarReservaFrame.setVisible(true);
+                    confirmarReservaFrame.setSize(850, 350);
+                    confirmarReservaFrame.setLocationRelativeTo(null);
                     dispose();
-                    Log.success("Modificacion Exitosa");
+
+                    int horaInicio = Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]);
+                    int horaFin = Integer.parseInt(horaSalidaSeleccionada.split(":")[0]);
+                    int horasSeleccionadas = horaFin - horaInicio;
+                    double costoTotal = calcularCosto(horasSeleccionadas);
+
+                    String informacionSeleccionada = String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br> Costo Total: $%.2f", nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada, costoTotal);
+
+                    confirmarReservaFrame.mostrarReserva(informacionSeleccionada);
                 }
             }
         };
