@@ -77,7 +77,7 @@ public class CtrlAutomovil {
     }
 
 
-    public void agregarMatricula(int idMarca, String placa) {
+    public boolean agregarMatricula(int idMarca, String placa) {
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
@@ -94,6 +94,7 @@ public class CtrlAutomovil {
             e.printStackTrace();
             System.out.println("Error al crear la matrícula.");
         }
+        return false;
     }
 
     public void eliminarMatricula(String matricula) {
@@ -101,7 +102,7 @@ public class CtrlAutomovil {
         automovil1.eliminarMatricula(matricula);
     }
 
-    public boolean modificarAutomovil(int nuevoIdMarca, String nuevaPlaca, String matricula) {
+    public boolean modificarMatricula(int nuevoIdMarca, String nuevaPlaca, String matricula) {
         int idAutomovil = Automovil.getIdConMatricula(matricula);
         Log.debug("id:" + idAutomovil);
         automovil = new Automovil(idAutomovil);
@@ -110,7 +111,7 @@ public class CtrlAutomovil {
             Log.debug(String.valueOf(automovil.getIdMarca()));
             automovil.setPlaca(nuevaPlaca);
             Log.debug(automovil.getPlaca());
-            automovil.modificarAutomovil();
+            automovil.modificarPlaca();
         } else {
             return false;
         }
@@ -118,18 +119,13 @@ public class CtrlAutomovil {
     }
 
 
-    public static Automovil getAutomovil() {
-        return automovil;
-    }
 
     /**
      * Metodo para cuando el usuario tiene varios autos asociados a su cuenta
      *
      * @return: Una lista de objetos tipo auto
      */
-    public LinkedList<Automovil> automovilesRegistrados() {
-        return null;
-    }
+
 
 
 }

@@ -25,6 +25,6 @@ public class CtrlAutomovilTest {
         CtrlUsuario ctrlUsuario = new CtrlUsuario();
         ctrlUsuario.iniciarSesion("viridianabenitezg@gmail.com","1234");
         CtrlAutomovil ctrlAutomovil = new CtrlAutomovil();
-        ctrlAutomovil.modificarAutomovil(1,"VIR-00-00","VIR-13-07");
+        ctrlAutomovil.modificarMatricula(1,"VIR-00-00","VIR-13-07");
     }
 }

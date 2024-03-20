@@ -18,6 +18,8 @@ public class ViewMenu extends JFrame {
     private JButton reservasList;
     private JButton cerrarSesíonButton;
 
+    private JButton verMatriculaButton;
+
     public ViewMenu() {
         setContentPane(pnMenu);
         CrearReserva();

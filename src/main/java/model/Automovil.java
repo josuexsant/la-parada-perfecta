@@ -6,10 +6,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Automovil {
-    private int id;
+    private static int id;
     private int idUsuario;
     private int idMarca;
-    private String placa;
+    private static String placa;
     private static DBManager dbManager = new DBManager();
 
     public Automovil() {
@@ -43,9 +43,7 @@ public class Automovil {
 
     }
 
-    public Automovil() {
 
-    }
 
     public static LinkedList<String> getPlacas(int id_Usuario) {
         LinkedList<String> placas = new LinkedList<>();
@@ -66,7 +64,7 @@ public class Automovil {
         return placas;
     }
 
-        public void modificarAutomovil() {
+        public void modificarPlaca() {
             String query = "UPDATE automoviles " + "SET id_marca = ?, " + "placa = ? " + "WHERE id = ?";
             try {
                 Connection conn = dbManager.getConnection();
@@ -231,7 +229,7 @@ public class Automovil {
         return marcas;
     }
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
@@ -247,7 +245,7 @@ public class Automovil {
         this.idMarca = idMarca;
     }
 
-    public String getPlaca() {
+    public static String getPlaca() {
         return placa;
     }
 
