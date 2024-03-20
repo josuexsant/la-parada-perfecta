@@ -97,9 +97,9 @@ public class CtrlAutomovil {
         return false;
     }
 
-    public void eliminarMatricula(String matricula) {
+    public boolean eliminarMatricula(String matricula) {
         Automovil automovil1 = new Automovil();
-        automovil1.eliminarMatricula(matricula);
+        return automovil1.eliminarMatricula(matricula);
     }
 
     public boolean modificarMatricula(int nuevoIdMarca, String nuevaPlaca, String matricula) {

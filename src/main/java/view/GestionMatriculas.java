@@ -49,7 +49,8 @@ public class GestionMatriculas extends JFrame {
             matriculasComboBox.addItem(placa);
         }
     }
-    public void Modificar(){
+
+    public void Modificar() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -70,7 +71,8 @@ public class GestionMatriculas extends JFrame {
         };
         modificarButton.addActionListener(accion);
     }
-    public void AgregarMatricula(){
+
+    public void AgregarMatricula() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -91,16 +93,20 @@ public class GestionMatriculas extends JFrame {
         };
         agregarMatriculaButton.addActionListener(accion);
     }
-    public void eliminarMatricula(){
+
+    public void eliminarMatricula() {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String matriculaSeleccionada = (String) matriculasComboBox.getSelectedItem();
                 int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar la matrícula seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
-                    ctrlAutomovil.eliminarMatricula(matriculaSeleccionada);
-                    JOptionPane.showMessageDialog(null, "Matrícula eliminada correctamente.", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                    matriculasComboBox.removeItem(matriculaSeleccionada);
+                    if (ctrlAutomovil.eliminarMatricula(matriculaSeleccionada)) {
+                        JOptionPane.showMessageDialog(null, "Matrícula eliminada correctamente.", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        matriculasComboBox.removeItem(matriculaSeleccionada);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Hay reservas asociadas a esta matricula");
+                    }
                 }
             }
         };
