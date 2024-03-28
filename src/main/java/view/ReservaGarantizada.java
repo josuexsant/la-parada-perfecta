@@ -31,7 +31,6 @@ public class ReservaGarantizada extends JFrame {
     public ReservaGarantizada() {
         ctrlReservaGarantizada = new CtrlReservaGarantizada();
         ctrlAutomovil = new CtrlAutomovil();
-        setContentPane(ReservaP);
         getMesBoxInicio();
         getMesBoxFin();
         getFechaBoxInicio();
@@ -185,6 +184,16 @@ public class ReservaGarantizada extends JFrame {
         confirmarButton.addActionListener(accion);
     }
 
+    public void mostrarInterfaz() {
+        setContentPane(ReservaP);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setSize(500, 600);
+        setResizable(false);
+        setVisible(true);
+        Log.info("Se inicia la vista Inicio de sesion");
+    }
 
     public void cancelar() {
         menu = new ViewMenu();

@@ -5,36 +5,43 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import controller.CtrlTDC;
+import controller.CtrlUsuario;
 import model.Log;
 
-public class RegistroTDC extends  JFrame{
+public class RegistroTDC extends JFrame {
     private JPanel registroTarjeta;
     private JTextField nombreText;
     private JTextField numeroText;
-    private JTextField cvvText;
+    private JPasswordField cvvText;
     private JTextField direccionText;
     private JButton finalizarButton;
     private JComboBox<String> mesBox;
     private JComboBox<String> yearBox;
+    private JButton cancelarButton;
+    private JLabel logo;
 
     public void mostrarInterfaz() {
         setContentPane(registroTarjeta);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
-        setResizable(true);
+        setSize(500, 500);
+        setResizable(false);
         setVisible(true);
     }
 
     public RegistroTDC() {
         llenarMesBox();
         llenarYearBox();
+
+        cancelarButton.addActionListener(e -> cancelar());
         mesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +93,7 @@ public class RegistroTDC extends  JFrame{
                     mostrarTdc.setTitle("Confirmar Reserva");
                     mostrarTdc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     mostrarTdc.setVisible(true);
-                    mostrarTdc.setSize(300, 250);
+                    mostrarTdc.setSize(500, 250);
                     mostrarTdc.setLocationRelativeTo(null);
 
 
@@ -115,7 +122,7 @@ public class RegistroTDC extends  JFrame{
             }
         });
 
-        ((AbstractDocument)numeroText.getDocument()).setDocumentFilter(new DocumentFilter() {
+        ((AbstractDocument) numeroText.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
                 StringBuilder sb = new StringBuilder();
@@ -139,7 +146,7 @@ public class RegistroTDC extends  JFrame{
             }
         });
 
-        ((AbstractDocument)cvvText.getDocument()).setDocumentFilter(new DocumentFilter() {
+        ((AbstractDocument) cvvText.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
                 StringBuilder sb = new StringBuilder();
@@ -164,5 +171,23 @@ public class RegistroTDC extends  JFrame{
         });
 
         finalizarButton.addActionListener(accion);
+    }
+
+    private void cancelar() {
+        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea salir?", "Salir",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+            CtrlUsuario ctrlUsuario = new CtrlUsuario();
+            ctrlUsuario.eliminar();
+            InicioSesion sesion = new InicioSesion();
+            sesion.mostrarInterfaz();
+            dispose();
+        }
+    }
+
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/tdc.png");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        logo = new JLabel(new ImageIcon(image));
     }
 }

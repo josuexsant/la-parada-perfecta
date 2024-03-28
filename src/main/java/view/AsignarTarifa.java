@@ -95,7 +95,8 @@ public class AsignarTarifa extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
-        setResizable(true);
+        setSize(500,600);
+        setResizable(false);
         setVisible(true);
         Log.info("Se inicia la vista Asignar tarifa");
     }

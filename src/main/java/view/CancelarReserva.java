@@ -22,7 +22,7 @@ public class CancelarReserva extends JFrame {
     private CtrlAutomovil ctrlAutomovil;
     private ViewMenu menu;
 
-    public CancelarReserva() throws SQLException{
+    public CancelarReserva(){
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(PCancelar);
@@ -32,7 +32,7 @@ public class CancelarReserva extends JFrame {
         obtenerIndiceSeleccionado();
 
     }
-    public void InsertarReservas() throws SQLException {
+    public void InsertarReservas() {
         // Obtener el modelo de lista actual de JListReserva
         DefaultListModel<String> listModel = (DefaultListModel<String>) JListReserva.getModel();
 
@@ -92,6 +92,17 @@ public class CancelarReserva extends JFrame {
 
         };
         cancelarReservaButton.addActionListener(accion);
+    }
+
+    public void mostrarInterfaz() {
+        setContentPane(PCancelar);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setSize(500, 600);
+        setResizable(false);
+        setVisible(true);
+        Log.info("Se inicia la vista Cancelar Reserva");
     }
 
 }

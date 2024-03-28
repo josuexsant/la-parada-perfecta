@@ -8,6 +8,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import java.awt.*;
 import java.awt.event.*;
 
 public class RegistroUsuario extends JFrame {
@@ -21,37 +22,36 @@ public class RegistroUsuario extends JFrame {
     private JPasswordField passwordText;
     private JComboBox ciudades;
     private JButton siguienteButton;
+    private JButton cancelarButton;
+    private JLabel logo;
     private CtrlUsuario ctrlUsuario;
 
 
     public RegistroUsuario() {
         ctrlUsuario = new CtrlUsuario();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cancelarButton.addActionListener(e -> cancelar());
 
-        siguienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombre = nombretext.getText();
-                String password = new String(passwordText.getPassword());
-                String apellidoMaterno = apellidoMaternotext.getText();
-                String apellidoPaterno = apellidoPaternotext.getText();
-                String telefono = telefonotext.getText();
-                String correo = correotext.getText();
-                int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
-                int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
+        siguienteButton.addActionListener(e -> {
+            String nombre = nombretext.getText();
+            String password = new String(passwordText.getPassword());
+            String apellidoMaterno = apellidoMaternotext.getText();
+            String apellidoPaterno = apellidoPaternotext.getText();
+            String telefono = telefonotext.getText();
+            String correo = correotext.getText();
+            int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
+            int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
-                if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
-                    JOptionPane.showMessageDialog(null, "Registro Exitoso");
+            if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
+                JOptionPane.showMessageDialog(null, "Registro Exitoso");
 
-                    RegistroTDC registroTDC = new RegistroTDC();
-                    registroTDC.mostrarInterfaz();
-                    dispose();
+                RegistroTDC registroTDC = new RegistroTDC();
+                registroTDC.mostrarInterfaz();
+                dispose();
 
-                    Log.info("Registro de usuario");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error en el registro");
-                }
+                Log.info("Registro de usuario");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error en el registro");
             }
         });
 
@@ -143,11 +143,18 @@ public class RegistroUsuario extends JFrame {
         });
     }
 
+    private void cancelar(){
+        InicioSesion sesion = new InicioSesion();
+        sesion.mostrarInterfaz();
+        dispose();
+    }
+
     public void mostrarInterfaz() {
         setContentPane(registroUsuariopanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+        setSize(500,600);
         setResizable(false);
         setVisible(true);
         Log.info("Se carga interfaz de registro de usuario");
@@ -176,5 +183,11 @@ public class RegistroUsuario extends JFrame {
             default:
                 return 0;
         }
+    }
+
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/agregar.gif");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST);
+        logo = new JLabel(new ImageIcon(image));
     }
 }

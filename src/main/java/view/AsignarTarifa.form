@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.AsignarTarifa">
-  <grid id="27dc6" binding="asignarTarifaPanel" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="asignarTarifaPanel" layout-manager="GridLayoutManager" row-count="10" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="602" height="547"/>
@@ -14,7 +14,7 @@
       <grid id="b8eff" binding="tituloPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-1"/>
@@ -42,28 +42,14 @@
       </grid>
       <hspacer id="a9a00">
         <constraints>
-          <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="20" height="-1"/>
-          </grid>
+          <grid row="0" column="3" row-span="9" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
       <hspacer id="d30ae">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="20" height="-1"/>
-          </grid>
+          <grid row="0" column="0" row-span="9" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
-      <component id="2a853" class="javax.swing.JButton" binding="aplicarButton" default-binding="true">
-        <constraints>
-          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-1"/>
-          <font size="18" style="0"/>
-          <text value="Aplicar"/>
-        </properties>
-      </component>
       <component id="cf12b" class="javax.swing.JLabel" binding="tServicioLabel">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -75,7 +61,7 @@
       </component>
       <component id="74c59" class="javax.swing.JComboBox" binding="tServicioBox">
         <constraints>
-          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
@@ -106,7 +92,7 @@
       </component>
       <component id="e70cf" class="javax.swing.JTextField" binding="tarifaText">
         <constraints>
-          <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -116,52 +102,54 @@
       </component>
       <component id="f6e16" class="javax.swing.JLabel" binding="tarifaActual">
         <constraints>
-          <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="18" style="1"/>
+          <font name="Roboto Light" size="18" style="0"/>
           <text value="Tarifa actual..."/>
         </properties>
       </component>
-      <vspacer id="7353b">
-        <constraints>
-          <grid row="8" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="20"/>
-          </grid>
-        </constraints>
-      </vspacer>
       <vspacer id="a3966">
         <constraints>
-          <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="2" use-parent-layout="false">
-            <preferred-size width="-1" height="50"/>
-          </grid>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="e71c3">
         <constraints>
-          <grid row="6" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="100"/>
-          </grid>
+          <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="3a007">
         <constraints>
-          <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="100"/>
-          </grid>
+          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="86612" class="javax.swing.JButton" binding="volverButton">
+      <component id="2a853" class="javax.swing.JButton" binding="aplicarButton" default-binding="true">
         <constraints>
-          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-1"/>
-          <font size="18" style="0"/>
-          <foreground color="-16777216"/>
-          <text value="Volver"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <text value="Aplicar"/>
         </properties>
       </component>
+      <component id="86612" class="javax.swing.JButton" binding="volverButton">
+        <constraints>
+          <grid row="8" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-16777216"/>
+          <text value="Cancelar"/>
+        </properties>
+      </component>
+      <vspacer id="7b3cc">
+        <constraints>
+          <grid row="9" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>

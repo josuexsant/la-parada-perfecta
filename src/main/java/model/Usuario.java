@@ -260,5 +260,20 @@ public class Usuario {
         return nombreCompleto;
     }
 
-
+    public void eliminar() {
+        try {
+            String query1 = "DELETE FROM passwords WHERE id_usuario = ?";
+            String query2 = "DELETE FROM informacion_usuario WHERE id = ?";
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt1 = conn.prepareStatement(query1);
+            PreparedStatement pstmt2 = conn.prepareStatement(query2);
+            pstmt1.setInt(1, id);
+            pstmt2.setInt(1, id);
+            pstmt1.executeUpdate();
+            pstmt2.executeUpdate();
+            Log.trace("Se ha cancelado el registro");
+        } catch (SQLException e) {
+            Log.error(e.getMessage());
+        }
+    }
 }

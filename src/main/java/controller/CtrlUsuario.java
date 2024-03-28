@@ -117,4 +117,8 @@ public class    CtrlUsuario {
         Log.warn("Sesión cerrada");
         return true;
     }
+
+    public void eliminar() {
+        usuario.eliminar();
+    }
 }
