@@ -36,7 +36,7 @@ public class ModificarReserva extends JFrame{
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
 
-    public ModificarReserva() throws SQLException {
+    public ModificarReserva() {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
 
@@ -50,7 +50,7 @@ public class ModificarReserva extends JFrame{
         Cancelar();
         InsertarReservas();
     }
-    public void InsertarReservas() throws SQLException {
+    public void InsertarReservas() {
         // Obtener el modelo de lista actual de JListReserva
         DefaultListModel<String> listModel = (DefaultListModel<String>) JListReserva.getModel();
 
@@ -193,5 +193,14 @@ public class ModificarReserva extends JFrame{
         confirmarButton.addActionListener(accion);
     }
 
-
+    public void mostrarInterfaz() {
+        setContentPane(ModificarR);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setSize(500, 600);
+        setResizable(false);
+        setVisible(true);
+        Log.info("Se inicia la vista Inicio de sesion");
+    }
 }

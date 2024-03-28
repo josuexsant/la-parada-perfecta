@@ -22,7 +22,7 @@ public class GestionMatriculas extends JFrame {
     private RegistroMatricula agregarM;
     private CtrlAutomovil ctrlAutomovil;
 
-    public GestionMatriculas() throws SQLException {
+    public GestionMatriculas() {
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(gestionMatriculasPanel);
         setLocationRelativeTo(null);
