@@ -21,9 +21,8 @@ public class ViewMenu extends JFrame {
     private JLabel img;
 
     public ViewMenu() {
-        setContentPane(pnMenu);
-        CrearReserva();
-        CancelarReserva();
+        crearReservaButton.addActionListener(e -> crearReserva());
+        eliminarReservaButton.addActionListener(e -> cancelarReserva());
         ModificarReserva();
         ReservaGarantizada();
         GestionMatriculas();
@@ -31,6 +30,7 @@ public class ViewMenu extends JFrame {
     }
 
     public void mostrarInterfaz() {
+        setContentPane(pnMenu);
         setTitle("Inicio");
         setVisible(true);
         pack();
@@ -39,52 +39,16 @@ public class ViewMenu extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    private void CrearReserva() {
-        ActionListener accion = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                RegistroReserva RegistroFrame;
-
-                try {
-                    RegistroFrame = new RegistroReserva();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-
-                dispose();
-                RegistroFrame.setTitle("Confirmar Reserva");
-                RegistroFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                RegistroFrame.setVisible(true);
-                RegistroFrame.setSize(900, 300);
-                RegistroFrame.setLocationRelativeTo(null);
-                dispose();
-            }
-        };
-        crearReservaButton.addActionListener(accion);
+    private void crearReserva() {
+      ResgitroReserva view = new ResgitroReserva();
+      view.mostrarInterfaz();
+      dispose();
     }
 
-    private void CancelarReserva() {
-        ActionListener accion = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                CancelarReserva CancelarFrame;
-
-                try {
-                    CancelarFrame = new CancelarReserva();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-
-                dispose();
-                CancelarFrame.setTitle("Confirmar Reserva");
-                CancelarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                CancelarFrame.setVisible(true);
-                CancelarFrame.setSize(900, 300);
-                CancelarFrame.setLocationRelativeTo(null);
-                dispose();
-            }
-        };
-        eliminarReservaButton.addActionListener(accion);
+    private void cancelarReserva() {
+        CancelarReserva view = new CancelarReserva();
+        view.mostrarInterfaz();
+        dispose();
     }
 
     private void ModificarReserva() {

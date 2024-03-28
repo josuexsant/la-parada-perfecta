@@ -186,8 +186,8 @@ public class RegistroUsuario extends JFrame {
     }
 
     private void createUIComponents() {
-        ImageIcon icon = new ImageIcon("src/main/images/editar.png");
-        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon("src/main/images/agregar.gif");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST);
         logo = new JLabel(new ImageIcon(image));
     }
 }

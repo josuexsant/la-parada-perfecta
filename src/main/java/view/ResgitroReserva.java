@@ -4,6 +4,7 @@ import controller.CtrlReserva;
 import controller.CtrlUsuario;
 import model.Log;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -16,7 +17,6 @@ public class ResgitroReserva extends JFrame {
     private JLabel LabelHLlegada;
     private JComboBox<String> HoraLlegada;
     private JPanel ReservaP;
-    private JPanel LabelTitulo;
     private JLabel LabelHoraSalida;
     private JComboBox<String> HoraSalida;
     private JComboBox<String> DiaBox;
@@ -27,6 +27,7 @@ public class ResgitroReserva extends JFrame {
     private JComboBox<String> MesBox;
     private JLabel nombreUsuario;
     private JButton CancelarButton;
+    private JLabel img;
     private JLabel LabelHSalida;
     private ViewMenu menu;
     private CtrlReserva ctrlReserva;
@@ -34,10 +35,9 @@ public class ResgitroReserva extends JFrame {
     private CtrlUsuario ctrlUsuario;
 
 
-    public ResgitroReserva() throws SQLException {
+    public ResgitroReserva() {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
-
         setContentPane(ReservaP);
         RegistroHora();
         MesSeleccionado();
@@ -168,5 +168,20 @@ public class ResgitroReserva extends JFrame {
         confirmarButton.addActionListener(accion);
     }
 
+    public void mostrarInterfaz() {
+        setContentPane(ReservaP);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setSize(500, 600);
+        setResizable(false);
+        setVisible(true);
+        Log.info("Se inicia la vista Registro reserva");
+    }
 
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/car-running.gif");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST);
+        img = new JLabel(new ImageIcon(image));
+    }
 }
