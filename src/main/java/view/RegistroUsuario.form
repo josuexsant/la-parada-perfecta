@@ -15,15 +15,16 @@
     <children>
       <component id="9179f" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-9723180"/>
           <enabled value="true"/>
           <font name="Roboto Light" size="28" style="1"/>
+          <foreground color="-14863017"/>
           <horizontalAlignment value="2"/>
           <horizontalTextPosition value="2"/>
-          <text value=" Registro de usuario"/>
+          <text value="Registro de usuario"/>
         </properties>
       </component>
       <component id="c4de8" class="javax.swing.JLabel">
@@ -33,6 +34,7 @@
         <properties>
           <autoscrolls value="false"/>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Nombre"/>
         </properties>
       </component>
@@ -53,6 +55,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Apellido Paterno"/>
         </properties>
       </component>
@@ -72,6 +75,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Apellido Materno"/>
         </properties>
       </component>
@@ -91,6 +95,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Telefono"/>
         </properties>
       </component>
@@ -110,6 +115,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Correo Electronico"/>
         </properties>
       </component>
@@ -129,6 +135,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Genero"/>
         </properties>
       </component>
@@ -139,8 +146,9 @@
           </grid>
         </constraints>
         <properties>
-          <background color="-1"/>
+          <background color="-918802"/>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <model>
             <item value="Masculino"/>
             <item value="Femenino"/>
@@ -153,6 +161,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Contraseña"/>
         </properties>
       </component>
@@ -172,6 +181,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Estado"/>
         </properties>
       </component>
@@ -182,8 +192,9 @@
           </grid>
         </constraints>
         <properties>
-          <background color="-1"/>
+          <background color="-918802"/>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <model>
             <item value="Puebla"/>
             <item value="México"/>
@@ -197,16 +208,16 @@
           <grid row="12" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-1"/>
+          <background color="-12223587"/>
           <font name="Roboto Light" size="18" style="0"/>
-          <foreground color="-16777216"/>
+          <foreground color="-1"/>
           <hideActionText value="false"/>
           <text value="Siguiente"/>
         </properties>
       </component>
       <vspacer id="a1aeb">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <hspacer id="2b911">
@@ -225,12 +236,12 @@
       </hspacer>
       <vspacer id="8bfbc">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="29e58">
         <constraints>
-          <grid row="14" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="14" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="5c1c0" class="javax.swing.JButton" binding="cancelarButton" default-binding="true">
@@ -238,14 +249,15 @@
           <grid row="13" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-1"/>
+          <background color="-12223587"/>
           <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-1"/>
           <text value="Cancelar"/>
         </properties>
       </component>
       <vspacer id="17810">
         <constraints>
-          <grid row="11" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="11" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="3104d" class="javax.swing.JLabel" binding="logo" custom-create="true">

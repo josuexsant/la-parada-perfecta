@@ -8,17 +8,18 @@
     <properties>
       <background color="-1"/>
       <enabled value="true"/>
+      <foreground color="-197121"/>
       <preferredSize width="500" height="500"/>
     </properties>
     <border type="none"/>
     <children>
       <component id="edbe" class="javax.swing.JLabel" binding="password">
         <constraints>
-          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Roboto" size="18" style="0"/>
-          <foreground color="-16777216"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="Contraseña"/>
         </properties>
       </component>
@@ -27,9 +28,9 @@
           <grid row="9" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-1"/>
-          <font name="Roboto" size="20" style="0"/>
-          <foreground color="-16777216"/>
+          <background color="-12223587"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-1"/>
           <text value="Registrarse"/>
         </properties>
       </component>
@@ -47,11 +48,6 @@
           </grid>
         </constraints>
       </hspacer>
-      <vspacer id="f5e34">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
       <vspacer id="b94d7">
         <constraints>
           <grid row="11" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
@@ -62,26 +58,26 @@
           <grid row="8" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-1"/>
-          <font name="Roboto" size="20" style="0"/>
-          <foreground color="-16777216"/>
+          <background color="-12223587"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-197121"/>
           <text value="Ingresar"/>
         </properties>
       </component>
       <component id="612a7" class="javax.swing.JLabel" binding="email">
         <constraints>
-          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <enabled value="true"/>
-          <font name="Roboto" size="18" style="0"/>
-          <foreground color="-16777216"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
           <text value="E-mail"/>
         </properties>
       </component>
       <component id="fbd04" class="javax.swing.JTextField" binding="emailText" default-binding="true">
         <constraints>
-          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="10"/>
           </grid>
         </constraints>
@@ -91,7 +87,7 @@
       </component>
       <component id="b15c8" class="javax.swing.JPasswordField" binding="passwordText" default-binding="true">
         <constraints>
-          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="10"/>
           </grid>
         </constraints>
@@ -101,10 +97,11 @@
       </component>
       <component id="98676" class="javax.swing.JLabel" binding="inicioDeSesiónLabel">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Roboto Light" size="20" style="1"/>
+          <foreground color="-14863017"/>
           <text value="Inicio de sesión"/>
         </properties>
       </component>
@@ -113,8 +110,9 @@
           <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-1"/>
-          <font name="Roboto Light" size="20" style="0"/>
+          <background color="-12223587"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-1"/>
           <text value="Soy operador"/>
         </properties>
       </component>
@@ -124,6 +122,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="28" style="1"/>
+          <foreground color="-14863017"/>
           <text value="La Parada Perfecta"/>
         </properties>
       </component>
@@ -136,7 +135,7 @@
       </vspacer>
       <component id="4b3ca" class="javax.swing.JLabel" binding="logo" custom-create="true">
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-1"/>
@@ -145,7 +144,12 @@
       </component>
       <vspacer id="fd904">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="d71f3">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
     </children>

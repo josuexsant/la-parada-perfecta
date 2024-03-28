@@ -86,7 +86,7 @@ public class InicioSesion extends JFrame {
 
     private void createUIComponents() {
         ImageIcon icon = new ImageIcon("src/main/images/usuario.png");
-        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         logo = new JLabel(new ImageIcon(image));
     }
 }
