@@ -65,6 +65,10 @@ public class InicioSesion extends JFrame {
         }
 
         if (ctrlOperador.iniciarSesion(emailText.getText(), passwordText.getText())) {
+            Thread hiloLoading = new Thread();
+            hiloLoading.start();
+            Loading loading = new Loading("Cargando...");
+            loading.mostrarInterfaz(100);
             AsignarTarifa asignarTarifa = new AsignarTarifa();
             asignarTarifa.mostrarInterfaz();
             dispose();

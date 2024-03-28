@@ -3,6 +3,7 @@ package view;
 import controller.CtrlUsuario;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ public class ViewMenu extends JFrame {
     private JButton crearReservaGarantizadaButton;
     private JButton reservasList;
     private JButton cerrarSesíonButton;
+    private JLabel img;
 
     public ViewMenu() {
         setContentPane(pnMenu);
@@ -31,7 +33,9 @@ public class ViewMenu extends JFrame {
     public void mostrarInterfaz() {
         setTitle("Inicio");
         setVisible(true);
-        setSize(300, 300);
+        pack();
+        setResizable(false);
+        setSize(500,600);
         setLocationRelativeTo(null);
     }
 
@@ -162,5 +166,11 @@ public class ViewMenu extends JFrame {
             }
         };
         gestionMatriculasButton.addActionListener(accion);
+    }
+
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/menu.png");
+        Image image = icon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        img= new JLabel(new ImageIcon(image));
     }
 }
