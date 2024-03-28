@@ -18,6 +18,7 @@ public class InicioSesion extends JFrame {
     private JLabel inicioDeSesiónLabel;
     private JButton soyOperadorButton;
     private JLabel logo;
+    private JLabel background;
     private CtrlUsuario ctrlUsuario;
     private ViewMenu menu;
 
