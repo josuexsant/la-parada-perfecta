@@ -11,15 +11,15 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class ModificarMatricula extends JFrame{
-    private JPanel tituloPanel;
     private JLabel matricuiaLabel;
     private JLabel marcaLabel;
     private JTextField matriculaText;
     private JComboBox marcaComboBox;
     private JButton modificarButton;
-    private JLabel tituloLabel;
     private JLabel matriculaField;
     private JPanel modificarPanel;
+    private JButton volverButton;
+    private JLabel img;
     private GestionMatriculas gestionMatriculas;
 
     private CtrlAutomovil ctrlAutomovil;
@@ -30,8 +30,6 @@ public class ModificarMatricula extends JFrame{
     public ModificarMatricula(String matriculaSeleccionada) throws SQLException {
         this.matriculaSeleccionada = matriculaSeleccionada;
         ctrlAutomovil = new CtrlAutomovil();
-        setContentPane(modificarPanel);
-        setLocationRelativeTo(null);
         obtenerMarcas();
         setMatriculaField();
         modificar();
@@ -45,6 +43,11 @@ public class ModificarMatricula extends JFrame{
         for (String marca : marcas) {
             marcaComboBox.addItem(marca);
         }
+    }
+    private void volver() {
+        GestionMatriculas view = new GestionMatriculas();
+        view.mostrarInterfaz();
+        dispose();
     }
     public void modificar(){
         ctrlAutomovil = new CtrlAutomovil();
@@ -92,5 +95,16 @@ public class ModificarMatricula extends JFrame{
             default:
                 return 0;
         }
+    }
+
+    public void mostrarInterfaz() {
+        setContentPane(modificarPanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setSize(500, 600);
+        setResizable(false);
+        setVisible(true);
+        Log.info("Se inicia la vista Inicio de sesion");
     }
 }

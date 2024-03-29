@@ -3,6 +3,7 @@ import controller.CtrlAutomovil;
 import model.Log;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -11,24 +12,33 @@ import java.util.LinkedList;
 public class RegistroMatricula extends JFrame{
 
     private JPanel registroPanel;
-    private JPanel tituloPanel;
     private JLabel matriculaLabel;
     private JLabel marcaLabel;
     private JTextField matriculaText;
     private JComboBox<String> marcaComboBox;
     private JButton registrarButton;
+    private JButton volverButton;
+    private JLabel img;
 
     private CtrlAutomovil ctrlAutomovil;
     private GestionMatriculas gestionMatriculas;
 
-    public RegistroMatricula() throws SQLException {
+    public RegistroMatricula() {
         ctrlAutomovil = new CtrlAutomovil();
         setContentPane(registroPanel);
         setLocationRelativeTo(null);
         obtenerMarcas();
         registrar();
+        volverButton.addActionListener(e -> volver());
     }
-    public void obtenerMarcas() throws SQLException {
+
+    private void volver() {
+        GestionMatriculas view = new GestionMatriculas();
+        view.mostrarInterfaz();
+        dispose();
+    }
+
+    public void obtenerMarcas() {
         LinkedList<String> marcas = ctrlAutomovil.getMarcas();
         for (String marca : marcas) {
             marcaComboBox.addItem(marca);
@@ -80,5 +90,22 @@ public class RegistroMatricula extends JFrame{
             default:
                 return 0;
         }
+    }
+
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/matricula.png");
+        Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        img = new JLabel(new ImageIcon(image));
+    }
+
+    public void mostrarInterfaz() {
+        setContentPane(registroPanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setSize(500, 600);
+        setResizable(false);
+        setVisible(true);
+        Log.info("Se inicia la vista Registro matricula");
     }
 }
