@@ -2,26 +2,31 @@ package view;
 
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
+import model.Automovil;
 import model.Log;
 import model.Reserva;
 
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 
-
-public class ModificarReserva extends JFrame{
+public class ModificarReserva extends JFrame {
     private JPanel ModificarR;
     private JList JListReserva;
-    private JComboBox<String>  DiaBox;
-    private JComboBox<String>  MesBox;
-    private JComboBox<String>  HoraLlegada;
-    private JComboBox<String>  HoraSalida;
-    private JComboBox<String>  MatriculaBox;
+    private JComboBox<String> DiaBox;
+    private JComboBox<String> MesBox;
+    private JComboBox<String> HoraLlegada;
+    private JComboBox<String> HoraSalida;
+    private JComboBox<String> MatriculaBox;
     private JButton CancelarButton;
     private JButton confirmarButton;
     private JLabel LabelHLlegada;
@@ -48,18 +53,21 @@ public class ModificarReserva extends JFrame{
         Cancelar();
         InsertarReservas();
     }
+
     public void InsertarReservas() {
         // Obtener el modelo de lista actual de JListReserva
-        DefaultListModel<String> listModel = (DefaultListModel<String>) JListReserva.getModel();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        JListReserva.setModel(listModel); // Establecer el modelo en el JList
 
-        // Obtener las reservas del controlador
-        LinkedList<String> reservas = ctrlReserva.obtenerReservas();
-
+        LinkedList<Reserva> reservasList = ctrlReserva.getList();
+        Automovil automovil;
         // Agregar cada reserva al modelo de lista
-        for (String reserva : reservas) {
-            listModel.addElement(reserva);
+        for (Reserva reserva : reservasList) {
+            automovil = new Automovil(reserva.getIdAutomovil());
+            listModel.addElement("ID: " + reserva.getId() + " Fecha: " + reserva.getFecha() + " Matricula: " + automovil.getPlaca());
         }
     }
+
     public void llenarMatriculas() {
         LinkedList<String> placas = ctrlAutomovil.getMatriculas();
         for (String placa : placas) {
@@ -175,7 +183,7 @@ public class ModificarReserva extends JFrame{
                     Log.error("No hay una matricula registrada");
                     JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
                 } else {
-                    ctrlReserva.modificarReserva(idReserva,diaSeleccionado,mesSeleccionado,horaLlegadaSeleccionada,horaSalidaSeleccionada,matriculaSeleccionada);
+                    ctrlReserva.modificarReserva(idReserva, diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
                     JOptionPane.showMessageDialog(null, "Modificación exitosa");
                     menu.mostrarInterfaz();
                     dispose();

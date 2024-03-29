@@ -42,6 +42,14 @@ public class CtrlReserva {
         return reservasString(reservas);
     }
 
+    public LinkedList<Reserva> getList(){
+        Sesion sesion = Sesion._instance();
+        Usuario usuario = sesion.getUsuario();
+        int idUsuario = usuario.getId();
+        LinkedList<Reserva> reservas = Reserva.getReservas(idUsuario);
+        return reservas;
+    }
+
     public LinkedList<String> reservasString(LinkedList<Reserva> reservas) {
         LinkedList<String> reservasStrings = new LinkedList<>();
 

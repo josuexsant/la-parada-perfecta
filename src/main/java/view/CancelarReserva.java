@@ -2,10 +2,12 @@ package view;
 
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
+import model.Automovil;
 import model.Log;
 import model.Reserva;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -16,8 +18,7 @@ public class CancelarReserva extends JFrame {
     private JList JListReserva;
     private JButton CancelarButton;
     private JButton cancelarReservaButton;
-    private JPanel PTitulo;
-    private JLabel Titulo;
+    private JLabel img;
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
     private ViewMenu menu;
@@ -34,14 +35,15 @@ public class CancelarReserva extends JFrame {
     }
     public void InsertarReservas() {
         // Obtener el modelo de lista actual de JListReserva
-        DefaultListModel<String> listModel = (DefaultListModel<String>) JListReserva.getModel();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        JListReserva.setModel(listModel); // Establecer el modelo en el JList
 
-        // Obtener las reservas del controlador
-        LinkedList<String> reservas = ctrlReserva.obtenerReservas();
-
+        LinkedList<Reserva> reservasList = ctrlReserva.getList();
+        Automovil automovil;
         // Agregar cada reserva al modelo de lista
-        for (String reserva : reservas) {
-            listModel.addElement(reserva);
+        for (Reserva reserva : reservasList) {
+            automovil = new Automovil(reserva.getIdAutomovil());
+            listModel.addElement("ID: " + reserva.getId() + " Fecha: " + reserva.getFecha() + " Matricula: " + automovil.getPlaca());
         }
     }
 
@@ -105,4 +107,9 @@ public class CancelarReserva extends JFrame {
         Log.info("Se inicia la vista Cancelar Reserva");
     }
 
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/cancelar.png");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        img = new JLabel(new ImageIcon(image));
+    }
 }
