@@ -35,9 +35,10 @@ public class CtrlAutomovil {
 
     /**
      * Metodo para cuando el usuario tiene varios autos asociados a su cuenta
+     *
      * @return: Una lista de objetos tipo auto
      */
-    public LinkedList<Automovil> automovilesRegistrados(){
+    public LinkedList<Automovil> automovilesRegistrados() {
         return null;
     }
 
@@ -54,8 +55,8 @@ public class CtrlAutomovil {
 
         for (String automovil : matriculas) {
             String matriculaString = "-Id: " + Automovil.getId() +
-                    "  ,-Automovil: " +  Automovil.obtenerMarca(Automovil.getId()) +
-                    "  ,-Placa: " + Automovil.getPlaca() ;
+                    "  ,-Automovil: " + Automovil.obtenerMarca(Automovil.getId()) +
+                    "  ,-Placa: " + Automovil.getPlaca();
             matriculasStrings.add(matriculaString);
         }
         return matriculasStrings;
@@ -82,17 +83,12 @@ public class CtrlAutomovil {
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
         Automovil automovil1 = new Automovil();
-        try {
-            String nombreMarca = automovil1.obtenerMarca(idMarca);
-            if (nombreMarca != null) {
-                automovil1.guardarAutomovil(idUsuario, idMarca, placa);
-                System.out.println("Matrícula creada exitosamente.");
-            } else {
-                System.out.println("No se pudo encontrar la marca especificada.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error al crear la matrícula.");
+        String nombreMarca = automovil1.obtenerMarca(idMarca);
+        if (nombreMarca != null) {
+            automovil1.guardarAutomovil(idUsuario, idMarca, placa);
+            System.out.println("Matrícula creada exitosamente.");
+        } else {
+            System.out.println("No se pudo encontrar la marca especificada.");
         }
         return false;
     }
@@ -119,13 +115,11 @@ public class CtrlAutomovil {
     }
 
 
-
     /**
      * Metodo para cuando el usuario tiene varios autos asociados a su cuenta
      *
      * @return: Una lista de objetos tipo auto
      */
-
 
 
 }

@@ -16,8 +16,6 @@ import javax.swing.*;
 
 public class ModificarReserva extends JFrame{
     private JPanel ModificarR;
-    private JPanel JPanelTitulo;
-    private JLabel Titulo;
     private JList JListReserva;
     private JComboBox<String>  DiaBox;
     private JComboBox<String>  MesBox;
@@ -132,11 +130,6 @@ public class ModificarReserva extends JFrame{
         double costoTotal = horasSeleccionadas * tarifaPorHora;
         return costoTotal;
     }
-
-    private String construirInformacionSeleccionada(String nombre, int mes, int dia, String horaLlegada, String horaSalida, String matriculaSeleccionada) {
-        return String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br>", nombre, mes, dia, horaLlegada, horaSalida, matriculaSeleccionada);
-    }
-
 
     public void setNombreField() {
         ctrlAutomovil.obtenerNombre();

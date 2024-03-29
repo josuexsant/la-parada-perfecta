@@ -44,7 +44,6 @@ public class Automovil {
     }
 
 
-
     public static LinkedList<String> getPlacas(int id_Usuario) {
         LinkedList<String> placas = new LinkedList<>();
         try {
@@ -64,21 +63,21 @@ public class Automovil {
         return placas;
     }
 
-        public void modificarPlaca() {
-            String query = "UPDATE automoviles " + "SET id_marca = ?, " + "placa = ? " + "WHERE id = ?";
-            try {
-                Connection conn = dbManager.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(query);
-                pstmt.setInt(1, idMarca);
-                pstmt.setString(2, placa);
-                pstmt.setInt(3, id);
-                pstmt.executeUpdate();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, e);
-            }
+    public void modificarPlaca() {
+        String query = "UPDATE automoviles " + "SET id_marca = ?, " + "placa = ? " + "WHERE id = ?";
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idMarca);
+            pstmt.setString(2, placa);
+            pstmt.setInt(3, id);
+            pstmt.executeUpdate();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
 
     public boolean guardarAutomovil() throws SQLException {
         Connection conn = dbManager.getConnection();
@@ -192,13 +191,12 @@ public class Automovil {
         return idAutomovil;
     }
 
-    public static String obtenerMarca(int idMarca) throws SQLException {
+    public static String obtenerMarca(int idMarca) {
         String marca = null;
-        Connection conn = dbManager.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
         try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
             String query = "SELECT m.nombre AS marca FROM automoviles a JOIN marcas m ON a.id_marca = m.id WHERE a.id_marca = ?";
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, idMarca);
@@ -223,7 +221,7 @@ public class Automovil {
                 String marca = rs.getString("nombre");
                 marcas.add(marca);
             }
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return marcas;
