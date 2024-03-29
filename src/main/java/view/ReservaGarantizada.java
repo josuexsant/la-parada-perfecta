@@ -5,13 +5,13 @@ import controller.CtrlReservaGarantizada;
 import model.Log;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 public class ReservaGarantizada extends JFrame {
     private JPanel ReservaP;
-    private JPanel LabelTitulo;
     private JLabel LabelnombreUsuario;
     private JLabel LabelHLlegada;
     private JLabel MesLabel;
@@ -24,6 +24,7 @@ public class ReservaGarantizada extends JFrame {
     private JLabel nombreUsuario;
     private JButton CancelarButton;
     private JComboBox MesBoxFin;
+    private JLabel img;
     private ViewMenu menu;
     private CtrlReservaGarantizada ctrlReservaGarantizada;
     private CtrlAutomovil ctrlAutomovil;
@@ -206,5 +207,11 @@ public class ReservaGarantizada extends JFrame {
         };
         CancelarButton.addActionListener(accion);
 
+    }
+
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/editar.png");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        img = new JLabel(new ImageIcon(image));
     }
 }

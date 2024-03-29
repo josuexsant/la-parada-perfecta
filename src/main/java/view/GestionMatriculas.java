@@ -4,6 +4,7 @@ import controller.CtrlAutomovil;
 import model.Log;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -11,12 +12,12 @@ import java.util.LinkedList;
 
 public class GestionMatriculas extends JFrame {
     private JPanel gestionMatriculasPanel;
-    private JPanel tituloPanel;
-    private JLabel tituloLabel;
     private JButton agregarMatriculaButton;
     private JButton modificarButton;
     private JButton eliminarButton;
     JComboBox matriculasComboBox;
+    private JButton volverButton;
+    private JLabel img;
 
     private ModificarMatricula modificarM;
     private RegistroMatricula agregarM;
@@ -24,13 +25,12 @@ public class GestionMatriculas extends JFrame {
 
     public GestionMatriculas() {
         ctrlAutomovil = new CtrlAutomovil();
-        setContentPane(gestionMatriculasPanel);
-        setLocationRelativeTo(null);
-        Modificar();
-        AgregarMatricula();
+        modificarButton.addActionListener(e -> modificar());
+        agregarMatriculaButton.addActionListener(e -> agregarMatricula());
         llenarMatriculas();
         mostrarInterfaz();
         eliminarMatricula();
+        volverButton.addActionListener(e -> volver());
     }
 
     public void mostrarInterfaz() {
@@ -38,9 +38,16 @@ public class GestionMatriculas extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
-        setResizable(true);
+        setSize(500, 600);
+        setResizable(false);
         setVisible(true);
-        Log.info("Se inicia la vista gestion de matriculas");
+        Log.info("Se inicia la vista gestion matriculas");
+    }
+
+    public void volver() {
+        ViewMenu view = new ViewMenu();
+        view.mostrarInterfaz();
+        dispose();
     }
 
     public void llenarMatriculas() {
@@ -50,48 +57,21 @@ public class GestionMatriculas extends JFrame {
         }
     }
 
-    public void Modificar() {
-        ActionListener accion = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                ModificarMatricula ModificarFrame;
-                try {
-                    ModificarFrame = new ModificarMatricula((String) matriculasComboBox.getSelectedItem());
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                ModificarFrame.setLocationRelativeTo(null);
-                ModificarFrame.setTitle("Agregar matrícula");
-                ModificarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                ModificarFrame.setVisible(true);
-                ModificarFrame.setSize(900, 300);
-                dispose();
-            }
-
-        };
-        modificarButton.addActionListener(accion);
+    public void modificar() {
+        ModificarMatricula view = null;
+        try {
+            view = new ModificarMatricula((String) matriculasComboBox.getSelectedItem());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        view.mostrarInterfaz();
+        dispose();
     }
 
-    public void AgregarMatricula() {
-        ActionListener accion = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                RegistroMatricula RegistrarFrame;
-                try {
-                    RegistrarFrame = new RegistroMatricula();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                dispose();
-                RegistrarFrame.setTitle("Agregar matrícula");
-                RegistrarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                RegistrarFrame.setVisible(true);
-                RegistrarFrame.setSize(900, 300);
-                RegistrarFrame.setLocationRelativeTo(null);
-                dispose();
-            }
-        };
-        agregarMatriculaButton.addActionListener(accion);
+    public void agregarMatricula() {
+      RegistroMatricula view = new RegistroMatricula();
+      view.mostrarInterfaz();
+      dispose();
     }
 
     public void eliminarMatricula() {
@@ -111,5 +91,11 @@ public class GestionMatriculas extends JFrame {
             }
         };
         eliminarButton.addActionListener(accion);
+    }
+
+    private void createUIComponents() {
+        ImageIcon icon = new ImageIcon("src/main/images/matricula.png");
+        Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        img = new JLabel(new ImageIcon(image));
     }
 }
