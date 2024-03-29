@@ -9,9 +9,10 @@ public class CtrlReserva {
     Reserva reserva;
 
     /**
+     * @return
      * @author: Josue Santamaria
      */
-    public void crearReserva(int dia, int mes, String horaInicio, String horaFin, String matricula) {
+    public Reserva crearReserva(int dia, int mes, String horaInicio, String horaFin, String matricula) {
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
@@ -21,6 +22,7 @@ public class CtrlReserva {
         String fecha = "2024-" + "-" + mes + "-" + dia;
         reserva = new Reserva(0, idAutomovil, fecha, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
         reserva.guardar();
+        return reserva;
     }
 
     //Esta funcion la uso en cancelar reserva para obtener una reserva por el indice de la opcion seleccionada
@@ -40,21 +42,26 @@ public class CtrlReserva {
         return reservasString(reservas);
     }
 
-    public LinkedList<String> reservasString(LinkedList<Reserva> reservas){
+    public LinkedList<Reserva> getList(){
+        Sesion sesion = Sesion._instance();
+        Usuario usuario = sesion.getUsuario();
+        int idUsuario = usuario.getId();
+        LinkedList<Reserva> reservas = Reserva.getReservas(idUsuario);
+        return reservas;
+    }
+
+    public LinkedList<String> reservasString(LinkedList<Reserva> reservas) {
         LinkedList<String> reservasStrings = new LinkedList<>();
-        try {
-            for (Reserva reserva : reservas) {
-                String reservaString = "-Id: " + reserva.getId() +
-                        "  ,-Automovil: " + Automovil.obtenerMarca(reserva.getIdAutomovil()) +
-                        "  ,-Fecha: " + reserva.getFecha() +
-                        "  ,-Fecha Inicio: " + reserva.getHoraInicio() +
-                        "  ,-Fecha Fin:" + reserva.getHoraFin() +
-                        "  ,-Cajon: " + reserva.getIdCajon() +
-                        "  ,-Usuario: " + reserva.getIdUsuario();
-                reservasStrings.add(reservaString);
-            }
-        }catch (SQLException e){
-            Log.error(e.getMessage());
+
+        for (Reserva reserva : reservas) {
+            String reservaString = "-Id: " + reserva.getId() +
+                    "  ,-Automovil: " + Automovil.obtenerMarca(reserva.getIdAutomovil()) +
+                    "  ,-Fecha: " + reserva.getFecha() +
+                    "  ,-Fecha Inicio: " + reserva.getHoraInicio() +
+                    "  ,-Fecha Fin:" + reserva.getHoraFin() +
+                    "  ,-Cajon: " + reserva.getIdCajon() +
+                    "  ,-Usuario: " + reserva.getIdUsuario();
+            reservasStrings.add(reservaString);
         }
         return reservasStrings;
     }

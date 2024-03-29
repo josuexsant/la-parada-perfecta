@@ -114,7 +114,6 @@ public class Reserva {
             generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next())
                 id = generatedKeys.getInt(1);
-
             Log.success("Se guardo la reserva con el ID: " + this.id);
             conn.close();
             return true; // Se pudo guardar la reserva exitosamente

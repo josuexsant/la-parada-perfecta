@@ -1,76 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.ConfirmarReserva">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="12" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1"/>
+    </properties>
     <border type="none"/>
     <children>
-      <grid id="74fc" binding="CReserva" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <component id="70319" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <autoscrolls value="true"/>
-          <focusable value="true"/>
-          <inheritsPopupMenu value="false"/>
+          <font name="Roboto Light" size="28" style="1"/>
+          <foreground color="-14863017"/>
+          <text value="¡Tu reserva ha sido creada!"/>
         </properties>
-        <border type="none"/>
-        <children>
-          <vspacer id="4ac67">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
-          <grid id="f3e26" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <background color="-9530690"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <component id="9dc98" class="javax.swing.JLabel" binding="confirmarReservaLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font name="Lucida Sans Typewriter" size="14" style="0"/>
-                  <text value="Confirmar reserva"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <component id="61d71" class="javax.swing.JLabel" binding="labelInfo">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Lucida Sans Typewriter" size="14" style="0"/>
-              <text value="Nombre del usuario: "/>
-            </properties>
-          </component>
-          <component id="c317b" class="javax.swing.JButton" binding="MenuButton">
-            <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="SF Pro Display" size="18"/>
-              <text value="Menu "/>
-            </properties>
-          </component>
-          <hspacer id="22adb">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </hspacer>
-        </children>
-      </grid>
+      </component>
+      <vspacer id="fc31c">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="a901c" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="ID:"/>
+        </properties>
+      </component>
+      <component id="c2bea" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Fecha:"/>
+        </properties>
+      </component>
+      <component id="47bc1" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Hora inicio:"/>
+        </properties>
+      </component>
+      <component id="1351e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Hora fin:"/>
+        </properties>
+      </component>
+      <component id="f981c" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Matricula:"/>
+        </properties>
+      </component>
+      <component id="d9476" class="javax.swing.JButton" binding="menuButton">
+        <constraints>
+          <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12223587"/>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-1"/>
+          <text value="Menu"/>
+        </properties>
+      </component>
+      <component id="7c473" class="javax.swing.JLabel" binding="idTextfield">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="21790" class="javax.swing.JLabel" binding="horaInicioTextfield">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="7c173" class="javax.swing.JLabel" binding="horaFinTextfield">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="9a1e0" class="javax.swing.JLabel" binding="matriculaTextfield">
+        <constraints>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <vspacer id="7f8b4">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <hspacer id="f01e4">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="dfc64">
+        <constraints>
+          <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="78a4c">
+        <constraints>
+          <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <hspacer id="32f9c">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <component id="3a332" class="javax.swing.JLabel" binding="img" custom-create="true">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="a356d" class="javax.swing.JLabel" binding="fechaTextfield">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+          <text value="Label"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

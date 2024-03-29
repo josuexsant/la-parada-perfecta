@@ -144,24 +144,9 @@ public class ResgitroReserva extends JFrame {
                     Log.error("No hay una matricula registrada");
                     JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
                 } else {
-                    ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
-
-                    ConfirmarReserva confirmarReservaFrame = new ConfirmarReserva();
-                    confirmarReservaFrame.setTitle("Confirmar Reserva");
-                    confirmarReservaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    confirmarReservaFrame.setVisible(true);
-                    confirmarReservaFrame.setSize(850, 350);
-                    confirmarReservaFrame.setLocationRelativeTo(null);
+                    ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
+                    view.mostrarInterfaz();
                     dispose();
-
-                    int horaInicio = Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]);
-                    int horaFin = Integer.parseInt(horaSalidaSeleccionada.split(":")[0]);
-                    int horasSeleccionadas = horaFin - horaInicio;
-                    double costoTotal = calcularCosto(horasSeleccionadas);
-
-                    String informacionSeleccionada = String.format("Nombre de usuario: %s <br><br> Mes: %d <br><br> Día: %d <br><br> Hora Llegada: %s <br><br> Hora Salida: %s <br><br> Matricula: %s <br><br> Costo Total: $%.2f", nombreSeleccionado, mesSeleccionado, diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada, costoTotal);
-
-                    confirmarReservaFrame.mostrarReserva(informacionSeleccionada);
                 }
             }
         };
@@ -180,7 +165,7 @@ public class ResgitroReserva extends JFrame {
     }
 
     private void createUIComponents() {
-        ImageIcon icon = new ImageIcon("src/main/images/car-running.gif");
+        ImageIcon icon = new ImageIcon("src/main/images/editar.png");
         Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST);
         img = new JLabel(new ImageIcon(image));
     }
