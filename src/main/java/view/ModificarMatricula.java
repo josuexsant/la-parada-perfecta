@@ -33,6 +33,7 @@ public class ModificarMatricula extends JFrame{
         obtenerMarcas();
         setMatriculaField();
         modificar();
+        volverButton.addActionListener(e -> volver());
     }
     public void setMatriculaField() {
         matriculaField.setText(matriculaSeleccionada);
