@@ -25,8 +25,6 @@ public class RegistroMatricula extends JFrame{
 
     public RegistroMatricula() {
         ctrlAutomovil = new CtrlAutomovil();
-        setContentPane(registroPanel);
-        setLocationRelativeTo(null);
         obtenerMarcas();
         registrar();
         volverButton.addActionListener(e -> volver());
@@ -54,10 +52,10 @@ public class RegistroMatricula extends JFrame{
 
                 if(marcaSeleccionada == 0){
                     Log.error("Por favor, seleccione una marca");
-                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una marca");
+                    JOptionPane.showMessageDialog(registroPanel, "Por favor, seleccione una marca");
                 }else{
                     ctrlAutomovil.agregarMatricula(marcaSeleccionada, matriculaNueva);
-                        JOptionPane.showMessageDialog(null, "Registro exitoso");
+                        JOptionPane.showMessageDialog(registroPanel, "Registro exitoso");
                          ViewMenu menu = new ViewMenu();
                          menu.mostrarInterfaz();
                          dispose();
@@ -102,7 +100,7 @@ public class RegistroMatricula extends JFrame{
         setContentPane(registroPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500, 600);
         setResizable(false);
         setVisible(true);

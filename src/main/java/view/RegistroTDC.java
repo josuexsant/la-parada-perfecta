@@ -85,7 +85,7 @@ public class RegistroTDC extends JFrame {
                 boolean registroExitoso = controladorTDC.registrarTDC(NumeroS, FechExp, CvvS, NombreSeleccionado, TDrir);
 
                 if (registroExitoso) {
-                    JOptionPane.showMessageDialog(null, "Registro de Tarjeta exitoso");
+                    JOptionPane.showMessageDialog(registroTarjeta, "Registro de Tarjeta exitoso");
                     Log.info("Tarjeta registrada");
 
                     dispose();
@@ -107,7 +107,7 @@ public class RegistroTDC extends JFrame {
 
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al registrar la tarjeta");
+                    JOptionPane.showMessageDialog(registroTarjeta, "Error al registrar la tarjeta");
                 }
             }
         };
@@ -174,7 +174,7 @@ public class RegistroTDC extends JFrame {
     }
 
     private void cancelar() {
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea salir?", "Salir",
+        if (JOptionPane.showConfirmDialog(registroTarjeta, "¿Está seguro que desea salir?", "Salir",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
             CtrlUsuario ctrlUsuario = new CtrlUsuario();

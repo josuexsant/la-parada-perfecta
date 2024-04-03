@@ -173,10 +173,10 @@ public class ReservaGarantizada extends JFrame {
 
                 if (matricula == null) {
                     Log.error("No hay una matricula registrada");
-                    JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
+                    JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
                 } else {
                     ctrlReservaGarantizada.crear(diaInicio,mesInicio,diaFin,mesFin,matricula);
-                    JOptionPane.showMessageDialog(null,"Reserva garantizada creada");
+                    JOptionPane.showMessageDialog(ReservaP,"Reserva garantizada creada");
                     menu.mostrarInterfaz();
                     dispose();
                 }

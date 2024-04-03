@@ -136,7 +136,7 @@ public class RegistroReserva extends JFrame {
 
                 if (matriculaSeleccionada == null) {
                     Log.error("No hay una matricula registrada");
-                    JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
+                    JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
                 } else {
                     ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
                     view.mostrarInterfaz();

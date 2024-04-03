@@ -86,7 +86,7 @@ public class CancelarReserva extends JFrame {
                 }
                 int idReserva = reserva.getId();
                 ctrlReserva.eliminarReservaSelccionada(idReserva);
-                JOptionPane.showMessageDialog(null, "Cancelacion exitosa");
+                JOptionPane.showMessageDialog(PCancelar, "Cancelacion exitosa");
                 menu.mostrarInterfaz();
                 dispose();
                 Log.success("Cancelacion Exitosa");
@@ -100,7 +100,7 @@ public class CancelarReserva extends JFrame {
         setContentPane(PCancelar);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500, 600);
         setResizable(false);
         setVisible(true);

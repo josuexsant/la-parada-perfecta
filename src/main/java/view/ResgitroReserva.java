@@ -142,7 +142,7 @@ public class ResgitroReserva extends JFrame {
 
                 if (matriculaSeleccionada == null) {
                     Log.error("No hay una matricula registrada");
-                    JOptionPane.showMessageDialog(null, "No hay una matricula seleccionada.");
+                    JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
                 } else {
                     ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
                     view.mostrarInterfaz();
@@ -157,7 +157,7 @@ public class ResgitroReserva extends JFrame {
         setContentPane(ReservaP);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500, 600);
         setResizable(false);
         setVisible(true);

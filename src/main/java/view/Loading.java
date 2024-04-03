@@ -18,7 +18,7 @@ public class Loading extends JFrame {
     public void mostrarInterfaz(int milliSeconds) {
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(320, 320);
         setResizable(false);
         setVisible(true);

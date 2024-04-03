@@ -46,12 +46,12 @@ public class AsignarTarifa extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!tarifaText.getText().matches("\\d+\\.\\d{2}")) {
-                    JOptionPane.showMessageDialog(null, "Por favor ingrese un número con dos decimales.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(asignarTarifaPanel, "Por favor ingrese un número con dos decimales.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 ctrlTarifa.modificarTarifa(Float.parseFloat(tarifaText.getText()), getConcepto());
-                JOptionPane.showMessageDialog(null, "Tarifa modificada");
+                JOptionPane.showMessageDialog(asignarTarifaPanel, "Tarifa modificada");
                 CtrlUsuario ctrlUsuario = new CtrlUsuario();
                 ctrlUsuario.cerrarSesion();
                 InicioSesion sesion = new InicioSesion();
@@ -94,7 +94,7 @@ public class AsignarTarifa extends JFrame {
         setContentPane(asignarTarifaPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500,600);
         setResizable(false);
         setVisible(true);
