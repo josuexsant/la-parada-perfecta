@@ -28,13 +28,16 @@ public class RegistroTDC extends JFrame {
     private JLabel logo;
 
     public void mostrarInterfaz() {
-        setContentPane(registroTarjeta);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setLocationRelativeTo(null);
-        setSize(500, 500);
-        setResizable(false);
-        setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            setContentPane(registroTarjeta);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            pack();
+            setLocation(100, 100);
+            setSize(500, 600);
+            setResizable(false);
+            setVisible(true);
+            Log.info("Se muestra RegistroTDC");
+        });
     }
 
     public RegistroTDC() {
@@ -53,8 +56,8 @@ public class RegistroTDC extends JFrame {
     }
 
     private void llenarMesBox() {
-        for (int mes = 01; mes <= 12; mes++) {
-            mesBox.addItem(String.valueOf(mes));
+        for (int mes = 1; mes <= 12; mes++) {
+            mesBox.addItem(String.format("%02d", mes));
         }
     }
 
@@ -83,32 +86,25 @@ public class RegistroTDC extends JFrame {
 
                 CtrlTDC controladorTDC = new CtrlTDC();
                 boolean registroExitoso = controladorTDC.registrarTDC(NumeroS, FechExp, CvvS, NombreSeleccionado, TDrir);
+                Loading view = new Loading("Verificando tarjeta");
+                view.mostrarInterfaz(10000);
 
-                if (registroExitoso) {
-                    JOptionPane.showMessageDialog(registroTarjeta, "Registro de Tarjeta exitoso");
-                    Log.info("Tarjeta registrada");
-
-                    dispose();
-                    MostrarTDC mostrarTdc = new MostrarTDC();
-                    mostrarTdc.setTitle("Confirmar Reserva");
-                    mostrarTdc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    mostrarTdc.setVisible(true);
-                    mostrarTdc.setSize(500, 250);
-                    mostrarTdc.setLocationRelativeTo(null);
-
-
-                    String informacionSeleccionada = construirInformacionSeleccionada(NombreSeleccionado, NumeroS, año, mes, CvvS, TDrir);
-                    mostrarTdc.mostrarInformacionSeleccionada(informacionSeleccionada);
-
-
-                    ViewMenu inicioMenuFrame = new ViewMenu();
-                    inicioMenuFrame.mostrarInterfaz();
-                    dispose();
-
-
-                } else {
-                    JOptionPane.showMessageDialog(registroTarjeta, "Error al registrar la tarjeta");
-                }
+                Timer timer = new Timer(10000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (registroExitoso) {
+                            JOptionPane.showMessageDialog(registroTarjeta, "Registro de Tarjeta exitoso");
+                            Log.info("Tarjeta registrada");
+                            ViewMenu inicioMenuFrame = new ViewMenu();
+                            inicioMenuFrame.mostrarInterfaz();
+                            dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(registroTarjeta, "Error al registrar la tarjeta");
+                        }
+                    }
+                });
+                timer.setRepeats(false); // Para que solo se ejecute una vez
+                timer.start();
             }
         };
 
@@ -124,7 +120,7 @@ public class RegistroTDC extends JFrame {
 
         ((AbstractDocument) numeroText.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
-            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException, BadLocationException {
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
                 StringBuilder sb = new StringBuilder();
                 sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
                 sb.insert(offset, string);

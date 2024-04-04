@@ -1,5 +1,7 @@
 package view;
 
+import model.Log;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,12 +20,15 @@ public class Loading extends JFrame {
     public void mostrarInterfaz(int milliSeconds) {
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        pack();
         setLocation(100,100);
-        setSize(320, 320);
+        setSize(500, 600);
         setResizable(false);
         setVisible(true);
+        Log.info("Se muestra Loading");
         showForMlls(milliSeconds);
     }
+
     private void showForMlls(int milliSeconds) {
         Timer timer = new Timer(milliSeconds, new ActionListener() {
             @Override
