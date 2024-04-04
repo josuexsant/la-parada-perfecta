@@ -1,5 +1,6 @@
 package controller;
 
+import model.Log;
 import model.Sesion;
 import model.TDC;
 import model.Usuario;
@@ -18,13 +19,13 @@ public class CtrlTDC {
 
         try {
             if (tarjetaNueva.registrar()) {
-                System.out.println("Registro de la tarjeta de credito exitoso");
+                Log.success("Registro de la tarjeta de credito exitoso");
                 return true;
             } else {
-                System.out.println("Registro de la tarjeta de credito fallido");
+                Log.warn("Registro de la tarjeta de credito fallido");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Log.warn(e.getMessage());
         }
         return false;
     }
