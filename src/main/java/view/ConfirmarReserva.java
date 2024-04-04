@@ -46,7 +46,7 @@ public class ConfirmarReserva extends JFrame {
         setContentPane(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500, 600);
         setResizable(false);
         setVisible(true);

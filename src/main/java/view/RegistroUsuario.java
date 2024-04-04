@@ -43,7 +43,7 @@ public class RegistroUsuario extends JFrame {
             int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
             if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
-                JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                JOptionPane.showMessageDialog(registroUsuariopanel, "Registro Exitoso");
 
                 RegistroTDC registroTDC = new RegistroTDC();
                 registroTDC.mostrarInterfaz();
@@ -51,7 +51,7 @@ public class RegistroUsuario extends JFrame {
 
                 Log.info("Registro de usuario");
             } else {
-                JOptionPane.showMessageDialog(null, "Error en el registro");
+                JOptionPane.showMessageDialog(registroUsuariopanel, "Error en el registro");
             }
         });
 
@@ -125,7 +125,7 @@ public class RegistroUsuario extends JFrame {
             public void focusLost(FocusEvent e) {
                 String correo = correotext.getText();
                 if (!correo.matches("^[\\w.-]+@[\\w.-]+\\.com$")) {
-                    JOptionPane.showMessageDialog(null, "Correo electrónico inválido");
+                    JOptionPane.showMessageDialog(registroUsuariopanel, "Correo electrónico inválido");
                     correotext.requestFocus();
                 }
             }
@@ -136,7 +136,7 @@ public class RegistroUsuario extends JFrame {
             public void focusLost(FocusEvent e) {
                 String password = new String(passwordText.getPassword());
                 if (password.length() != 8) {
-                    JOptionPane.showMessageDialog(null, "La contraseña debe tener 8 caracteres");
+                    JOptionPane.showMessageDialog(registroUsuariopanel, "La contraseña debe tener 8 caracteres");
                     passwordText.requestFocus();
                 }
             }
@@ -153,7 +153,7 @@ public class RegistroUsuario extends JFrame {
         setContentPane(registroUsuariopanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500,600);
         setResizable(false);
         setVisible(true);

@@ -62,7 +62,7 @@ public class ModificarMatricula extends JFrame{
                     Log.error("Por favor, seleccione una marca");
                 }else{
                     ctrlAutomovil.modificarMatricula(marcaSeleccionada, matriculaNueva, matriculaSeleccionada);
-                    JOptionPane.showMessageDialog(null, "Modificacion exitosa");
+                    JOptionPane.showMessageDialog(modificarPanel, "Modificacion exitosa");
 
                     ViewMenu menu = new ViewMenu();
                     menu.mostrarInterfaz();
@@ -102,7 +102,7 @@ public class ModificarMatricula extends JFrame{
         setContentPane(modificarPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500, 600);
         setResizable(false);
         setVisible(true);

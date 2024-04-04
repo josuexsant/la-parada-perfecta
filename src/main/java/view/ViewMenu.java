@@ -32,7 +32,7 @@ public class ViewMenu extends JFrame {
         pack();
         setResizable(false);
         setSize(500, 600);
-        setLocationRelativeTo(null);
+        setLocation(100, 100);
     }
 
     private void crearReserva() {
@@ -63,7 +63,7 @@ public class ViewMenu extends JFrame {
         CtrlUsuario ctrlUsuario = new CtrlUsuario();
         InicioSesion sesion = new InicioSesion();
         if (ctrlUsuario.cerrarSesion()) {
-            JOptionPane.showMessageDialog(null, "Sesión cerrada");
+            JOptionPane.showMessageDialog(pnMenu, "Sesión cerrada");
             dispose();
             sesion.mostrarInterfaz();
         }

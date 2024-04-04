@@ -36,17 +36,17 @@ public class InicioSesion extends JFrame {
         String password = new String(passwordText.getPassword());
 
         if (correoElectronico.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese un correo ó contraseña validos");
+            JOptionPane.showMessageDialog(inicio, "Ingrese un correo ó contraseña validos");
             return;
         }
 
         if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
-            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+            JOptionPane.showMessageDialog(inicio, "Inicio de sesión exitoso");
             menu.mostrarInterfaz();
             dispose();
             Log.success("Sesion Exitosa");
         } else {
-            JOptionPane.showMessageDialog(null, "Inicio de sesión fallido");
+            JOptionPane.showMessageDialog(inicio, "Inicio de sesión fallido");
             Log.error("Fallo en el inicio de sesión");
         }
     }
@@ -60,7 +60,7 @@ public class InicioSesion extends JFrame {
     private void iniciarSesionOperador() {
         CtrlOperador ctrlOperador = new CtrlOperador();
         if (emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese un correo ó contraseña validos");
+            JOptionPane.showMessageDialog(inicio, "Ingrese un correo ó contraseña validos");
             return;
         }
 
@@ -73,7 +73,8 @@ public class InicioSesion extends JFrame {
             asignarTarifa.mostrarInterfaz();
             dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Datos incorrectos");
+            setLocation(100,100);
+            JOptionPane.showMessageDialog(inicio, "Datos incorrectos");
         }
     }
 
@@ -81,7 +82,7 @@ public class InicioSesion extends JFrame {
         setContentPane(inicio);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500, 600);
         setResizable(false);
         setVisible(true);
