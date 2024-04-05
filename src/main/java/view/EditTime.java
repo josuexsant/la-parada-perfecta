@@ -1,5 +1,6 @@
 package view;
 
+import controller.CtrlTime;
 import model.Log;
 import model.SimulatedTime;
 
@@ -23,7 +24,8 @@ public class EditTime extends JFrame {
     }
 
     private void reset() {
-        SimulatedTime.getInstance().setDate(Calendar.getInstance());
+        CtrlTime ctrlTime = new CtrlTime();
+        ctrlTime.reset();
         TimerSimulator view = new TimerSimulator();
         view.mostrarInterfaz();
         dispose();
@@ -39,12 +41,9 @@ public class EditTime extends JFrame {
         Date date = (Date) spinnerDate.getValue();
         Date time = (Date) spinnerTime.getValue();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, time.getHours());
-        calendar.set(Calendar.MINUTE, time.getMinutes());
+        CtrlTime ctrlTime = new CtrlTime();
+        ctrlTime.guardar(date,time);
 
-        SimulatedTime.getInstance().setDate(calendar);
         TimerSimulator view = new TimerSimulator();
         view.mostrarInterfaz();
         dispose();
