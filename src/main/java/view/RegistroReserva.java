@@ -1,15 +1,19 @@
 package view;
+
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
 import controller.CtrlUsuario;
 import model.Log;
 import model.Reserva;
+import model.SimulatedTime;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.LinkedList;
 import javax.swing.*;
+
 public class RegistroReserva extends JFrame {
 
     private JTextField txtnombreUsuario;
@@ -35,10 +39,9 @@ public class RegistroReserva extends JFrame {
     private CtrlUsuario ctrlUsuario;
     private Reserva reserva;
 
-    public RegistroReserva() throws SQLException {
+    public RegistroReserva() {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
-
         setContentPane(ReservaP);
         RegistroHora();
         MesSeleccionado();
@@ -47,15 +50,30 @@ public class RegistroReserva extends JFrame {
         establecerNombre();
         Confirmar();
         Cancelar();
+
     }
 
-    public void llenarPlacaAutomovil(){
+    public void mostrarInterfaz() {
+        SwingUtilities.invokeLater(() -> {
+            setContentPane(ReservaP);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            pack();
+            setLocation(100, 100);
+            setSize(500, 600);
+            setResizable(false);
+            setVisible(true);
+            Log.info("Se muestra RegistroReserva");
+        });
+    }
+
+    public void llenarPlacaAutomovil() {
         LinkedList<String> placas = ctrlAutomovil.getMatriculas();
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
     }
-    public void MesSeleccionado(){
+
+    public void MesSeleccionado() {
         MesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,27 +83,39 @@ public class RegistroReserva extends JFrame {
             }
         });
     }
-    public void RegistroHora(){
+
+    public void RegistroHora() {
         for (int f = 0; f <= 23; f++) {
-            HoraLlegada.addItem(String.format("%s:00",f));
+            HoraLlegada.addItem(String.format("%s:00", f));
             HoraSalida.addItem(String.format("%s:00", f));
         }
     }
+
     public void RegistroFecha() {
         MesBox.removeAllItems();
         for (int mes = 1; mes <= 12; mes++) {
             MesBox.addItem(Integer.toString(mes));
         }
     }
+
     public void RegistroDia(int mes) {
         DiaBox.removeAllItems();
         switch (mes) {
-            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
                 for (int f = 1; f <= 31; f++) {
                     DiaBox.addItem(Integer.toString(f));
                 }
                 break;
-            case 4: case 6: case 9: case 11:
+            case 4:
+            case 6:
+            case 9:
+            case 11:
                 for (int f = 1; f <= 30; f++) {
                     DiaBox.addItem(Integer.toString(f));
                 }
@@ -97,6 +127,7 @@ public class RegistroReserva extends JFrame {
                 break;
         }
     }
+
     private double calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
@@ -105,11 +136,13 @@ public class RegistroReserva extends JFrame {
         double costoTotal = horasSeleccionadas * tarifaPorHora;
         return costoTotal;
     }
-    public void establecerNombre(){
-        ctrlAutomovil.obtenerNombre();
-        nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
+
+    public void establecerNombre() {
+        String nombre = ctrlAutomovil.obtenerNombre();
+        nombreUsuario.setText(nombre);
     }
-    public void Cancelar(){
+
+    public void Cancelar() {
 
         menu = new ViewMenu();
 
@@ -123,27 +156,45 @@ public class RegistroReserva extends JFrame {
         CancelarButton.addActionListener(accion);
         dispose();
     }
-    private void Confirmar() {
-        ActionListener accion = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int mesSeleccionado = Integer.parseInt((String) MesBox.getSelectedItem());
-                int diaSeleccionado = Integer.parseInt((String) DiaBox.getSelectedItem());
-                String horaLlegadaSeleccionada = (String) HoraLlegada.getSelectedItem();
-                String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
-                String nombreSeleccionado = nombreUsuario.getText();
-                String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
 
-                if (matriculaSeleccionada == null) {
-                    Log.error("No hay una matricula registrada");
-                    JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
-                } else {
-                    ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
-                    view.mostrarInterfaz();
-                    dispose();
+    private void Confirmar() {
+        ActionListener accion = actionEvent -> {
+            Loading view = new Loading("Comprobando disponilidad...");
+            view.mostrarInterfaz(10000);
+
+            Timer timer = new Timer(10000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.invokeLater(() -> {
+                        int mesSeleccionado = Integer.parseInt((String) MesBox.getSelectedItem());
+                        int diaSeleccionado = Integer.parseInt((String) DiaBox.getSelectedItem());
+                        String horaLlegadaSeleccionada = (String) HoraLlegada.getSelectedItem();
+                        String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
+                        String nombreSeleccionado = nombreUsuario.getText();
+                        String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
+                        Calendar peticion = Calendar.getInstance();
+                        peticion.set(2024,mesSeleccionado-1,diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada),0);
+                        Log.debug(peticion.toString());
+                 /*       if (matriculaSeleccionada == null && verificarDisponibilidad(peticion)) {
+                            Log.error("No hay una matricula registrada");
+                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
+                        } else {
+                            ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
+                            view.mostrarInterfaz();
+                            dispose();
+                        }*/
+                    });
                 }
-            }
+            });
+            timer.setRepeats(false); // Para que solo se ejecute una vez
+            timer.start();
         };
         confirmarButton.addActionListener(accion);
+    }
+
+    public boolean verificarDisponibilidad(Calendar peticion){
+        Calendar deadLine = SimulatedTime.getInstance().getDate();
+        deadLine.add(Calendar.MINUTE, -15);
+        return peticion.before(deadLine);
     }
 }
