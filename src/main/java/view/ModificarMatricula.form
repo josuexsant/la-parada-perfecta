@@ -123,7 +123,7 @@
         <properties>
           <font name="Roboto Light" size="28" style="1"/>
           <foreground color="-14863017"/>
-          <text value="Modica una matricula"/>
+          <text value="Modifica una matricula"/>
         </properties>
       </component>
       <vspacer id="b5c9">

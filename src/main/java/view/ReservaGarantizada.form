@@ -201,7 +201,7 @@
         <properties>
           <font name="Roboto Light" size="18" style="0"/>
           <foreground color="-14863017"/>
-          <text value="Seleccionar matricula"/>
+          <text value="Automovil"/>
         </properties>
       </component>
       <vspacer id="a6c85">

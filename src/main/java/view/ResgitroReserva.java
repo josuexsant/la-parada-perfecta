@@ -73,8 +73,8 @@ public class ResgitroReserva extends JFrame {
 
     public void RegistroHora() {
         for (int f = 0; f <= 23; f++) {
-            HoraLlegada.addItem(String.format("%s:00", f));
-            HoraSalida.addItem(String.format("%s:00", f));
+            HoraLlegada.addItem(String.format("%s", f));
+            HoraSalida.addItem(String.format("%s", f));
         }
     }
 
@@ -159,16 +159,19 @@ public class ResgitroReserva extends JFrame {
                         String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
                         String nombreSeleccionado = nombreUsuario.getText();
                         String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
+
+
                         Calendar peticion = Calendar.getInstance();
                         peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada), 0);
                         Log.debug(peticion.toString());
-                        if (matriculaSeleccionada == null && verificarDisponibilidad(peticion)) {
-                            Log.error("No hay una matricula registrada");
-                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
-                        } else {
+
+                        if (matriculaSeleccionada != null && verificarDisponibilidad(peticion)>0) {
                             ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
                             view.mostrarInterfaz();
                             dispose();
+                        } else {
+                            Log.error("No hay una matricula registrada");
+                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
                         }
                     });
                 }
@@ -192,10 +195,12 @@ public class ResgitroReserva extends JFrame {
         });
     }
 
-    public boolean verificarDisponibilidad(Calendar peticion) {
+    public int verificarDisponibilidad(Calendar peticion) {
         Calendar deadLine = SimulatedTime.getInstance().getDate();
         deadLine.add(Calendar.MINUTE, -15);
-        return peticion.before(deadLine);
+
+        int i = peticion.compareTo(deadLine);
+        return i;
     }
 
     private void createUIComponents() {
