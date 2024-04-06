@@ -165,13 +165,13 @@ public class ResgitroReserva extends JFrame {
                         peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada), 0);
                         Log.debug(peticion.toString());
 
-                        if (matriculaSeleccionada == null && verificarDisponibilidad(peticion)<0) {
-                            Log.error("No hay una matricula registrada");
-                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
-                        } else {
+                        if (matriculaSeleccionada != null && verificarDisponibilidad(peticion)>0) {
                             ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
                             view.mostrarInterfaz();
                             dispose();
+                        } else {
+                            Log.error("No hay una matricula registrada");
+                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
                         }
                     });
                 }
