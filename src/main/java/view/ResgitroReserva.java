@@ -86,7 +86,6 @@ public class ResgitroReserva extends JFrame {
     }
 
     public void RegistroDia(int mes) {
-        DiaBox.removeAllItems();
         switch (mes) {
             case 1:
             case 3:
