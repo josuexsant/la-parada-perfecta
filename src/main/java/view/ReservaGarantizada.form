@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="ReservaP" layout-manager="GridLayoutManager" row-count="16" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1152" height="646"/>
+      <xy x="20" y="20" width="413" height="529"/>
     </constraints>
     <properties>
       <background color="-1"/>
@@ -122,27 +122,6 @@
           <text value="Día:"/>
         </properties>
       </component>
-      <component id="6be47" class="javax.swing.JComboBox" binding="MesBoxInicio">
-        <constraints>
-          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-918802"/>
-          <font name="Roboto Light" size="18" style="0"/>
-          <foreground color="-14863017"/>
-        </properties>
-      </component>
-      <component id="50eed" class="javax.swing.JComboBox" binding="DiaBoxInicio">
-        <constraints>
-          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-918802"/>
-          <font name="Roboto Light" size="18" style="0"/>
-          <foreground color="-14863017"/>
-          <model/>
-        </properties>
-      </component>
       <component id="a8b15" class="javax.swing.JLabel">
         <constraints>
           <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -161,27 +140,6 @@
           <font name="Roboto Light" size="18" style="0"/>
           <foreground color="-14863017"/>
           <text value="Mes: "/>
-        </properties>
-      </component>
-      <component id="c6425" class="javax.swing.JComboBox" binding="DiaBoxFin">
-        <constraints>
-          <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-918802"/>
-          <font name="Roboto Light" size="18" style="0"/>
-          <foreground color="-14863017"/>
-          <name value="HoraLlegada"/>
-        </properties>
-      </component>
-      <component id="3694e" class="javax.swing.JComboBox" binding="MesBoxFin">
-        <constraints>
-          <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-918802"/>
-          <font name="Roboto Light" size="18" style="0"/>
-          <foreground color="-14863017"/>
         </properties>
       </component>
       <component id="e26ec" class="javax.swing.JComboBox" binding="MatriculaBox">
@@ -229,6 +187,42 @@
           <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
+      <component id="f5b50" class="javax.swing.JSpinner" binding="DaySpinner" custom-create="true">
+        <constraints>
+          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+        </properties>
+      </component>
+      <component id="4f4c6" class="javax.swing.JSpinner" binding="MesSpineer" custom-create="true">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+        </properties>
+      </component>
+      <component id="92925" class="javax.swing.JSpinner" binding="DaySpinnerFin" custom-create="true">
+        <constraints>
+          <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+        </properties>
+      </component>
+      <component id="1ee64" class="javax.swing.JSpinner" binding="MesSpinnerFin" custom-create="true">
+        <constraints>
+          <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="18" style="0"/>
+          <foreground color="-14863017"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

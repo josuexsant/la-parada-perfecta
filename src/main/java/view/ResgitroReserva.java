@@ -59,6 +59,61 @@ public class ResgitroReserva extends JFrame {
 
     }
 
+
+    public void MesSeleccionado() {
+        MesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String mesSeleccionadoString = (String) MesBox.getSelectedItem();
+                int mesSeleccionado = Integer.parseInt(mesSeleccionadoString);
+                RegistroDia(mesSeleccionado);
+            }
+        });
+    }
+
+    public void RegistroHora() {
+        for (int f = 0; f <= 23; f++) {
+            HoraLlegada.addItem(String.format("%s:00", f));
+            HoraSalida.addItem(String.format("%s:00", f));
+        }
+    }
+
+    public void RegistroFecha() {
+        MesBox.removeAllItems();
+        for (int mes = 1; mes <= 12; mes++) {
+            MesBox.addItem(Integer.toString(mes));
+        }
+    }
+
+    public void RegistroDia(int mes) {
+        switch (mes) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                for (int f = 1; f <= 31; f++) {
+                    DiaBox.addItem(Integer.toString(f));
+                }
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                for (int f = 1; f <= 30; f++) {
+                    DiaBox.addItem(Integer.toString(f));
+                }
+                break;
+            case 2:
+                for (int f = 1; f <= 28; f++) {
+                    DiaBox.addItem(Integer.toString(f));
+                }
+                break;
+        }
+    }
+
     private double calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
