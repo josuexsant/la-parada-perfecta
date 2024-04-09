@@ -18,7 +18,7 @@
           <background color="-12223587"/>
           <font name="Roboto Light" size="18" style="0"/>
           <foreground color="-1"/>
-          <text value="Agregar matrícula"/>
+          <text value="Agregar"/>
         </properties>
       </component>
       <vspacer id="21553">

@@ -88,7 +88,7 @@
           <enabled value="true"/>
           <font name="Roboto Light" size="18" style="0"/>
           <foreground color="-14863017"/>
-          <text value="Matricula:"/>
+          <text value="Automovil"/>
         </properties>
       </component>
       <component id="451d5" class="javax.swing.JComboBox" binding="MatriculaBox">
