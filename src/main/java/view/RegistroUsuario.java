@@ -161,7 +161,7 @@ public class RegistroUsuario extends JFrame {
     }
 
     private int obtenerIdGenero(String genero) {
-        if ("Masculino".equals(genero)) {
+        if ("Masculino000".equals(genero)) {
             return 1;
         } else if ("Femenino".equals(genero)) {
             return 2;
@@ -172,18 +172,73 @@ public class RegistroUsuario extends JFrame {
 
     private int obtenerIdCiudad(String ciudades) {
         switch (ciudades) {
-            case "Puebla":
-                return 20;
+            case "Aguascalientes":
+                return 1;
+            case "Baja California":
+                return 2;
+            case "Baja California Sur":
+                return 3;
+            case "Campeche":
+                return 4;
+            case "Chiapas":
+                return 5;
+            case "Chihuahua":
+                return 6;
+            case "Coahuila":
+                return 7;
+            case "Colima":
+                return 8;
+            case "Durango":
+                return 9;
+            case "Guanajuato":
+                return 10;
+            case "Guerrero":
+                return 11;
+            case "Hidalgo":
+                return 12;
+            case "Jalisco":
+                return 13;
             case "México":
                 return 14;
-            case "Veracruz":
-                return 29;
+            case "Michoacán":
+                return 15;
+            case "Morelos":
+                return 16;
             case "Nayarit":
                 return 17;
+            case "Nuevo León":
+                return 18;
+            case "Oaxaca":
+                return 19;
+            case "Puebla":
+                return 20;
+            case "Querétaro":
+                return 21;
+            case "Quintana Roo":
+                return 22;
+            case "San Luis Potosí":
+                return 23;
+            case "Sinaloa":
+                return 24;
+            case "Sonora":
+                return 25;
+            case "Tabasco":
+                return 26;
+            case "Tamaulipas":
+                return 27;
+            case "Tlaxcala":
+                return 28;
+            case "Veracruz":
+                return 29;
+            case "Yucatán":
+                return 30;
+            case "Zacatecas":
+                return 31;
             default:
                 return 0;
         }
     }
+
 
     private void createUIComponents() {
         ImageIcon icon = new ImageIcon("src/main/images/agregar.gif");

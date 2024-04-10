@@ -23,7 +23,6 @@ public class FusionarReserva extends JFrame{
     public FusionarReserva() throws SQLException {
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
-
         setContentPane(fusionarPanel);
         cancelar();
         //fusionar();
