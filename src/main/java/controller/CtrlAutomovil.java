@@ -78,19 +78,18 @@ public class CtrlAutomovil {
     }
 
 
-    public boolean agregarMatricula(int idMarca, String placa) {
+    public void agregarMatricula(int idMarca, String placa) {
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
         Automovil automovil1 = new Automovil();
-        String nombreMarca = automovil1.obtenerMarca(idMarca);
-        if (nombreMarca != null) {
+        String nombreMarca = Automovil.obtenerMarca(idMarca);
+        if (idMarca != 0) {
             automovil1.guardarAutomovil(idUsuario, idMarca, placa);
             System.out.println("Matrícula creada exitosamente.");
         } else {
             System.out.println("No se pudo encontrar la marca especificada.");
         }
-        return false;
     }
 
     public boolean eliminarMatricula(String matricula) {

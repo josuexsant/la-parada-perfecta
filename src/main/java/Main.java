@@ -1,9 +1,10 @@
 import model.SimulatedTime;
 import view.InicioSesion;
+import view.Panel;
+import view.ReservaImprevista;
 import view.TimerSimulator;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,5 +15,8 @@ public class Main {
 
         TimerSimulator timer = new TimerSimulator();
         timer.mostrarInterfaz();
+
+        Panel panel = new Panel();
+        panel.mostrarInterfaz();
     }
 }

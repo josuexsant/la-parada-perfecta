@@ -58,7 +58,6 @@ public class ResgitroReserva extends JFrame {
         for (String placa : placas) {
             MatriculaBox.addItem(placa);
         }
-
     }
 
     private double calcularCosto(int horasSeleccionadas) {
