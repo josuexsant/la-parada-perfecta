@@ -251,9 +251,37 @@ public class Reserva {
 
     }
 
+    public boolean guardarReservaImprevista() {
+        try {
+            dbManager = new DBManager();
+            Connection conn = dbManager.getConnection();
+            PreparedStatement stmt;
+            ResultSet generatedKeys;
 
+            String query = "INSERT INTO reservaciones (id_automovil, fecha, fecha_inicio, fecha_fin, id_cajon, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, idAutomovil);
+            stmt.setString(2, fecha); // Se asigna la fecha actual
+            stmt.setString(3, horaInicio);
+            stmt.setString(4, horaFin);
+            stmt.setInt(5, idCajon);
+            stmt.setInt(6, idUsuario);
 
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0)
+                Log.error("No se guardo la reserva");
 
+            generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next())
+                id = generatedKeys.getInt(1);
+            Log.success("Se guardo la reserva con el ID: " + this.id);
+            conn.close();
+            return true;
+        } catch (SQLException e) {
+            Log.error(e.getMessage());
+            return false;
+        }
+    }
 
 
     public int getId() {

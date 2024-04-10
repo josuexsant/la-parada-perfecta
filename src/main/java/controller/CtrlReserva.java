@@ -3,6 +3,8 @@ package controller;
 import model.*;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 public class CtrlReserva {
@@ -102,5 +104,19 @@ public class CtrlReserva {
         } else {
             Log.info("Las reservas no son fusionables.");
         }
+    }
+
+    public Reserva crearReservaImprevista(String horaInicio, String horaFin, String matricula){
+        int idAutomovil = 0;
+        CtrlCajon ctrlCajon = new CtrlCajon();
+        Cajon cajon = ctrlCajon.getCajonDisponible();
+        int idCajon = cajon.getId();
+        int idUsuario = Sesion._instance().getUsuario().getId();
+        idAutomovil = Automovil.getIdConMatricula(matricula);
+        LocalDate fechaActual = LocalDate.now();
+        String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        reserva = new Reserva(0, idAutomovil, fechaFormateada, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
+        reserva.guardar();
+        return reserva;
     }
 }
