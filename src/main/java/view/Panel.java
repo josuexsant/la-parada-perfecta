@@ -44,7 +44,6 @@ public class Panel extends JFrame{
                             String correoElectronico = usuario.recuperarCorreo(membresiaInt);
                             String contrasenia = usuario.recuperarPassword(membresiaInt);
                             ctrlUsuario.iniciarSesion(correoElectronico, contrasenia);
-                            Sesion sesion = new Sesion();
 
                             // Crear instancia de la ventana de reserva imprevista
                             ReservaImprevista reservaImprevista = new ReservaImprevista();
