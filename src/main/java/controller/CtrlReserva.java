@@ -20,7 +20,7 @@ public class CtrlReserva {
         int idUsuario = Sesion._instance().getUsuario().getId();
         idAutomovil = Automovil.getIdConMatricula(matricula);
         String fecha = "2024-" + "-" + mes + "-" + dia;
-        reserva = new Reserva(0, idAutomovil, fecha, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
+        reserva = new Reserva(0, idAutomovil, fecha, horaInicio, horaFin, idCajon, idUsuario);
         reserva.guardar();
         return reserva;
     }

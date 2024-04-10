@@ -91,7 +91,7 @@ public class ResgitroReserva extends JFrame {
     private void Confirmar() {
         ActionListener accion = actionEvent -> {
             Loading view = new Loading("Comprobando disponilidad...");
-            view.mostrarInterfaz(10000);
+            view.mostrarInterfaz(1000);
 
             Timer timer = new Timer(10000, new ActionListener() {
                 @Override
