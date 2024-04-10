@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -260,6 +257,46 @@ public class Usuario {
         return nombreCompleto;
     }
 
+    public String recuperarCorreo(int id_Usuario) throws SQLException {
+        String correoElectronico = null;
+        String query = "SELECT correo_electronico " +
+                "FROM informacion_usuario " +
+                "WHERE id = ?";
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id_Usuario);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                String correo = rs.getString("correo_electronico");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return correoElectronico;
+    }
+
+    public String recuperarPassword(int id_Usuario) throws SQLException {
+        String contrasenia = null;
+        String query = "SELECT password " +
+                "FROM passwords " +
+                "WHERE id = ?";
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id_Usuario);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                String password = rs.getString("password");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return contrasenia;
+    }
+
     public void eliminar() {
         try {
             String query1 = "DELETE FROM passwords WHERE id_usuario = ?";
@@ -276,4 +313,20 @@ public class Usuario {
             Log.error(e.getMessage());
         }
     }
+
+    public boolean usuarioExiste(int idUsuario) {
+        String query = "SELECT id FROM informacion_usuario WHERE id = ?";
+        try {
+            Connection conn = dbManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idUsuario);
+            ResultSet rs = pstmt.executeQuery();
+            // Si rs.next() devuelve true, significa que se encontró un registro con el idUsuario
+            return rs.next();
+        } catch (SQLException e) {
+            Log.error(e.getMessage());
+            return false; // Si ocurre alguna excepción, se retorna false
+        }
+    }
+
 }

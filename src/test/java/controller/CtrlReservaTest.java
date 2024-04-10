@@ -74,4 +74,13 @@ class CtrlReservaTest {
         int id = 54;
         ctrlReserva1.eliminarReservaSelccionada(id);
     }
+
+    @Test
+    void crearReservaImprevista(){
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("alexis@example.com", "12345678");
+        CtrlReserva ctrlReserva = new CtrlReserva();
+        ctrlReserva.crearReservaImprevista("04:00", "ABC-1-2-3");
+
+    }
 }

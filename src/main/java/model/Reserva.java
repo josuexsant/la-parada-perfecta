@@ -239,18 +239,12 @@ public class Reserva {
                 }else {
                     Log.error("La reserva no se pudo fusionar.");
                 }
-
-
-
             }
         }catch (SQLException e){
             e.printStackTrace();
             Log.error("No se pudo fusionar las reservas");
-
         }
-
     }
-
 
     public int getId() {
         return id;
