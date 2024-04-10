@@ -4,6 +4,8 @@ import controller.CtrlAutomovil;
 import controller.CtrlReserva;
 import controller.CtrlUsuario;
 import model.Log;
+import model.Reserva;
+import model.Sesion;
 import model.SimulatedTime;
 
 import java.awt.*;
@@ -110,7 +112,9 @@ public class ResgitroReserva extends JFrame {
                         Log.debug(peticion.toString());
 
                         if (matriculaSeleccionada != null && verificarDisponibilidad(peticion)>0) {
-                            ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada));
+                            Reserva reservaNueva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+
+                            ConfirmarReserva view = new ConfirmarReserva(reservaNueva);
                             view.mostrarInterfaz();
                             dispose();
                         } else {
@@ -124,6 +128,13 @@ public class ResgitroReserva extends JFrame {
             timer.start();
         };
         confirmarButton.addActionListener(accion);
+    }
+
+    public void esFusionable(Reserva reservaNueva){
+        LinkedList<Reserva> reservas = Reserva.getReservas(Sesion._instance().getUsuario().getId());
+        for (Reserva reserva:reservas){
+           reservaNueva.esFusionable(reserva);
+        }
     }
 
     public void mostrarInterfaz() {

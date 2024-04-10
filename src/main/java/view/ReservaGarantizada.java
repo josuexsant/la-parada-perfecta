@@ -187,6 +187,7 @@ public class ReservaGarantizada extends JFrame {
 
                     if(matriculaSeleccionada != null){
                         ctrlReservaGarantizada.crear(diaInicio,mesInicio,diaFin,mesFin,matriculaSeleccionada);
+                        dispose();
                         menu.mostrarInterfaz();
                     }else{
                         Log.error("No hay matricula registrada");
@@ -207,7 +208,7 @@ public class ReservaGarantizada extends JFrame {
         setContentPane(ReservaP);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
+        setLocation(100,100);
         setSize(500, 600);
         setResizable(false);
         setVisible(true);
