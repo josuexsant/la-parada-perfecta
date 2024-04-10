@@ -84,7 +84,7 @@ public class CtrlAutomovil {
         int idUsuario = usuario.getId();
         Automovil automovil1 = new Automovil();
         String nombreMarca = automovil1.obtenerMarca(idMarca);
-        if (nombreMarca != null) {
+        if (idMarca != 0) {
             automovil1.guardarAutomovil(idUsuario, idMarca, placa);
             System.out.println("Matrícula creada exitosamente.");
         } else {

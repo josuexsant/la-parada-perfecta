@@ -196,10 +196,37 @@
           <font name="Roboto Light" size="18" style="0"/>
           <foreground color="-14863017"/>
           <model>
-            <item value="Puebla"/>
-            <item value="México"/>
-            <item value="Veracruz"/>
-            <item value="Nayarit"/>
+            <item value="Aguascalientes"/>
+            <item value="Baja California "/>
+            <item value="Baja California Sur "/>
+            <item value="Campeche "/>
+            <item value="Chiapas "/>
+            <item value="Chihuahua "/>
+            <item value="Coahuila "/>
+            <item value="Colima "/>
+            <item value="Durango "/>
+            <item value="Guanajuato "/>
+            <item value="Guerrero "/>
+            <item value="Hidalgo "/>
+            <item value="Jalisco "/>
+            <item value="México "/>
+            <item value="Michoacán "/>
+            <item value="Morelos "/>
+            <item value="Nayarit "/>
+            <item value="Nuevo León "/>
+            <item value="Oaxaca "/>
+            <item value="Puebla "/>
+            <item value="Querétaro "/>
+            <item value="Quintana Roo "/>
+            <item value="San Luis Potosí "/>
+            <item value="Sinaloa "/>
+            <item value="Sonora "/>
+            <item value="Tabasco "/>
+            <item value="Tamaulipas "/>
+            <item value="Tlaxcala "/>
+            <item value="Veracruz "/>
+            <item value="Yucatán "/>
+            <item value="Zacatecas"/>
           </model>
         </properties>
       </component>

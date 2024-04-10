@@ -220,36 +220,38 @@ public class Reserva {
     }
 
 
-    private void fusionarReserva(Reserva otraReserva){
-        Timestamp nuevaHoraInicio = Timestamp.valueOf(this.getFecha() + " " + this.getHoraInicio());
-        Timestamp nuevaHoraFin = Timestamp.valueOf(this.getFecha() + " " + otraReserva.getHoraInicio());
+    public void fusionarReserva(Reserva otraReserva){
+        if (esFusionable(otraReserva) && seSuperpone(this, otraReserva)) {
+            Timestamp nuevaHoraInicio = Timestamp.valueOf(this.getFecha() + " " + this.getHoraInicio());
+            Timestamp nuevaHoraFin = Timestamp.valueOf(this.getFecha() + " " + otraReserva.getHoraInicio());
 
-        DBManager dbManager = new DBManager();
+            DBManager dbManager = new DBManager();
 
-        try (Connection conn = dbManager.getConnection()) {
-            String sql = "UPDATE reservaciones SET fecha_inicio = ?, fecha_fin = ? WHERE id = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setTimestamp(1,nuevaHoraInicio);
-                pstmt.setTimestamp(2,nuevaHoraFin);
-                pstmt.setInt(3,this.getId());
+            try (Connection conn = dbManager.getConnection()) {
+                String sql = "UPDATE reservaciones SET fecha_inicio = ?, fecha_fin = ? WHERE id = ?";
+                try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                    pstmt.setTimestamp(1, nuevaHoraInicio);
+                    pstmt.setTimestamp(2, nuevaHoraFin);
+                    pstmt.setInt(3, this.getId());
 
-                int rowsAffected = pstmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    Log.success("la reserva se fusiono extosamente.");
-                }else {
-                    Log.error("La reserva no se pudo fusionar.");
+                    int rowsAffected = pstmt.executeUpdate();
+                    if (rowsAffected > 0) {
+                        Log.success("La reserva se fusionó exitosamente.");
+
+                    } else {
+                        Log.error("La reserva no se pudo fusionar.");
+                    }
                 }
-
-
-
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Log.error("No se pudo fusionar las reservas");
             }
-        }catch (SQLException e){
-            e.printStackTrace();
-            Log.error("No se pudo fusionar las reservas");
-
+        } else {
+            Log.error("Las reservas no son fusionables o no se superponen.");
         }
 
     }
+
 
 
     public int getId() {

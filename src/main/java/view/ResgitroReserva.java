@@ -60,6 +60,7 @@ public class ResgitroReserva extends JFrame {
         }
 
     }
+    
 
     private double calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;

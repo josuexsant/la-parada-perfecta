@@ -1,5 +1,8 @@
 package view;
 
+import controller.CtrlAutomovil;
+import controller.CtrlReserva;
+
 import javax.swing.*;
 
 public class ReservaInesperada {
@@ -14,4 +17,12 @@ public class ReservaInesperada {
     private JSpinner MesSpinner;
     private JSpinner EntradaSpinner;
     private JSpinner SalidaSpinner;
+    private ViewMenu menu;
+    private CtrlReserva ctrlReserva;
+    private CtrlAutomovil ctrlAutomovil;
+
+    public  ReservaInesperada(){
+        ctrlReserva = new CtrlReserva();
+
+    }
 }
