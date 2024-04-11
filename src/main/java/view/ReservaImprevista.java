@@ -6,6 +6,7 @@ import controller.CtrlReserva;
 import controller.CtrlUsuario;
 import model.*;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class ReservaImprevista extends JFrame{
         ctrlAutomovil = new CtrlAutomovil();
         llenarPlacaAutomovil();
         establecerNombre();
-        //Confirmar();
+        configurarHoraSalidaSpinner();
         mostrarInterfaz();
         Cancelar();
         confirmar();
@@ -51,7 +52,6 @@ public class ReservaImprevista extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingUtilities.invokeLater(() -> {
-
                         String fechaTexto = fechaLabel.getText();
                         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
                         Date fecha;
@@ -61,7 +61,6 @@ public class ReservaImprevista extends JFrame{
                             Log.error("Error al parsear la fecha: " + ex.getMessage());
                             return;
                         }
-
                         // Obtener el día y el mes de la fecha
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(fecha);
@@ -116,14 +115,7 @@ public class ReservaImprevista extends JFrame{
         setVisible(true);
         Log.info("Se inicia la vista reserva imprevista");
     }
-//        public void llenarPlacaAutomovil() {
-//        LinkedList<String> placas = ctrlAutomovil.getMatriculas();
-//        for (String placa : placas) {
-//            matriculaComboBox.addItem(placa);
-//        }
-//    }
     public void establecerNombre() {
-
         nombreLabel.setText(Sesion._instance().getUsuario().getNombre());
         Calendar calendar = SimulatedTime.getInstance().getDate();
         Date date = calendar.getTime();
@@ -131,10 +123,6 @@ public class ReservaImprevista extends JFrame{
         fechaLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(date));
 
     }
-//    public void establecerNombre() {
-//        ctrlAutomovil.obtenerNombre();
-//        nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
-//    }
     public void Cancelar() {
         menu = new ViewMenu();
         ActionListener accion = new ActionListener() {
@@ -146,6 +134,29 @@ public class ReservaImprevista extends JFrame{
         };
         cancelarButton.addActionListener(accion);
         dispose();
+    }
+
+    private void configurarHoraSalidaSpinner() {
+        Calendar calendar = SimulatedTime.getInstance().getDate();
+        Date predeterminada = calendar.getTime();
+
+        // Redondea las siguientes horas a 60 minutos
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+
+        Date initDate = calendar.getTime();
+        Date maxDate = calendar.getTime();
+
+        SpinnerDateModel timeModel = new SpinnerDateModel(
+                initDate,  // Hora inicial redondeada a la próxima hora completa
+                null,
+                maxDate,
+                Calendar.HOUR_OF_DAY
+        );
+
+        horaSalidaSpinner.setModel(timeModel);
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(horaSalidaSpinner, "HH:mm");
+        horaSalidaSpinner.setEditor(editor);
     }
 
 }

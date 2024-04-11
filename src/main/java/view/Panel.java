@@ -74,8 +74,6 @@ public class Panel extends JFrame{
             }
         });
     }
-
-
     public void mostrarInterfaz() {
         setContentPane(Panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,6 +82,6 @@ public class Panel extends JFrame{
         setSize(500, 300);
         setResizable(false);
         setVisible(true);
-        Log.info("Se inicia la vista Inicio de sesion");
+        Log.info("Se inicia la vista Panel");
     }
 }
