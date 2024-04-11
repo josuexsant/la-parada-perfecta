@@ -123,11 +123,13 @@ public class ReservaImprevista extends JFrame{
 //        }
 //    }
     public void establecerNombre() {
+
         nombreLabel.setText(Sesion._instance().getUsuario().getNombre());
         Calendar calendar = SimulatedTime.getInstance().getDate();
         Date date = calendar.getTime();
         horaLlegadaLabel.setText(new SimpleDateFormat("HH:mm").format(date));
         fechaLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(date));
+
     }
 //    public void establecerNombre() {
 //        ctrlAutomovil.obtenerNombre();
