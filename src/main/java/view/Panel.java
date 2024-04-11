@@ -4,12 +4,16 @@ import controller.CtrlPanel;
 import controller.CtrlUsuario;
 import model.Log;
 import model.Sesion;
+import model.SimulatedTime;
 import model.Usuario;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Panel extends JFrame{
     private JPanel Panel;
@@ -27,6 +31,7 @@ public class Panel extends JFrame{
         mostrarInterfaz();
     }
 
+
     private void ingresar() {
         ActionListener accion = new ActionListener() {
             @Override
@@ -39,13 +44,8 @@ public class Panel extends JFrame{
                         texto = ctrlPanel.verificarMembresiaUsuario(membresiaInt);
                         // Si la membresía es verificada con éxito, abrir la ventana de reserva imprevista
                         if (texto != null && !texto.isEmpty()) {
-                            usuario = new Usuario();
-                            ctrlUsuario = new CtrlUsuario();
-                            String correoElectronico = usuario.recuperarCorreo(membresiaInt);
-                            String contrasenia = usuario.recuperarPassword(membresiaInt);
-                            ctrlUsuario.iniciarSesion(correoElectronico, contrasenia);
-                            Sesion sesion = new Sesion();
-
+                            Sesion._instance().setUsuario(new Usuario(Integer.parseInt(membresia)));
+                            Log.debug("Sesion iniciada: " + Sesion._instance().getUsuario().getCorreoElectronico());
                             // Crear instancia de la ventana de reserva imprevista
                             ReservaImprevista reservaImprevista = new ReservaImprevista();
                             // Mostrar la interfaz de la ventana de reserva imprevista

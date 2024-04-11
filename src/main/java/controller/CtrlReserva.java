@@ -77,6 +77,7 @@ public class CtrlReserva {
     public boolean modificarReserva(int idReserva, int dia, int mes, String horaInicio, String horaFin, String matricula) {
         String fecha = "2024-" + dia + "-" + mes;
         String hInicio = horaInicio + ":00";
+
         String hFin = horaFin + ":00";
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();

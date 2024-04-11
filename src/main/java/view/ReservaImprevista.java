@@ -4,10 +4,15 @@ package view;
 import controller.CtrlAutomovil;
 import controller.CtrlReserva;
 import controller.CtrlUsuario;
-import model.Log;
+import model.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import javax.swing.*;
 
@@ -29,11 +34,77 @@ public class ReservaImprevista extends JFrame{
     public ReservaImprevista(){
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
-       // llenarPlacaAutomovil();
-        //establecerNombre();
+        llenarPlacaAutomovil();
+        establecerNombre();
         //Confirmar();
         mostrarInterfaz();
         Cancelar();
+        confirmar();
+    }
+
+    private void confirmar() {
+        ActionListener accion = actionEvent -> {
+            Loading view = new Loading("Comprobando disponilidad...");
+            view.mostrarInterfaz(10000);
+
+            Timer timer = new Timer(10000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.invokeLater(() -> {
+
+                        String fechaTexto = fechaLabel.getText();
+                        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+                        Date fecha;
+                        try {
+                            fecha = formatoFecha.parse(fechaTexto);
+                        } catch (ParseException ex) {
+                            Log.error("Error al parsear la fecha: " + ex.getMessage());
+                            return;
+                        }
+
+                        // Obtener el día y el mes de la fecha
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(fecha);
+                        int diaSeleccionado = calendar.get(Calendar.DAY_OF_MONTH);
+                        int mesSeleccionado = calendar.get(Calendar.MONTH) + 1; // Los meses en Calendar van de 0 a 11
+                        String horaLlegadaSeleccionada = horaLlegadaLabel.getText();
+                        String horaSalidaSeleccionada = new SimpleDateFormat("HH:mm").format(horaSalidaSpinner.getValue());
+                        String nombreSeleccionado;
+                        try {
+                            nombreSeleccionado = Sesion._instance().getUsuario().nombreCompleto(Sesion._instance().getUsuario().getId());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        String matriculaSeleccionada = (String) matriculaComboBox.getSelectedItem();
+
+
+                        Calendar peticion = Calendar.getInstance();
+                        peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]), 0);
+                        Log.debug(peticion.toString());
+
+                        if (matriculaSeleccionada != null) {
+                            Reserva reservaNueva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+                            ConfirmarReserva view = new ConfirmarReserva(reservaNueva);
+                            view.mostrarInterfaz();
+                            dispose();
+                        } else {
+                            Log.error("No hay una matricula registrada");
+                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
+                        }
+                    });
+                }
+            });
+            timer.setRepeats(false); // Para que solo se ejecute una vez
+            timer.start();
+        };
+        confirmarButton.addActionListener(accion);
+    }
+
+    public void llenarPlacaAutomovil() {
+        LinkedList<String> placas = ctrlAutomovil.getMatriculas();
+        for (String placa : placas) {
+            matriculaComboBox.addItem(placa);
+        }
     }
     public void mostrarInterfaz() {
         setContentPane(ReservaP);
@@ -52,8 +123,13 @@ public class ReservaImprevista extends JFrame{
 //        }
 //    }
     public void establecerNombre() {
-        ctrlAutomovil.obtenerNombre();
-        nombreLabel.setText(ctrlAutomovil.obtenerNombre());
+
+        nombreLabel.setText(Sesion._instance().getUsuario().getNombre());
+        Calendar calendar = SimulatedTime.getInstance().getDate();
+        Date date = calendar.getTime();
+        horaLlegadaLabel.setText(new SimpleDateFormat("HH:mm").format(date));
+        fechaLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(date));
+
     }
 //    public void establecerNombre() {
 //        ctrlAutomovil.obtenerNombre();
@@ -71,45 +147,5 @@ public class ReservaImprevista extends JFrame{
         cancelarButton.addActionListener(accion);
         dispose();
     }
-//    private void Confirmar() {
-//        ActionListener accion = actionEvent -> {
-//            Loading view = new Loading("Comprobando disponilidad...");
-//            view.mostrarInterfaz(10000);
-//
-//            Timer timer = new Timer(10000, new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    SwingUtilities.invokeLater(() -> {
-//                        int diaSeleccionado = Integer.parseInt(new SimpleDateFormat("dd").format(diaSpinner.getValue()));
-//                        int mesSeleccionado = Integer.parseInt(new SimpleDateFormat("MM").format(mesSpinner.getValue()));
-//                        String horaLlegadaSeleccionada = new SimpleDateFormat("HH:mm").format(llegadaSpinner.getValue());
-//                        String horaSalidaSeleccionada = new SimpleDateFormat("HH:mm").format(salidaSpinner.getValue());
-//                        String nombreSeleccionado = nombreUsuario.getText();
-//                        String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
-//
-//
-//                        Calendar peticion = Calendar.getInstance();
-//                        peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]), 0);
-//                        Log.debug(peticion.toString());
-//
-//                        if (matriculaSeleccionada != null && verificarDisponibilidad(peticion)>0) {
-//                            Reserva reservaNueva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
-//
-//                            ConfirmarReserva view = new ConfirmarReserva(reservaNueva);
-//                            view.mostrarInterfaz();
-//                            dispose();
-//                        } else {
-//                            Log.error("No hay una matricula registrada");
-//                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
-//                        }
-//                    });
-//                }
-//            });
-//            timer.setRepeats(false); // Para que solo se ejecute una vez
-//            timer.start();
-//        };
-//        confirmarButton.addActionListener(accion);
-//    }
-
 
 }
