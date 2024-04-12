@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Panel extends JFrame{
+public class Panel extends JFrame {
     private JPanel Panel;
     private JTextField textField1;
     private JButton ingresarButton;
@@ -24,17 +24,17 @@ public class Panel extends JFrame{
     private CtrlPanel ctrlPanel;
     private CtrlUsuario ctrlUsuario;
     private Usuario usuario;
-    public Panel(){
+
+    public Panel() {
         ctrlPanel = new CtrlPanel();
         setContentPane(Panel);
         ingresar();
         mostrarInterfaz();
     }
 
-
     private void ingresar() {
-        // ActionListener para el botón ingresarButton
-        ActionListener accion = new ActionListener() {
+        reservarButton.setEnabled(false);
+        ActionListener accionIngresar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String membresia = textField1.getText();
@@ -43,57 +43,60 @@ public class Panel extends JFrame{
                     String texto = null;
                     try {
                         texto = ctrlPanel.verificarMembresiaUsuario(membresiaInt);
+                        if (texto.startsWith("Bienvenido")) {
+                            reservarButton.setEnabled(true);
+                        } else {
+                            reservarButton.setEnabled(false);
+                        }
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
                     textArea1.setText(texto);
                 } else {
-                    textArea1.setText("Por favor, ingrese su membresía.");
+                    textArea1.setText("Ingrese una membresia valida");
+                    reservarButton.setEnabled(false);
                 }
             }
         };
-        ingresarButton.addActionListener(accion);
+        ingresarButton.addActionListener(accionIngresar);
 
-        // ActionListener para el botón aceptarButton
-        reservarButton.addActionListener(new ActionListener() {
+        ActionListener accionReservar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String texto = null;
                 String membresia = textField1.getText();
-                if (!membresia.isEmpty()) {
-                    int membresiaInt = Integer.parseInt(membresia);
-                    String texto = null;
-                    try {
-                        texto = ctrlPanel.verificarMembresiaUsuario(membresiaInt);
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    // Si la membresía es verificada con éxito se abre la ventana de reserva imprevista
-                    if (texto != null && !texto.isEmpty()) {
-                        Sesion._instance().setUsuario(new Usuario(membresiaInt));
-                        Log.debug("Sesión iniciada: " + Sesion._instance().getUsuario().getCorreoElectronico());
-
-                        ReservaImprevista reservaImprevista = new ReservaImprevista();
-                        reservaImprevista.mostrarInterfaz();
-                        dispose();
-                    } else {
-                        // Si no hay membresía verificada se muestra mensaje de error
-                        textArea1.setText("Membresía no verificada. Por favor, inténtelo de nuevo.");
-                    }
+                int membresiaInt = Integer.parseInt(membresia);
+                try {
+                    texto = ctrlPanel.verificarMembresiaUsuario(membresiaInt);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                if (texto.startsWith("Bienvenido") && texto != null) {
+                    Sesion._instance().setUsuario(new Usuario(membresiaInt));
+                    Log.debug("Sesión iniciada: " + Sesion._instance().getUsuario().getCorreoElectronico());
+                    ReservaImprevista reservaImprevista = new ReservaImprevista();
+                    reservaImprevista.mostrarInterfaz();
+                    dispose();
                 } else {
-                    textArea1.setText("Por favor, ingrese su membresía.");
+                    textArea1.setText("Ingrese una membresia valida.");
+
                 }
             }
-        });
+        };
+        reservarButton.addActionListener(accionReservar);
     }
 
-    public void mostrarInterfaz() {
-        setContentPane(Panel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setLocation(800,400);
-        setSize(500, 300);
-        setResizable(false);
-        setVisible(true);
-        Log.info("Se inicia la vista Panel");
-    }
+
+
+        public void mostrarInterfaz() {
+            setContentPane(Panel);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            pack();
+            setLocation(800, 400);
+            setSize(500, 300);
+            setResizable(false);
+            setVisible(true);
+            Log.info("Se inicia la vista Panel");
+        }
 }
+

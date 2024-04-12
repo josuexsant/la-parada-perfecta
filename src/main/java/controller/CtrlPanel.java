@@ -12,6 +12,7 @@ public class CtrlPanel {
     private static Reserva reserva;
     SimulatedTime simulatedTime = SimulatedTime.getInstance();
 
+
     public String verificarMembresiaUsuario(int idUsuario) throws SQLException {
         if (usuario.usuarioExiste(idUsuario)) {
             return "Bienvenido " + usuario.nombreCompleto(idUsuario);
