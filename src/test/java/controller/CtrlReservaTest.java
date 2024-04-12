@@ -2,17 +2,11 @@ package controller;
 
 import model.Log;
 import model.Reserva;
-import model.Sesion;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
-
-import static org.junit.jupiter.api.Assertions.*;
-import model.Usuario;
-
-import java.sql.SQLException;
 
 class CtrlReservaTest {
 
@@ -104,6 +98,6 @@ class CtrlReservaTest {
         CtrlReserva ctrlReserva = new CtrlReserva();
         Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"14:00","17:00","QET-12-14");
 
-        ctrlReserva.fusionar(new Reserva(40), reservaNueva);
+        ctrlReserva.fusionAfter(new Reserva(40), reservaNueva);
     }
 }
