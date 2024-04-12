@@ -84,7 +84,7 @@ public class ReservaImprevista extends JFrame{
 
                         if (matriculaSeleccionada != null) {
                             Reserva reservaNueva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
-                            ConfirmarReserva view = new ConfirmarReserva(reservaNueva);
+                            ConfirmarReservaImprevista view = new ConfirmarReservaImprevista(reservaNueva);
                             view.mostrarInterfaz();
                             dispose();
                         } else {
@@ -125,11 +125,9 @@ public class ReservaImprevista extends JFrame{
 
     }
     public void Cancelar() {
-        menu = new ViewMenu();
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                menu.mostrarInterfaz();
                 panel = new Panel();
                 panel.mostrarInterfaz();
                 dispose();
