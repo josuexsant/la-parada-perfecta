@@ -75,9 +75,7 @@ public class ResgitroReserva extends JFrame {
     }
 
     public void Cancelar() {
-
         menu = new ViewMenu();
-
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

@@ -32,6 +32,7 @@ public class ReservaImprevista extends JFrame{
     CtrlReserva ctrlReserva;
     CtrlAutomovil ctrlAutomovil;
     private CtrlUsuario ctrlUsuario;
+    private Panel panel;
     public ReservaImprevista(){
         ctrlReserva = new CtrlReserva();
         ctrlAutomovil = new CtrlAutomovil();
@@ -129,6 +130,8 @@ public class ReservaImprevista extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 menu.mostrarInterfaz();
+                panel = new Panel();
+                panel.mostrarInterfaz();
                 dispose();
             }
         };
