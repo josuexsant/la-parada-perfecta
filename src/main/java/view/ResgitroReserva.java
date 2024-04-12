@@ -114,15 +114,15 @@ public class ResgitroReserva extends JFrame {
                          *  4: ok
                          */
 
-                        Reserva reserva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+                        Reserva reserva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado -1, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
                         switch (status(reserva)) {
                             case 0:
                                 Log.error("No hay una matricula registrada");
                                 JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
                                 break;
                             case 1:
-                                Log.error("Verifica la fecha");
-                                JOptionPane.showMessageDialog(ReservaP, "Verifica la fecha.");
+                                Log.error("Debes de crear una reserva 15 minutos antes");
+                                JOptionPane.showMessageDialog(ReservaP, "Debes de crear una reserva 15 minutos antes.");
                                 break;
                             case 2:
                                 Log.error("Fecha ya reservada");
@@ -195,15 +195,18 @@ public class ResgitroReserva extends JFrame {
 
         Calendar peticion = Calendar.getInstance();
         peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]), 0);
-        Log.debug(peticion.toString());
+        Log.debug("Tiempo de reserva: " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(peticion.getTime()));
+
 
         Calendar deadLine = SimulatedTime.getInstance().getDate();
         deadLine.add(Calendar.MINUTE, -15);
-        int i = peticion.compareTo(deadLine);
+        Log.debug("Tiempo limite: " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(deadLine.getTime()));
 
-        if (i > 0)
-            return 4;
-        return 1;
+        boolean i = peticion.before(deadLine);
+
+        if (i)
+            return 1;
+        return 4;
     }
 
 

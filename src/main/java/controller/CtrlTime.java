@@ -1,7 +1,9 @@
 package controller;
 
+import model.Log;
 import model.SimulatedTime;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -19,6 +21,8 @@ public class CtrlTime {
         calendar.set(Calendar.MINUTE, time.getMinutes());
 
         simulatedTime.setDate(calendar);
+
+        Log.debug("Tiempo en la aplicacion: " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(SimulatedTime.getInstance().getDate().getTime()));
     }
 
     public void reset(){
