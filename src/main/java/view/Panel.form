@@ -58,7 +58,7 @@
           <foreground color="-14863017"/>
         </properties>
       </component>
-      <component id="ca3c8" class="javax.swing.JButton" binding="aceptarButton" default-binding="true">
+      <component id="ca3c8" class="javax.swing.JButton" binding="reservarButton">
         <constraints>
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="472" height="30"/>
@@ -68,7 +68,7 @@
           <background color="-12223587"/>
           <font name="Roboto Light" size="18" style="0"/>
           <foreground color="-1"/>
-          <text value="Aceptar"/>
+          <text value="Quiero reservar"/>
         </properties>
       </component>
       <component id="91969" class="javax.swing.JLabel">

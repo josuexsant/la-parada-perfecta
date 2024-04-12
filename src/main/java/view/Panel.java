@@ -20,7 +20,7 @@ public class Panel extends JFrame{
     private JTextField textField1;
     private JButton ingresarButton;
     private JTextArea textArea1;
-    private JButton aceptarButton;
+    private JButton reservarButton;
     private CtrlPanel ctrlPanel;
     private CtrlUsuario ctrlUsuario;
     private Usuario usuario;
@@ -33,6 +33,7 @@ public class Panel extends JFrame{
 
 
     private void ingresar() {
+        // ActionListener para el botón ingresarButton
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,38 +43,49 @@ public class Panel extends JFrame{
                     String texto = null;
                     try {
                         texto = ctrlPanel.verificarMembresiaUsuario(membresiaInt);
-                        // Si la membresía es verificada con éxito, abrir la ventana de reserva imprevista
-                        if (texto != null && !texto.isEmpty()) {
-                            Sesion._instance().setUsuario(new Usuario(Integer.parseInt(membresia)));
-                            Log.debug("Sesion iniciada: " + Sesion._instance().getUsuario().getCorreoElectronico());
-                            // Crear instancia de la ventana de reserva imprevista
-                            ReservaImprevista reservaImprevista = new ReservaImprevista();
-                            // Mostrar la interfaz de la ventana de reserva imprevista
-                            reservaImprevista.mostrarInterfaz();
-                            // Cerrar la ventana actual (de inicio de sesión)
-                            dispose();
-                        }
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
-                    textArea1.setText(texto); // Mostrar en el JTextArea
+                    textArea1.setText(texto);
                 } else {
-                    textArea1.setText("Por favor, ingrese su membresía."); // Mostrar mensaje en el JTextArea
+                    textArea1.setText("Por favor, ingrese su membresía.");
                 }
             }
         };
         ingresarButton.addActionListener(accion);
 
         // ActionListener para el botón aceptarButton
-        aceptarButton.addActionListener(new ActionListener() {
+        reservarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Limpiar el JTextField y el JTextArea
-                textField1.setText("");
-                textArea1.setText("");
+                String membresia = textField1.getText();
+                if (!membresia.isEmpty()) {
+                    int membresiaInt = Integer.parseInt(membresia);
+                    String texto = null;
+                    try {
+                        texto = ctrlPanel.verificarMembresiaUsuario(membresiaInt);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    // Si la membresía es verificada con éxito se abre la ventana de reserva imprevista
+                    if (texto != null && !texto.isEmpty()) {
+                        Sesion._instance().setUsuario(new Usuario(membresiaInt));
+                        Log.debug("Sesión iniciada: " + Sesion._instance().getUsuario().getCorreoElectronico());
+
+                        ReservaImprevista reservaImprevista = new ReservaImprevista();
+                        reservaImprevista.mostrarInterfaz();
+                        dispose();
+                    } else {
+                        // Si no hay membresía verificada se muestra mensaje de error
+                        textArea1.setText("Membresía no verificada. Por favor, inténtelo de nuevo.");
+                    }
+                } else {
+                    textArea1.setText("Por favor, ingrese su membresía.");
+                }
             }
         });
     }
+
     public void mostrarInterfaz() {
         setContentPane(Panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
