@@ -92,11 +92,18 @@ class CtrlReservaTest {
         CtrlReserva ctrlReserva = new CtrlReserva();
         Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"13:00","14:00","QET-12-14");
 
-        ctrlReserva.esFusionable(reservaNueva);
+        ctrlReserva.esFusionable();
 
     }
 
     @Test
+
     void fusionar() {
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("josuexsanta@gmail.com","12345678");
+        CtrlReserva ctrlReserva = new CtrlReserva();
+        Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"14:00","17:00","QET-12-14");
+
+        ctrlReserva.fusionar(new Reserva(40), reservaNueva);
     }
 }

@@ -29,10 +29,12 @@ public class CtrlReserva {
         calendar.set(2024, mes, dia);
         Date date = calendar.getTime();
         String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        ;
         reserva = new Reserva(0, idAutomovil, fecha, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
-        reserva.guardar();
         return reserva;
+    }
+
+    public void guardar() {
+        reserva.guardar();
     }
 
     //Esta funcion la uso en cancelar reserva para obtener una reserva por el indice de la opcion seleccionada
@@ -127,23 +129,24 @@ public class CtrlReserva {
         return reserva;
     }
 
-    public boolean esFusionable(Reserva reservaNueva) {
+    public int esFusionable() {
         LinkedList<Reserva> reservas = getList();
-        Log.trace("Hora de inicio de la nueva reserva: " + reservaNueva.getHoraInicio());
+        Log.trace("Hora de inicio de la nueva reserva: " + reserva.getHoraInicio());
         for (Reserva reservaAntigua : reservas) {
-            if (reservaAntigua.getFecha().equals(reservaNueva.getFecha())) {
+            if (reservaAntigua.getFecha().equals(reserva.getFecha())) {
                 Log.warn("La fecha es la misma");
                 Log.trace("Hora fin de la reserva antigua: " + reservaAntigua.getHoraFin());
-                if (reservaAntigua.getHoraFin().equals(reservaNueva.getHoraInicio())) {
+                if (reservaAntigua.getHoraFin().equals(reserva.getHoraInicio())) {
                     Log.info("Es fusionable con la reserva " + reservaAntigua.getId());
-                    return true;
+                    fusionar(reservaAntigua, reserva);
+                    return 2;
                 }
             }
         }
-        return false;
+        return 4;
     }
 
-    public void fusionar(Reserva reservaAntigua, Reserva reservaNueva){
+    public void fusionar(Reserva reservaAntigua, Reserva reservaNueva) {
         String fecha = reservaNueva.getFecha();
         LocalDate localDate = LocalDate.parse(fecha);
 
@@ -151,15 +154,30 @@ public class CtrlReserva {
         int month = localDate.getMonthValue();
         int day = localDate.getDayOfMonth();
 
-        System.out.println("Año: " + year);
-        System.out.println("Mes: " + month);
-        System.out.println("Día: " + day);
-        Automovil automovil = new Automovil(reservaNueva.getIdAutomovil());
-        modificarReserva(reservaAntigua.getId(),
-                        day,
-                        month,
-                        reservaAntigua.getHoraInicio(),
-                        reservaNueva.getHoraFin(),
-                        automovil.getPlaca());
+        reserva = new Reserva(reservaAntigua.getId());
+        reserva.setIdAutomovil(reservaNueva.getIdAutomovil());
+        reserva.setFecha(reservaNueva.getFecha());
+        reserva.setHoraInicio(reservaAntigua.getHoraInicio());
+        reserva.setHoraFin(reservaNueva.getHoraFin());
+        reserva.setIdCajon(reservaAntigua.getIdCajon());
+        reserva.setIdUsuario(reservaAntigua.getIdUsuario());
+        reserva.modificar(reservaAntigua.getIdUsuario(), reservaAntigua.getId());
+        Log.info("Reserva fusionada");
+    }
+
+    public int esDuplicada() {
+        LinkedList<Reserva> reservas = getList();
+
+        for (Reserva reservaAntigua : reservas) {
+            if (reservaAntigua.getFecha().equals(reserva.getFecha())) {
+
+                if (reservaAntigua.getHoraInicio().equals(reserva.getHoraInicio()) && reservaAntigua.getHoraFin().equals(reserva.getHoraFin())) {
+                    Log.info("La reserva ya existe con el ID: " + reservaAntigua.getId());
+                    reserva = null;
+                    return 3;
+                }
+            }
+        }
+        return 4;
     }
 }

@@ -24,6 +24,7 @@ public class Reserva {
     }
 
     public Reserva(int idReserva) {
+        dbManager = new DBManager();
         String query = "SELECT " +
                 "    r.id," +
                 "    r.id_automovil, " +
@@ -192,6 +193,7 @@ public class Reserva {
             pstmt.close();
             conn.close();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Log.error(ex.getMessage());
         }
     }
