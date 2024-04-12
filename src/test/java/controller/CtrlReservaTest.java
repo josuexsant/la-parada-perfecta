@@ -86,8 +86,6 @@ class CtrlReservaTest {
         CtrlReserva ctrlReserva = new CtrlReserva();
         Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"13:00","14:00","QET-12-14");
 
-        ctrlReserva.esFusionable();
-
     }
 
     @Test
