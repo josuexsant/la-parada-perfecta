@@ -127,4 +127,14 @@ public class CtrlReserva {
         return reserva;
     }
 
+    public void esFusionable(Reserva reservaNueva){
+        Log.debug("Fecha RN: " + reservaNueva.getFecha());
+        LinkedList<Reserva> reservas = getList();
+
+        for(Reserva reservaAntigua: reservas){
+            if (reservaAntigua.getFecha() == reservaNueva.getFecha())
+                Log.warn("La hora es la misma");
+            Log.debug("Fecha RA: " + reservaAntigua.getFecha());
+        }
+    }
 }

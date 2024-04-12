@@ -157,6 +157,7 @@ public class ResgitroReserva extends JFrame {
         return i;
     }
 
+
     private void createUIComponents() {
         Calendar calendar = (Calendar) SimulatedTime.getInstance().getDate().clone();
 

@@ -83,4 +83,16 @@ class CtrlReservaTest {
         ctrlReserva.crearReservaImprevista("04:00", "ABC-1-2-3");
 
     }
+
+    @DisplayName("Verificar si una reserva es fusionable")
+    @Test
+    void esFusionable() {
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("josuexsanta@gmail.com","12345678");
+        CtrlReserva ctrlReserva = new CtrlReserva();
+        Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"12:00","13:00","QET-12-14");
+
+        ctrlReserva.esFusionable(reservaNueva);
+
+    }
 }
