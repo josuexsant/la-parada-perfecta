@@ -3,9 +3,12 @@ package controller;
 import model.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 public class CtrlReserva {
@@ -22,8 +25,11 @@ public class CtrlReserva {
         int idCajon = cajon.getId();
         int idUsuario = Sesion._instance().getUsuario().getId();
         idAutomovil = Automovil.getIdConMatricula(matricula);
-        String fecha = "2024-" + "-" + mes + "-" + dia;
-        reserva = new Reserva(0, idAutomovil, fecha, horaInicio, horaFin, idCajon, idUsuario);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2024,mes,dia);
+        Date date = calendar.getTime();
+        String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date);  ;
+        reserva = new Reserva(0, idAutomovil, fecha, horaInicio+":00", horaFin+":00", idCajon, idUsuario);
         reserva.guardar();
         return reserva;
     }
@@ -128,13 +134,17 @@ public class CtrlReserva {
     }
 
     public void esFusionable(Reserva reservaNueva){
-        Log.debug("Fecha RN: " + reservaNueva.getFecha());
         LinkedList<Reserva> reservas = getList();
-
+        Log.trace("Hora de inicio de la nueva reserva: "+reservaNueva.getHoraInicio());
         for(Reserva reservaAntigua: reservas){
-            if (reservaAntigua.getFecha() == reservaNueva.getFecha())
-                Log.warn("La hora es la misma");
-            Log.debug("Fecha RA: " + reservaAntigua.getFecha());
+            if (reservaAntigua.getFecha().equals(reservaNueva.getFecha())) {
+                Log.warn("La fecha es la misma");
+                Log.trace("Hora fin de la reserva antigua: "+ reservaAntigua.getHoraFin());
+                    if (reservaAntigua.getHoraFin().equals(reservaNueva.getHoraInicio())){
+                        Log.info("Es fusionable con la reserva " + reservaAntigua.getId());
+                    }
+            }else{
+            }
         }
     }
 }

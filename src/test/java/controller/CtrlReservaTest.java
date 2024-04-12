@@ -90,7 +90,7 @@ class CtrlReservaTest {
         CtrlUsuario ctrlUsuario = new CtrlUsuario();
         ctrlUsuario.iniciarSesion("josuexsanta@gmail.com","12345678");
         CtrlReserva ctrlReserva = new CtrlReserva();
-        Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"12:00","13:00","QET-12-14");
+        Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"13:00","14:00","QET-12-14");
 
         ctrlReserva.esFusionable(reservaNueva);
 
