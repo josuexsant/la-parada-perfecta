@@ -95,4 +95,8 @@ class CtrlReservaTest {
         ctrlReserva.esFusionable(reservaNueva);
 
     }
+
+    @Test
+    void fusionar() {
+    }
 }
