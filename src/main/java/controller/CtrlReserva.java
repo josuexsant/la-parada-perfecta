@@ -3,13 +3,17 @@ package controller;
 import model.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 public class CtrlReserva {
     Reserva reserva;
+    Reserva fusion;
 
     /**
      * @return
@@ -22,10 +26,16 @@ public class CtrlReserva {
         int idCajon = cajon.getId();
         int idUsuario = Sesion._instance().getUsuario().getId();
         idAutomovil = Automovil.getIdConMatricula(matricula);
-        String fecha = "2024-" + "-" + mes + "-" + dia;
-        reserva = new Reserva(0, idAutomovil, fecha, horaInicio, horaFin, idCajon, idUsuario);
-        reserva.guardar();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2024, mes, dia);
+        Date date = calendar.getTime();
+        String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        reserva = new Reserva(0, idAutomovil, fecha, horaInicio + ":00", horaFin + ":00", idCajon, idUsuario);
         return reserva;
+    }
+
+    public void guardar() {
+        reserva.guardar();
     }
 
     //Esta funcion la uso en cancelar reserva para obtener una reserva por el indice de la opcion seleccionada
@@ -45,7 +55,7 @@ public class CtrlReserva {
         return reservasString(reservas);
     }
 
-    public LinkedList<Reserva> getList(){
+    public LinkedList<Reserva> getList() {
         Sesion sesion = Sesion._instance();
         Usuario usuario = sesion.getUsuario();
         int idUsuario = usuario.getId();
@@ -100,14 +110,7 @@ public class CtrlReserva {
         }
     }
 
-    public void fusionarReservas(Reserva reserva1, Reserva reserva2) {
-        if (reserva1.esFusionable(reserva2)) {
-            Log.info("Las reservas son fusionables.");
-        } else {
-            Log.info("Las reservas no son fusionables.");
-        }
-    }
-    public Reserva crearReservaImprevista(String horaFin, String matricula){
+    public Reserva crearReservaImprevista(String horaFin, String matricula) {
         int idAutomovil = 0;
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
@@ -127,4 +130,68 @@ public class CtrlReserva {
         return reserva;
     }
 
+    public int esFusionable(Reserva reservaNueva) {
+        LinkedList<Reserva> reservas = getList();
+        Log.trace("Hora de inicio de la nueva reserva: " + reservaNueva.getHoraInicio());
+        for (Reserva reservaAntigua : reservas) {
+            if (reservaAntigua.getFecha().equals(reservaNueva.getFecha())) {
+                Log.warn("La fecha es la misma");
+                Log.trace("Hora fin de la reserva antigua: " + reservaAntigua.getHoraFin());
+                if (reservaAntigua.getHoraFin().equals(reservaNueva.getHoraInicio())) {
+                    Log.info("Es fusionable con la reserva con " + reservaAntigua.getId());
+                    fusionAfter(reservaAntigua, reservaNueva);
+                    return 3;
+                } else if (reservaAntigua.getHoraInicio().equals(reservaNueva.getHoraFin())) {
+                    Log.info("Es fusionable con la reserva con " + reservaAntigua.getId());
+                    fusionBefore(reservaAntigua, reservaNueva);
+                    return 3;
+                }
+            }
+        }
+        return 4;
+    }
+
+    public void fusionBefore(Reserva reservaAntigua, Reserva reservaNueva) {
+        reservaAntigua.setIdAutomovil(reservaNueva.getIdAutomovil());
+        reservaAntigua.setFecha(reservaNueva.getFecha());
+        reservaAntigua.setHoraInicio(reservaNueva.getHoraInicio());
+        reservaAntigua.setHoraFin(reservaAntigua.getHoraFin());
+        reservaAntigua.setIdCajon(reservaAntigua.getIdCajon());
+        reservaAntigua.setIdUsuario(reservaAntigua.getIdUsuario());
+        reservaAntigua.modificar(reservaAntigua.getIdUsuario(), reservaAntigua.getId());
+        fusion = reservaAntigua;
+        Log.info("Reserva fusionada");
+    }
+
+    public void fusionAfter(Reserva reservaAntigua, Reserva rn) {
+        reservaAntigua.setIdAutomovil(rn.getIdAutomovil());
+        reservaAntigua.setFecha(rn.getFecha());
+        reservaAntigua.setHoraInicio(reservaAntigua.getHoraInicio());
+        reservaAntigua.setHoraFin(rn.getHoraFin());
+        reservaAntigua.setIdCajon(reservaAntigua.getIdCajon());
+        reservaAntigua.setIdUsuario(reservaAntigua.getIdUsuario());
+        reservaAntigua.modificar(reservaAntigua.getIdUsuario(), reservaAntigua.getId());
+        fusion = reservaAntigua;
+        Log.info("Reserva fusionada");
+    }
+
+    public Reserva getFusion() {
+        return fusion;
+    }
+
+    public int esDuplicada(Reserva rn) {
+        LinkedList<Reserva> reservas = getList();
+
+        for (Reserva reservaAntigua : reservas) {
+            if (reservaAntigua.getFecha().equals(rn.getFecha())) {
+
+                if (reservaAntigua.getHoraInicio().equals(rn.getHoraInicio()) && reservaAntigua.getHoraFin().equals(reserva.getHoraFin())) {
+                    Log.info("La reserva ya existe con el ID: " + reservaAntigua.getId());
+                    reserva = null;
+                    return 2;
+                }
+            }
+        }
+        return 4;
+    }
 }

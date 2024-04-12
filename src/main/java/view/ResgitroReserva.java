@@ -19,7 +19,6 @@ import java.util.logging.SimpleFormatter;
 import javax.swing.*;
 
 public class ResgitroReserva extends JFrame {
-
     private JTextField txtnombreUsuario;
     private JLabel LabelnombreUsuario;
     private JLabel LabelHLlegada;
@@ -41,7 +40,6 @@ public class ResgitroReserva extends JFrame {
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
     private CtrlUsuario ctrlUsuario;
-
 
     public ResgitroReserva() {
         ctrlReserva = new CtrlReserva();
@@ -107,16 +105,42 @@ public class ResgitroReserva extends JFrame {
                         Calendar peticion = Calendar.getInstance();
                         peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]), 0);
                         Log.debug(peticion.toString());
+                        /**
+                         * Codigos de error
+                         *  0: matricula vacia..
+                         *  1: fecha no disponible
+                         *  2: fecha ya reservada
+                         *  3: fusionable
+                         *  4: ok
+                         */
 
-                        if (matriculaSeleccionada != null && verificarDisponibilidad(peticion)>0) {
-                            Reserva reservaNueva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+                        Reserva reserva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+                        switch (status(reserva)) {
+                            case 0:
+                                Log.error("No hay una matricula registrada");
+                                JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
+                                break;
+                            case 1:
+                                Log.error("Verifica la fecha");
+                                JOptionPane.showMessageDialog(ReservaP, "Verifica la fecha.");
+                                break;
+                            case 2:
+                                Log.error("Fecha ya reservada");
+                                JOptionPane.showMessageDialog(ReservaP, "Fecha ya reservada.");
+                                break;
+                            case 3:
+                                Log.error("Reserva fusionable");
+                                JOptionPane.showMessageDialog(ReservaP, "Tu reserva se ha fusionado con el ID: " + ctrlReserva.getFusion().getId());
+                                ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.getFusion());
+                                view.mostrarInterfaz();
+                                dispose();
+                                break;
+                            case 4:
+                                ctrlReserva.guardar();
+                                ConfirmarReserva view2 = new ConfirmarReserva(reserva);
+                                view2.mostrarInterfaz();
+                                dispose();
 
-                            ConfirmarReserva view = new ConfirmarReserva(reservaNueva);
-                            view.mostrarInterfaz();
-                            dispose();
-                        } else {
-                            Log.error("No hay una matricula registrada");
-                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
                         }
                     });
                 }
@@ -127,11 +151,28 @@ public class ResgitroReserva extends JFrame {
         confirmarButton.addActionListener(accion);
     }
 
-    public void esFusionable(Reserva reservaNueva){
-        LinkedList<Reserva> reservas = Reserva.getReservas(Sesion._instance().getUsuario().getId());
-        for (Reserva reserva:reservas){
-           reservaNueva.esFusionable(reserva);
+    public int status(Reserva rn) {
+        int i;
+        i = verificarMatricula();
+        if (i == 0)
+            return i;
+        i = verificarDisponibilidad();
+        if (i == 1){
+            return 1;
         }
+        i = ctrlReserva.esDuplicada(rn);
+        if (i==2)
+            return 2;
+        i = ctrlReserva.esFusionable(rn);
+        if(i ==3)
+            return i;
+        return 4;
+    }
+
+    public int verificarMatricula() {
+        if (MatriculaBox.getSelectedItem() == null)
+            return 0;
+        return 4;
     }
 
     public void mostrarInterfaz() {
@@ -147,13 +188,24 @@ public class ResgitroReserva extends JFrame {
         });
     }
 
-    public int verificarDisponibilidad(Calendar peticion) {
+    public int verificarDisponibilidad() {
+        int diaSeleccionado = Integer.parseInt(new SimpleDateFormat("dd").format(diaSpinner.getValue()));
+        int mesSeleccionado = Integer.parseInt(new SimpleDateFormat("MM").format(mesSpinner.getValue()));
+        String horaLlegadaSeleccionada = new SimpleDateFormat("HH:mm").format(llegadaSpinner.getValue());
+
+        Calendar peticion = Calendar.getInstance();
+        peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]), 0);
+        Log.debug(peticion.toString());
+
         Calendar deadLine = SimulatedTime.getInstance().getDate();
         deadLine.add(Calendar.MINUTE, -15);
-
         int i = peticion.compareTo(deadLine);
-        return i;
+
+        if (i > 0)
+            return 4;
+        return 1;
     }
+
 
     private void createUIComponents() {
         Calendar calendar = (Calendar) SimulatedTime.getInstance().getDate().clone();
@@ -197,8 +249,8 @@ public class ResgitroReserva extends JFrame {
 
         diaSpinner.setEditor(new JSpinner.DateEditor(diaSpinner, "dd"));
         mesSpinner.setEditor(new JSpinner.DateEditor(mesSpinner, "MM"));
-        llegadaSpinner.setEditor(new JSpinner.DateEditor(llegadaSpinner,"HH:mm"));
-        salidaSpinner.setEditor(new JSpinner.DateEditor(salidaSpinner,"HH:mm"));
+        llegadaSpinner.setEditor(new JSpinner.DateEditor(llegadaSpinner, "HH:mm"));
+        salidaSpinner.setEditor(new JSpinner.DateEditor(salidaSpinner, "HH:mm"));
 
         ImageIcon icon = new ImageIcon("src/main/images/editar.png");
         Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST);

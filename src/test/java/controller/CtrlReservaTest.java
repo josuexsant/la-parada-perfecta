@@ -2,17 +2,11 @@ package controller;
 
 import model.Log;
 import model.Reserva;
-import model.Sesion;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
-
-import static org.junit.jupiter.api.Assertions.*;
-import model.Usuario;
-
-import java.sql.SQLException;
 
 class CtrlReservaTest {
 
@@ -82,5 +76,26 @@ class CtrlReservaTest {
         CtrlReserva ctrlReserva = new CtrlReserva();
         ctrlReserva.crearReservaImprevista("04:00", "ABC-1-2-3");
 
+    }
+
+    @DisplayName("Verificar si una reserva es fusionable")
+    @Test
+    void esFusionable() {
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("josuexsanta@gmail.com","12345678");
+        CtrlReserva ctrlReserva = new CtrlReserva();
+        Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"13:00","14:00","QET-12-14");
+
+    }
+
+    @Test
+
+    void fusionar() {
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("josuexsanta@gmail.com","12345678");
+        CtrlReserva ctrlReserva = new CtrlReserva();
+        Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"14:00","17:00","QET-12-14");
+
+        ctrlReserva.fusionAfter(new Reserva(40), reservaNueva);
     }
 }

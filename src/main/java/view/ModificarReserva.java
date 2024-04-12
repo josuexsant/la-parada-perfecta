@@ -130,7 +130,7 @@ public class ModificarReserva extends JFrame {
         }
     }
 
-    private double calcularCosto(int horasSeleccionadas) {
+    private double  calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
             throw new IllegalArgumentException("Las horas seleccionadas deben ser positivas.");
@@ -183,7 +183,7 @@ public class ModificarReserva extends JFrame {
                     Log.error("No hay una matricula registrada");
                     JOptionPane.showMessageDialog(ModificarR, "No hay una matricula seleccionada.");
                 } else {
-                    ctrlReserva.modificarReserva(idReserva, diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+                    ctrlReserva.modificarReserva(idReserva, mesSeleccionado,diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
                     JOptionPane.showMessageDialog(ModificarR, "Modificación exitosa");
                     menu.mostrarInterfaz();
                     dispose();
