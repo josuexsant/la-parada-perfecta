@@ -3,6 +3,7 @@ package view;
 import controller.CtrlOperador;
 import controller.CtrlUsuario;
 import model.Log;
+import java.util.Locale;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +24,7 @@ public class InicioSesion extends JFrame {
     private ViewMenu menu;
 
     public InicioSesion() {
+        Locale.setDefault(new Locale("es", "ES"));
         ctrlUsuario = new CtrlUsuario();
         menu = new ViewMenu();
 

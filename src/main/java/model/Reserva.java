@@ -237,7 +237,7 @@ public class Reserva {
 
                 int rowsAffected = pstmt.executeUpdate();
                 if (rowsAffected > 0) {
-                    Log.success("la reserva se fusiono extosamente.");
+                    Log.success("la reserva se fusiono exitosamente.");
                 }else {
                     Log.error("La reserva no se pudo fusionar.");
                 }
