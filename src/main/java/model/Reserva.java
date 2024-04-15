@@ -220,6 +220,32 @@ public class Reserva {
 
         return inicio1.before(fin2) && inicio2.before(fin1);
     }
+    public void extenderReserva(int idUsuario, int idReserva) {
+        String query = "UPDATE reservaciones " +
+                "SET id_automovil = ?, " +
+                "fecha_inicio = ?, " +
+                "fecha_fin = ?, " +
+                "id_cajon = ? " +
+                "WHERE id_usuario = ? AND id = ?";
+        try {
+            dbManager = new DBManager();
+            PreparedStatement pstmt;
+            Connection conn = dbManager.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,idAutomovil);
+            pstmt.setString(2, horaInicio);
+            pstmt.setString(3, horaFin);
+            pstmt.setInt(4, idCajon);
+            pstmt.setInt(5, idUsuario);
+            pstmt.setInt(6, idReserva);
+            pstmt.executeUpdate();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Log.error(ex.getMessage());
+        }
+    }
+
 
 
     private void fusionarReserva(Reserva otraReserva){

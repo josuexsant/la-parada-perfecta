@@ -5,27 +5,26 @@ import controller.CtrlReserva;
 import model.Automovil;
 import model.Log;
 import model.Reserva;
+import model.SimulatedTime;
 
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 
 public class ModificarReserva extends JFrame {
     private JPanel ModificarR;
+    private JLabel img;
     private JList JListReserva;
-    private JComboBox<String> DiaBox;
-    private JComboBox<String> MesBox;
-    private JComboBox<String> HoraLlegada;
-    private JComboBox<String> HoraSalida;
     private JComboBox<String> MatriculaBox;
     private JButton CancelarButton;
     private JButton confirmarButton;
@@ -35,6 +34,10 @@ public class ModificarReserva extends JFrame {
     private JLabel LabelHoraSalida;
     private JLabel LabelnombreUsuario;
     private JLabel nombreUsuario;
+    private JSpinner DiaSpinner;
+    private JSpinner MesSpinner;
+    private JSpinner HoraLlSpinner;
+    private JSpinner HoraSaSpinner;
     private ViewMenu menu;
     private CtrlReserva ctrlReserva;
     private CtrlAutomovil ctrlAutomovil;
@@ -44,9 +47,6 @@ public class ModificarReserva extends JFrame {
         ctrlAutomovil = new CtrlAutomovil();
 
         setContentPane(ModificarR);
-        getHoraBox();
-        getMesBox();
-        getFechaBox();
         llenarMatriculas();
         setNombreField();
         Confirmar();
@@ -75,62 +75,8 @@ public class ModificarReserva extends JFrame {
         }
     }
 
-    public void getMesBox() {
-        MesBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String mesSeleccionadoString = (String) MesBox.getSelectedItem();
-                int mesSeleccionado = Integer.parseInt(mesSeleccionadoString);
-                RegistroDia(mesSeleccionado);
-            }
-        });
-    }
 
-    public void getHoraBox() {
-        for (int f = 0; f <= 23; f++) {
-            HoraLlegada.addItem(String.format("%s:00", f));
-            HoraSalida.addItem(String.format("%s:00", f));
-        }
-    }
-
-    public void getFechaBox() {
-        MesBox.removeAllItems();
-        for (int mes = 1; mes <= 12; mes++) {
-            MesBox.addItem(Integer.toString(mes));
-        }
-    }
-
-    public void RegistroDia(int mes) {
-        DiaBox.removeAllItems();
-        switch (mes) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                for (int f = 1; f <= 31; f++) {
-                    DiaBox.addItem(Integer.toString(f));
-                }
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                for (int f = 1; f <= 30; f++) {
-                    DiaBox.addItem(Integer.toString(f));
-                }
-                break;
-            case 2:
-                for (int f = 1; f <= 28; f++) {
-                    DiaBox.addItem(Integer.toString(f));
-                }
-                break;
-        }
-    }
-
-    private double  calcularCosto(int horasSeleccionadas) {
+    private double calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
             throw new IllegalArgumentException("Las horas seleccionadas deben ser positivas.");
@@ -143,6 +89,66 @@ public class ModificarReserva extends JFrame {
         ctrlAutomovil.obtenerNombre();
         nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
     }
+    private void Confirmar() {
+        ActionListener accion = actionEvent -> {
+            int optionSelected = JListReserva.getSelectedIndex();
+
+            Reserva reserva = null;
+            try {
+                reserva = ctrlReserva.obtenerReservaPorIndice(optionSelected);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            int idReserva = reserva.getId();
+            int diaSeleccionado = Integer.parseInt(new SimpleDateFormat("dd").format(DiaSpinner.getValue()));
+            int mesSeleccionado = Integer.parseInt(new SimpleDateFormat("MM").format(MesSpinner.getValue()));
+            String horaLlegadaSeleccionada = new SimpleDateFormat("HH:mm").format(HoraLlSpinner.getValue());
+            String horaSalidaSeleccionada = new SimpleDateFormat("HH:mm").format(HoraSaSpinner.getValue());
+            String nombreSeleccionado = nombreUsuario.getText();
+            String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
+            Log.debug("Dia: " +String.valueOf( diaSeleccionado));
+            Log.debug("Mes: " + String.valueOf(mesSeleccionado));
+
+            if (matriculaSeleccionada == null) {
+                Log.error("No hay una matricula registrada");
+                JOptionPane.showMessageDialog(ModificarR, "No hay una matricula seleccionada.");
+            } else {
+                // Aquí se replica la lógica de la función original
+                Loading view = new Loading("Comprobando disponilidad...");
+                view.mostrarInterfaz(10000);
+
+                Timer timer = new Timer(10000, e -> {
+                    SwingUtilities.invokeLater(() -> {
+                        Calendar peticion = Calendar.getInstance();
+                        peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]), 0);
+                        Log.debug(peticion.toString());
+
+                        if (verificarDisponibilidad(peticion) > 0) {
+                            ctrlReserva.modificarReserva(idReserva, diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+                            JOptionPane.showMessageDialog(ModificarR, "Modificación exitosa");
+                            menu.mostrarInterfaz();
+                            dispose();
+                            Log.success("Modificación Exitosa");
+                        } else {
+                            Log.error("No hay una matrícula registrada");
+                            JOptionPane.showMessageDialog(ModificarR, "Modificación exitosa");
+                        }
+                    });
+                });
+                timer.setRepeats(false); // Para que solo se ejecute una vez
+                timer.start();
+            }
+        };
+        confirmarButton.addActionListener(accion);
+    }
+    public int verificarDisponibilidad(Calendar peticion) {
+        Calendar deadLine = SimulatedTime.getInstance().getDate();
+        deadLine.add(Calendar.MINUTE, -15);
+
+        int i = peticion.compareTo(deadLine);
+        return i;
+    }
+
 
     public void Cancelar() {
         menu = new ViewMenu();
@@ -158,41 +164,7 @@ public class ModificarReserva extends JFrame {
         dispose();
     }
 
-    private void Confirmar() {
-        ActionListener accion = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int optionSelected = JListReserva.getSelectedIndex();
 
-
-                Reserva reserva = null;
-                try {
-                    reserva = ctrlReserva.obtenerReservaPorIndice(optionSelected);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-                int idReserva = reserva.getId();
-                int mesSeleccionado = Integer.parseInt((String) MesBox.getSelectedItem());
-                int diaSeleccionado = Integer.parseInt((String) DiaBox.getSelectedItem());
-                String horaLlegadaSeleccionada = (String) HoraLlegada.getSelectedItem();
-                String horaSalidaSeleccionada = (String) HoraSalida.getSelectedItem();
-                String nombreSeleccionado = nombreUsuario.getText();
-                String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
-
-                if (matriculaSeleccionada == null) {
-                    Log.error("No hay una matricula registrada");
-                    JOptionPane.showMessageDialog(ModificarR, "No hay una matricula seleccionada.");
-                } else {
-                    ctrlReserva.modificarReserva(idReserva, mesSeleccionado,diaSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
-                    JOptionPane.showMessageDialog(ModificarR, "Modificación exitosa");
-                    menu.mostrarInterfaz();
-                    dispose();
-                    Log.success("Modificacion Exitosa");
-                }
-            }
-        };
-        confirmarButton.addActionListener(accion);
-    }
 
     public void mostrarInterfaz() {
         setContentPane(ModificarR);
@@ -203,5 +175,55 @@ public class ModificarReserva extends JFrame {
         setResizable(false);
         setVisible(true);
         Log.info("Se inicia la vista Inicio de sesion");
+    }
+
+    private void createUIComponents() {
+        Calendar calendar = (Calendar) SimulatedTime.getInstance().getDate().clone();
+
+        Date initDate = calendar.getTime();
+        Date predeterminada = calendar.getTime();
+        calendar.add(Calendar.YEAR, 1);
+        Date maxDate = calendar.getTime();
+
+        SpinnerModel dayModel = new SpinnerDateModel(
+                initDate,
+                null,
+                maxDate,
+                Calendar.DAY_OF_MONTH
+        );
+
+        SpinnerModel monthModel = new SpinnerDateModel(
+                initDate,
+                null,
+                maxDate,
+                Calendar.MONTH
+        );
+        SpinnerModel timeModel1 = new SpinnerDateModel(
+                initDate,
+                null,
+                maxDate,
+                Calendar.HOUR_OF_DAY
+        );
+
+        SpinnerModel timeModel2 = new SpinnerDateModel(
+                initDate,
+                null,
+                maxDate,
+                Calendar.HOUR_OF_DAY
+        );
+
+        DiaSpinner = new JSpinner(dayModel);
+        MesSpinner = new JSpinner(monthModel);
+        HoraLlSpinner = new JSpinner(timeModel1);
+        HoraSaSpinner = new JSpinner(timeModel2);
+
+        DiaSpinner.setEditor(new JSpinner.DateEditor(DiaSpinner, "dd"));
+        MesSpinner.setEditor(new JSpinner.DateEditor(MesSpinner, "MM"));
+        HoraLlSpinner.setEditor(new JSpinner.DateEditor(HoraLlSpinner,"HH:mm"));
+        HoraSaSpinner.setEditor(new JSpinner.DateEditor(HoraSaSpinner,"HH:mm"));
+
+        ImageIcon icon = new ImageIcon("src/main/images/editar.png");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST);
+        img = new JLabel(new ImageIcon(image)); //Falta agregar imagen
     }
 }
