@@ -85,10 +85,11 @@ public class CtrlReserva {
     }
 
     public boolean modificarReserva(int idReserva, int dia, int mes, String horaInicio, String horaFin, String matricula) {
-        String fecha = "2024-" + dia + "-" + mes;
+        String fecha = "2024-" + mes + "-" + dia;
         String hInicio = horaInicio + ":00";
-
         String hFin = horaFin + ":00";
+        Log.debug(fecha);
+
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
         int idCajon = cajon.getId();
@@ -104,6 +105,29 @@ public class CtrlReserva {
             reserva.setIdCajon(idCajon);
             reserva.setIdUsuario(idUsuario);
             reserva.modificar(idUsuario, idReserva);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean extenderReserva(int idReserva, String horaInicio, String horaFin, String matricula) {
+        CtrlCajon ctrlCajon = new CtrlCajon();
+        Cajon cajon = ctrlCajon.getCajonDisponible();
+        int idCajon = cajon.getId();
+        int idUsuario = Sesion._instance().getUsuario().getId();
+        int idAutomovil = Automovil.getIdConMatricula(matricula);
+
+        reserva = new Reserva(idReserva);
+        if (reserva != null) {
+            String fecha = reserva.getFecha(); // Obtener la fecha de la reserva
+            // Actualizar la reserva con las nuevas horas
+            reserva.setHoraInicio(horaInicio + ":00");
+            reserva.setHoraFin(horaFin + ":00");
+            reserva.setIdAutomovil(idAutomovil);
+            reserva.setIdCajon(idCajon);
+            reserva.setIdUsuario(idUsuario);
+            // Llamar al método para actualizar la reserva en la base de datos
+            reserva.extenderReserva(idUsuario, idReserva);
             return true;
         } else {
             return false;

@@ -70,6 +70,21 @@ class CtrlReservaTest {
     }
 
     @Test
+    @DisplayName("Extender tiempo de reserva")
+    void extederReserva(){
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("viridiana@example.com","12345678");
+        CtrlReserva ctrlReserva = new CtrlReserva();
+        int idReserva = 5;
+        String horaInicio = "10:00";
+        String horaFin = "12:00";
+        String matricula = "VIR-12-12";
+        CtrlReserva instancia = new CtrlReserva();
+        boolean resultado = instancia.extenderReserva(idReserva,horaInicio,horaFin,matricula);
+
+    }
+
+    @Test
     void crearReservaImprevista(){
         CtrlUsuario ctrlUsuario = new CtrlUsuario();
         ctrlUsuario.iniciarSesion("alexis@example.com", "12345678");
