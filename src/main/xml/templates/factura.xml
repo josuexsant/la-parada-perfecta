@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura>
+    <cabecera>
+        <nombre>LA PARADA PERFECTA S A DE C V</nombre>
+        <rfc>TCH850701-RM1</rfc>
+        <sucursal>001</sucursal>
+        <direccion>Col. Lomas de angelopolis</direccion>
+        <leyenda>
+            REGIMEN FISCAL - 601
+            GENERAL DE LEY PERSONAS MORALES
+        </leyenda>
+        <ciudad>PUEBLA</ciudad>
+        
+    </cabecera>
+    
+    <fecha>
+        <ano>2024</ano>
+        <mes>Abril</mes>
+        <dia>8</dia>
+    </fecha>
+    
+    <cliente>
+        <membresia>1</membresia>
+        <nombre>Alberto Josue Santamaria Morales</nombre>
+        <numero>2211362365</numero>
+        <email>josuexsanta@gmail.com</email>
+        
+    </cliente>
+    
+    <servicio>
+        <tipo>Reserva</tipo>
+        <llegada>13:00</llegada>
+        <salida>17:00</salida>
+        <automovil>
+            <matricula>ABC-12-12</matricula>
+            <marca>Toyota</marca>
+        </automovil>
+        <precioHora>20.00</precioHora>
+    </servicio>
+    
+    <cobro>
+        <moneda>MXN</moneda>
+        <tipoPago>CREDITO</tipoPago>
+        <tarjeta>
+            <!-- Comunmente solo se muestran los ultomos 4 digitos de las tarjetas por seguridad -->
+            <titular>Alberto Josue Santamaria Morales</titular>
+            <terminacionNumero>1234</terminacionNumero>
+            <direccionFacturacion>Calle de Josue</direccionFacturacion>
+        </tarjeta>
+        <subTotal>80.00</subTotal>
+        <ivaPorcentaje>16</ivaPorcentaje>
+        <total>92.80</total>
+        <!-- 2024/04/15 07:38 01-SUC 01-idReserva -->
+        <folio>2404 1507 3801 0001</folio>
+    </cobro>
+   
+    <contacto>
+        <leyenda>
+            Tu opinión es muy importante.
+        </leyenda>
+        <numeroTelefonico>2211362365</numeroTelefonico>
+        <email>la.parada.perfecta@gmail.com</email>
+    </contacto>
+</factura>
