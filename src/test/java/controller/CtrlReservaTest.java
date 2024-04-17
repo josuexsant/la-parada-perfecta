@@ -75,7 +75,7 @@ class CtrlReservaTest {
         CtrlUsuario ctrlUsuario = new CtrlUsuario();
         ctrlUsuario.iniciarSesion("viridiana@example.com","12345678");
         CtrlReserva ctrlReserva = new CtrlReserva();
-        int idReserva = 5;
+        int idReserva = 1;
         String horaInicio = "10:00";
         String horaFin = "12:00";
         String matricula = "VIR-12-12";

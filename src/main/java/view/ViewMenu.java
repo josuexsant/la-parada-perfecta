@@ -1,6 +1,7 @@
 package view;
 
 import controller.CtrlUsuario;
+import model.Reserva;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +16,13 @@ public class ViewMenu extends JFrame {
     private JButton crearReservaGarantizadaButton;
     private JButton cerrarSesionButton;
     private JLabel img;
+    private JButton extenderTiempoButton;
 
     public ViewMenu() {
         crearReservaButton.addActionListener(e -> crearReserva());
         eliminarReservaButton.addActionListener(e -> cancelarReserva());
         modificarReservaButton.addActionListener(e -> modificarReserva());
+        extenderTiempoButton.addActionListener(e -> extenderTiempo());
         crearReservaGarantizadaButton.addActionListener(e -> reservaGarantizada());
         gestionMatriculasButton.addActionListener(e -> gestionMatriculas());
         cerrarSesionButton.addActionListener(e -> cerrarSesion());
@@ -55,6 +58,11 @@ public class ViewMenu extends JFrame {
 
     private void reservaGarantizada() {
         ReservaGarantizada view = new ReservaGarantizada();
+        view.mostrarInterfaz();
+        dispose();
+    }
+    private void extenderTiempo(){
+        ExtenderReserva view = new ExtenderReserva();
         view.mostrarInterfaz();
         dispose();
     }

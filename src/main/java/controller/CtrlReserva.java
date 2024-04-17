@@ -128,6 +128,7 @@ public class CtrlReserva {
             reserva.setIdUsuario(idUsuario);
             // Llamar al método para actualizar la reserva en la base de datos
             reserva.extenderReserva(idUsuario, idReserva);
+            Log.success("Salió bien extender tiempo");
             return true;
         } else {
             return false;
