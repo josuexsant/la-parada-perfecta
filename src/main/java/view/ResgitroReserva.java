@@ -1,6 +1,7 @@
 package view;
 
 import controller.CtrlAutomovil;
+import controller.CtrlFactura;
 import controller.CtrlReserva;
 import controller.CtrlUsuario;
 import model.Log;
@@ -142,12 +143,15 @@ public class ResgitroReserva extends JFrame {
                                 dispose();
 
                         }
+                        CtrlFactura ctrlFactura = new CtrlFactura();
+                        ctrlFactura.generarFacturaPDF(horaLlegadaSeleccionada,horaSalidaSeleccionada, matriculaSeleccionada,diaSeleccionado,mesSeleccionado);
                     });
                 }
             });
             timer.setRepeats(false); // Para que solo se ejecute una vez
             timer.start();
         };
+
         confirmarButton.addActionListener(accion);
     }
 
