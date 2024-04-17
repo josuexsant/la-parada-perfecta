@@ -26,6 +26,45 @@ public class TDC {
         this.nombre_titular = nombre_titular;
         this.direccion_facturacion = direccion_facturacion;
     }
+    public TDC(String idUsuarioString) {
+        // Convertir el String a int (idUsuario)
+        int idUsuario = Integer.parseInt(idUsuarioString);
+
+        // Consulta SQL para obtener los datos de la TDC
+        String query = "SELECT " +
+                "    tc.id, " +
+                "    tc.id_usuario, " +
+                "    tc.numero_tarjeta, " +
+                "    tc.fecha_expiracion, " +
+                "    tc.cvv, " +
+                "    tc.nombre_titular, " +
+                "    tc.direccion_facturacion " +
+                "FROM " +
+                "    informacion_TDC tc " +
+                "    JOIN informacion_usuario iu ON tc.id_usuario = iu.id " +
+                "WHERE " +
+                "    iu.id = ?";
+
+        // Ejecutar la consulta SQL
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, idUsuario);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Asignar los valores obtenidos a los campos de la instancia actual
+                    this.id_usuario = idUsuario;
+                    this.numero_tarjeta= resultSet.getString("numero_tarjeta");
+                    this.fecha_expiracion = resultSet.getString("fecha_expiracion");
+                    this.cvv = resultSet.getString("cvv");
+                    this.nombre_titular = resultSet.getString("nombre_titular");
+                    this.direccion_facturacion = resultSet.getString("direccion_facturacion");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public TDC(int idTDC) {
         String query = "SELECT " +
@@ -58,6 +97,8 @@ public class TDC {
             e.printStackTrace();
         }
     }
+
+
 
     public void setNumeroTarjeta(String numero_tarjeta){
         this.numero_tarjeta = numero_tarjeta;
