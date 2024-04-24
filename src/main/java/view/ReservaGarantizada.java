@@ -4,6 +4,7 @@ import controller.CtrlAutomovil;
 import controller.CtrlReserva;
 import controller.CtrlReservaGarantizada;
 import model.Log;
+import model.Reserva;
 import model.SimulatedTime;
 
 import javax.swing.*;
@@ -39,10 +40,6 @@ public class ReservaGarantizada extends JFrame {
     public ReservaGarantizada() {
         ctrlReservaGarantizada = new CtrlReservaGarantizada();
         ctrlAutomovil = new CtrlAutomovil();
-      /*  getMesBoxInicio();
-        getMesBoxFin();
-        getFechaBoxInicio();
-        getFechaBoxFin();*/
         llenarMatriculas();
         setNombreField();
         Confirmar();
@@ -55,99 +52,12 @@ public class ReservaGarantizada extends JFrame {
             MatriculaBox.addItem(placa);
         }
     }
-/*
-    public void getMesBoxInicio() {
-        MesBoxInicio.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String mesSeleccionadoString = (String) MesBoxInicio.getSelectedItem();
-                int mesSeleccionado = Integer.parseInt(mesSeleccionadoString);
-                RegistroDiaInicio(mesSeleccionado);
-            }
-        });
-    }
-    public void getMesBoxFin() {
-        MesBoxFin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String mesSeleccionadoString = (String) MesBoxFin.getSelectedItem();
-                int mesSeleccionado = Integer.parseInt(mesSeleccionadoString);
-                RegistroDiaFin(mesSeleccionado);
-            }
-        });
+    public int verificarMatricula() {
+        if (MatriculaBox.getSelectedItem() == null)
+            return 0;
+        return 5;
     }
 
-    public void getFechaBoxInicio() {
-        MesBoxInicio.removeAllItems();
-        for (int mes = 1; mes <= 12; mes++) {
-            MesBoxInicio.addItem(Integer.toString(mes));
-        }
-    }
-    public void getFechaBoxFin() {
-        MesBoxFin.removeAllItems();
-        for (int mes = 1; mes <= 12; mes++) {
-            MesBoxFin.addItem(Integer.toString(mes));
-        }
-    }
-
-    public void RegistroDiaInicio(int mes) {
-        DiaBoxInicio.removeAllItems();
-        switch (mes) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                for (int f = 1; f <= 31; f++) {
-                    DiaBoxInicio.addItem(Integer.toString(f));
-                }
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                for (int f = 1; f <= 30; f++) {
-                    DiaBoxInicio.addItem(Integer.toString(f));
-                }
-                break;
-            case 2:
-                for (int f = 1; f <= 28; f++) {
-                    DiaBoxInicio.addItem(Integer.toString(f));
-                }
-                break;
-        }
-    }
-    public void RegistroDiaFin(int mes) {
-        switch (mes) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                for (int f = 1; f <= 31; f++) {
-                    DiaBoxFin.addItem(Integer.toString(f));
-                }
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                for (int f = 1; f <= 30; f++) {
-                    DiaBoxFin.addItem(Integer.toString(f));
-                }
-                break;
-            case 2:
-                for (int f = 1; f <= 28; f++) {
-                    DiaBoxFin.addItem(Integer.toString(f));
-                }
-                break;
-        }
-    }
-*/
     private double calcularCosto(int horasSeleccionadas) {
         double tarifaPorHora = 10.0;
         if (horasSeleccionadas < 0) {
@@ -166,44 +76,86 @@ public class ReservaGarantizada extends JFrame {
         nombreUsuario.setText(ctrlAutomovil.obtenerNombre());
     }
 
-    private void Confirmar() {
-        ActionListener accion = actionEvent -> {
-            Loading view = new Loading("Comprobando disponibilidad...");
-            view.mostrarInterfaz(10000);
+//    private void Confirmar() {
+//        ActionListener accion = actionEvent -> {
+//            Loading view = new Loading("Comprobando disponibilidad...");
+//            view.mostrarInterfaz(10000);
+//
+//            Timer timer = new Timer(10000, new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    SwingUtilities.invokeLater(() -> {
+//                    int diaInicio = Integer.parseInt(new SimpleDateFormat("dd").format(DaySpinner.getValue()));
+//                    int mesInicio = Integer.parseInt(new SimpleDateFormat("MM").format(MesSpineer.getValue()));
+//                    int diaFin = Integer.parseInt(new SimpleDateFormat("dd").format(DaySpinnerFin.getValue()));
+//                    int mesFin = Integer.parseInt(new SimpleDateFormat("MM").format(MesSpinnerFin.getValue()));
+//                    String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
+//
+//                    Calendar peticion = Calendar.getInstance();
+//                    peticion.set(2024,mesInicio -1, diaFin);
+//                    Log.debug(peticion.toString());
+//
+//
+//                    });
+//                }
+//            });
+//            timer.setRepeats(false); // Para que solo se ejecute una vez
+//            timer.start();
+//        };
+//        confirmarButton.addActionListener(accion);
+//    }
+private void Confirmar() {
+    ActionListener accion = actionEvent -> {
+        Loading view = new Loading("Comprobando disponibilidad...");
+        view.mostrarInterfaz(10000);
 
-            Timer timer = new Timer(10000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingUtilities.invokeLater(() -> {
+        Timer timer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
                     int diaInicio = Integer.parseInt(new SimpleDateFormat("dd").format(DaySpinner.getValue()));
                     int mesInicio = Integer.parseInt(new SimpleDateFormat("MM").format(MesSpineer.getValue()));
                     int diaFin = Integer.parseInt(new SimpleDateFormat("dd").format(DaySpinnerFin.getValue()));
                     int mesFin = Integer.parseInt(new SimpleDateFormat("MM").format(MesSpinnerFin.getValue()));
                     String matriculaSeleccionada = (String) MatriculaBox.getSelectedItem();
 
-                    Calendar peticion = Calendar.getInstance();
-                    peticion.set(2024,mesInicio -1, diaFin);
-                    Log.debug(peticion.toString());
-
-                    if(matriculaSeleccionada != null){
-                        ctrlReservaGarantizada.crear(diaInicio,mesInicio,diaFin,mesFin,matriculaSeleccionada);
-                        UIManager.put("OptionPane.okButtonText", "Aceptar");
-                        JOptionPane.showMessageDialog(ReservaP, "Reserva guardada con exito", "Reserva imprevista", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-                        menu.mostrarInterfaz();
-                    }else{
-                        Log.error("No hay matricula registrada");
-                        UIManager.put("OptionPane.okButtonText", "Volver a intentar");
-                        JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
-
+                    // Verificar restricciones antes de confirmar la reserva garantizada
+                    int status = statusReservaGarantizada(diaInicio, mesInicio, diaFin, mesFin, matriculaSeleccionada);
+                    if (status != 0) {
+                        // Si hay alguna restricción, mostrar un mensaje de error o manejarlo de acuerdo a tus necesidades
+                        switch (status) {
+                            case 1:
+                                Log.error("Los dias y mesese deben ser validos");
+                                break;
+                            case 2:
+                                Log.error("La matrícula del automóvil es inválida.");
+                                break;
+                            default:
+                                Log.error("Error desconocido al crear la reserva.");
+                        }
+                        return;
                     }
-                    });
-                }
-            });
-            timer.setRepeats(false); // Para que solo se ejecute una vez
-            timer.start();
-        };
-        confirmarButton.addActionListener(accion);
+
+                    // Si no hay restricciones, confirmar la reserva garantizada
+                    ctrlReservaGarantizada.crear(diaInicio, mesInicio, diaFin, mesFin, matriculaSeleccionada);
+                });
+            }
+        });
+        timer.setRepeats(false); // Para que solo se ejecute una vez
+        timer.start();
+    };
+    confirmarButton.addActionListener(accion);
+}
+
+    private int statusReservaGarantizada(int diaInicio, int mesInicio, int diaFin, int mesFin, String matricula) {
+        // Verificar restricciones aquí y devolver un código de estado correspondiente
+        if (diaInicio < 1 || diaInicio > 31 || diaFin < 1 || diaFin > 31 || mesInicio < 1 || mesInicio > 12 || mesFin < 1 || mesFin > 12 || diaInicio > diaFin || (mesInicio == mesFin && diaInicio == diaFin)) {
+            return 1; // Las horas de inicio y fin deben ser válidas
+        }
+        if (verificarMatricula() == 0) {
+            return 2; // La matrícula del automóvil es inválida
+        }
+        return 0;
     }
 
 
@@ -262,7 +214,6 @@ public class ReservaGarantizada extends JFrame {
         MesSpineer.setEditor(new JSpinner.DateEditor(MesSpineer, "MM"));
         MesSpinnerFin.setEditor(new JSpinner.DateEditor(MesSpinnerFin, "MM"));
         DaySpinnerFin.setEditor(new JSpinner.DateEditor(DaySpinnerFin, "dd"));
-
     }
 
 }
