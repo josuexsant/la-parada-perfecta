@@ -84,27 +84,34 @@ public class RegistroTDC extends JFrame {
                 String mes = (String) mesBox.getSelectedItem();
                 String año = (String) yearBox.getSelectedItem();
 
-                CtrlTDC controladorTDC = new CtrlTDC();
-                boolean registroExitoso = controladorTDC.registrarTDC(NumeroS, FechExp, CvvS, NombreSeleccionado, TDrir);
-                Loading view = new Loading("Verificando tarjeta");
-                view.mostrarInterfaz(10000);
+                UIManager.put("OptionPane.yesButtonText", "Sí");
+                UIManager.put("OptionPane.noButtonText", "No");
+                int confirmacion = JOptionPane.showConfirmDialog(registroTarjeta, "¿La información que ingresaste es correcta?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                if(confirmacion == JOptionPane.YES_OPTION){
+                    CtrlTDC controladorTDC = new CtrlTDC();
+                    boolean registroExitoso = controladorTDC.registrarTDC(NumeroS, FechExp, CvvS, NombreSeleccionado, TDrir);
+                    Loading view = new Loading("Verificando tarjeta");
+                    view.mostrarInterfaz(10000);
 
-                Timer timer = new Timer(10000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (registroExitoso) {
-                            JOptionPane.showMessageDialog(registroTarjeta, "Registro de Tarjeta exitoso");
-                            Log.info("Tarjeta registrada");
-                            ViewMenu inicioMenuFrame = new ViewMenu();
-                            inicioMenuFrame.mostrarInterfaz();
-                            dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(registroTarjeta, "Error al registrar la tarjeta");
+                    Timer timer = new Timer(10000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (registroExitoso) {
+                                UIManager.put("OptionPane.okButtonText", "Aceptar");
+                                JOptionPane.showMessageDialog(registroTarjeta, "Registro de tarjeta exitoso", "Registro de tarjeta", JOptionPane.INFORMATION_MESSAGE);
+                                Log.info("Tarjeta registrada");
+                                ViewMenu inicioMenuFrame = new ViewMenu();
+                                inicioMenuFrame.mostrarInterfaz();
+                                dispose();
+                            } else {
+                                UIManager.put("OptionPane.okButtonText", "Aceptar");
+                                JOptionPane.showMessageDialog(registroTarjeta, "Error al registrar la tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
-                    }
-                });
-                timer.setRepeats(false); // Para que solo se ejecute una vez
-                timer.start();
+                    });
+                    timer.setRepeats(false); // Para que solo se ejecute una vez
+                    timer.start();
+                }
             }
         };
 

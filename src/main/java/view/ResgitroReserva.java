@@ -1,6 +1,7 @@
 package view;
 
 import controller.CtrlAutomovil;
+import controller.CtrlFactura;
 import controller.CtrlReserva;
 import controller.CtrlUsuario;
 import model.Log;
@@ -114,24 +115,27 @@ public class ResgitroReserva extends JFrame {
                          *  3: fusionable
                          *  4: ok
                          */
-
                         Reserva reserva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado -1, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
                         switch (status(reserva)) {
                             case 0:
                                 Log.error("No hay una matricula registrada");
-                                JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
+                                UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                                JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
                                 break;
                             case 1:
                                 Log.error("Debes de crear una reserva 15 minutos antes");
-                                JOptionPane.showMessageDialog(ReservaP, "Debes de crear una reserva 15 minutos antes.");
+                                UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                                JOptionPane.showMessageDialog(ReservaP, "Debes de crear una reserva 15 minutos antes.", "Error", JOptionPane.ERROR_MESSAGE);
                                 break;
                             case 2:
                                 Log.error("Fecha ya reservada");
-                                JOptionPane.showMessageDialog(ReservaP, "Fecha ya reservada.");
+                                UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                                JOptionPane.showMessageDialog(ReservaP, "Fecha ya reservada.", "Error", JOptionPane.ERROR_MESSAGE);
                                 break;
                             case 3:
                                 Log.error("Reserva fusionable");
-                                JOptionPane.showMessageDialog(ReservaP, "Tu reserva se ha fusionado con el ID: " + ctrlReserva.getFusion().getId());
+                                UIManager.put("OptionPane.okButtonText", "Aceptar");
+                                JOptionPane.showMessageDialog(ReservaP, "Tu reserva se ha fusionado con el ID: " + ctrlReserva.getFusion().getId(), "Reserva fusionada", JOptionPane.INFORMATION_MESSAGE);
                                 ConfirmarReserva view = new ConfirmarReserva(ctrlReserva.getFusion());
                                 view.mostrarInterfaz();
                                 dispose();
@@ -145,14 +149,17 @@ public class ResgitroReserva extends JFrame {
                                 ConfirmarReserva view2 = new ConfirmarReserva(reserva);
                                 view2.mostrarInterfaz();
                                 dispose();
-
                         }
+                        CtrlFactura ctrlFactura = new CtrlFactura();
+                        ctrlFactura.generarFacturaPDF(horaLlegadaSeleccionada,horaSalidaSeleccionada, matriculaSeleccionada,diaSeleccionado,mesSeleccionado);
+
                     });
                 }
             });
             timer.setRepeats(false); // Para que solo se ejecute una vez
             timer.start();
         };
+
         confirmarButton.addActionListener(accion);
     }
 

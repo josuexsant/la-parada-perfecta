@@ -58,11 +58,17 @@ public class ModificarMatricula extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String matriculaNueva = (String) matriculaText.getText();
                 int marcaSeleccionada = obtenerIdMarca((String) marcaComboBox.getSelectedItem());
-                if(marcaSeleccionada == 0){
+                if (matriculaNueva.isEmpty()){
+                    UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                    JOptionPane.showMessageDialog(modificarPanel, "Por favor, digita una matricula", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+               else if(marcaSeleccionada == 0){
+                    UIManager.put("OptionPane.okButtonText", "Volver a intentar");
                     Log.error("Por favor, seleccione una marca");
                 }else{
                     ctrlAutomovil.modificarMatricula(marcaSeleccionada, matriculaNueva, matriculaSeleccionada);
-                    JOptionPane.showMessageDialog(modificarPanel, "Modificacion exitosa");
+                    UIManager.put("OptionPane.okButtonText", "Aceptar");
+                    JOptionPane.showMessageDialog(modificarPanel, "Modificacion exitosa", "Modificarcion de matricula", JOptionPane.INFORMATION_MESSAGE);
 
                     ViewMenu menu = new ViewMenu();
                     menu.mostrarInterfaz();
