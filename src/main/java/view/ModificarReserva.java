@@ -111,7 +111,8 @@ public class ModificarReserva extends JFrame {
 
             if (matriculaSeleccionada == null) {
                 Log.error("No hay una matricula registrada");
-                JOptionPane.showMessageDialog(ModificarR, "No hay una matricula seleccionada.");
+                UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                JOptionPane.showMessageDialog(ModificarR, "No hay una matricula seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 // Aquí se replica la lógica de la función original
                 Loading view = new Loading("Comprobando disponilidad...");
@@ -125,12 +126,14 @@ public class ModificarReserva extends JFrame {
 
                         if (verificarDisponibilidad(peticion) > 0) {
                             ctrlReserva.modificarReserva(idReserva, diaSeleccionado, mesSeleccionado, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
-                            JOptionPane.showMessageDialog(ModificarR, "Modificación exitosa");
+                            UIManager.put("OptionPane.okButtonText", "Aceptar");
+                            JOptionPane.showMessageDialog(ModificarR, "Modificación exitosa", "Modificacion", JOptionPane.INFORMATION_MESSAGE);
                             menu.mostrarInterfaz();
                             dispose();
                             Log.success("Modificación Exitosa");
                         } else {
                             Log.error("No hay una matrícula registrada");
+                            UIManager.put("OptionPane.okButtonText", "Aceptar");
                             JOptionPane.showMessageDialog(ModificarR, "Modificación exitosa");
                         }
                     });

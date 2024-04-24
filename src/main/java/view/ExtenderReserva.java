@@ -115,7 +115,8 @@ public class ExtenderReserva extends JFrame {
 
             if (matriculaSeleccionada == null) {
                 Log.error("No hay una matricula registrada");
-                JOptionPane.showMessageDialog(ExtenderP, "No hay una matricula seleccionada.");
+                UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                JOptionPane.showMessageDialog(ExtenderP, "No hay una matricula seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 // Aquí se replica la lógica de la función original
                 Loading view = new Loading("Comprobando disponilidad...");
@@ -128,12 +129,14 @@ public class ExtenderReserva extends JFrame {
 
                         if (verificarDisponibilidad(peticion) > 0) {
                             ctrlReserva.extenderReserva(idReserva,horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
-                            JOptionPane.showMessageDialog(ExtenderP, "Modificación exitosa");
+                            UIManager.put("OptionPane.okButtonText", "Aceptar");
+                            JOptionPane.showMessageDialog(ExtenderP, "Modificación exitosa", "Extender reserva", JOptionPane.INFORMATION_MESSAGE);
                             menu.mostrarInterfaz();
                             dispose();
                             Log.success("Modificación Exitosa");
                         } else {
                             Log.error("No hay una matrícula registrada");
+                            UIManager.put("OptionPane.okButtonText", "Aceptar");
                             JOptionPane.showMessageDialog(ExtenderP, "Modificación exitosa");
                         }
                     });

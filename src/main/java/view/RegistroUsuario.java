@@ -42,18 +42,27 @@ public class RegistroUsuario extends JFrame {
             int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
             int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
-            if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
-                JOptionPane.showMessageDialog(registroUsuariopanel, "Registro Exitoso");
+            UIManager.put("OptionPane.yesButtonText", "Sí");
+            UIManager.put("OptionPane.noButtonText", "No");
+            int confirmacion = JOptionPane.showConfirmDialog(registroUsuariopanel, "¿La información que ingresaste es correcta?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
-                RegistroTDC registroTDC = new RegistroTDC();
-                registroTDC.mostrarInterfaz();
-                dispose();
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
+                    UIManager.put("OptionPane.okButtonText", "Aceptar");
+                    JOptionPane.showMessageDialog(registroUsuariopanel, "Registro Exitoso", "Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
 
-                Log.info("Registro de usuario");
-            } else {
-                JOptionPane.showMessageDialog(registroUsuariopanel, "Error en el registro");
+                    RegistroTDC registroTDC = new RegistroTDC();
+                    registroTDC.mostrarInterfaz();
+                    dispose();
+
+                    Log.info("Registro de usuario");
+                } else {
+                    UIManager.put("OptionPane.okButtonText", "Intentar de nuevo");
+                    JOptionPane.showMessageDialog(registroUsuariopanel, "Error en el registro");
+                }
             }
         });
+
 
         nombretext.addKeyListener(new KeyAdapter() {
             @Override

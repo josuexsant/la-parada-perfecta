@@ -79,13 +79,17 @@ public class GestionMatriculas extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String matriculaSeleccionada = (String) matriculasComboBox.getSelectedItem();
+                UIManager.put("OptionPane.yesButtonText", "Sí");
+                UIManager.put("OptionPane.noButtonText", "No");
                 int confirmacion = JOptionPane.showConfirmDialog(gestionMatriculasPanel, "¿Estás seguro de que deseas eliminar la matrícula seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     if (ctrlAutomovil.eliminarMatricula(matriculaSeleccionada)) {
+                        UIManager.put("OptionPane.okButtonText", "Aceptar");
                         JOptionPane.showMessageDialog(gestionMatriculasPanel, "Matrícula eliminada correctamente.", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
                         matriculasComboBox.removeItem(matriculaSeleccionada);
                     } else {
-                        JOptionPane.showMessageDialog(gestionMatriculasPanel, "Hay reservas asociadas a esta matricula");
+                        UIManager.put("OptionPane.okButtonText", "Aceptar");
+                        JOptionPane.showMessageDialog(gestionMatriculasPanel, "Hay reservas asociadas a esta matricula", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }

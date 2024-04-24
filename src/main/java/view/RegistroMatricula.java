@@ -49,16 +49,21 @@ public class RegistroMatricula extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String matriculaNueva = (String) matriculaText.getText();
                 int marcaSeleccionada = obtenerIdMarca((String) marcaComboBox.getSelectedItem());
-
-                if(marcaSeleccionada == 0){
+                if (matriculaNueva.isEmpty()){
+                    UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                    JOptionPane.showMessageDialog(registroPanel, "Por favor, digite una matricula", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(marcaSeleccionada == 0){
+                    UIManager.put("OptionPane.okButtonText", "Aceptar");
                     Log.error("Por favor, seleccione una marca");
-                    JOptionPane.showMessageDialog(registroPanel, "Por favor, seleccione una marca");
+                    JOptionPane.showMessageDialog(registroPanel, "Por favor, seleccione una marca", "Error", JOptionPane.ERROR_MESSAGE);
                 }else{
                     ctrlAutomovil.agregarMatricula(marcaSeleccionada, matriculaNueva);
-                        JOptionPane.showMessageDialog(registroPanel, "Registro exitoso");
-                         ViewMenu menu = new ViewMenu();
-                         menu.mostrarInterfaz();
-                         dispose();
+                    UIManager.put("OptionPane.okButtonText", "Aceptar");
+                    JOptionPane.showMessageDialog(registroPanel, "Registro exitoso", "Registro matricula", JOptionPane.INFORMATION_MESSAGE);
+                    ViewMenu menu = new ViewMenu();
+                    menu.mostrarInterfaz();
+                    dispose();
                     }
             }
         });

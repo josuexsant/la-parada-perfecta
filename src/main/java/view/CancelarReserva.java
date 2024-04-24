@@ -75,23 +75,26 @@ public class CancelarReserva extends JFrame {
         ActionListener accion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int optionSelected = JListReserva.getSelectedIndex();
-
-
-                Reserva reserva = null;
-                try {
-                    reserva = ctrlReserva.obtenerReservaPorIndice(optionSelected);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                UIManager.put("OptionPane.yesButtonText", "Sí");
+                UIManager.put("OptionPane.noButtonText", "No");
+                int confirmacion = JOptionPane.showConfirmDialog(PCancelar, "¿Estas seguro de cancelar esta reserva?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                if (confirmacion == JOptionPane.YES_OPTION){
+                    int optionSelected = JListReserva.getSelectedIndex();
+                    Reserva reserva = null;
+                    try {
+                        reserva = ctrlReserva.obtenerReservaPorIndice(optionSelected);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    int idReserva = reserva.getId();
+                    ctrlReserva.eliminarReservaSelccionada(idReserva);
+                    UIManager.put("OptionPane.okButtonText", "Aceptar");
+                    JOptionPane.showMessageDialog(PCancelar, "Cancelacion exitosa", "Cancelacion", JOptionPane.INFORMATION_MESSAGE);
+                    menu.mostrarInterfaz();
+                    dispose();
+                    Log.success("Cancelacion Exitosa");
                 }
-                int idReserva = reserva.getId();
-                ctrlReserva.eliminarReservaSelccionada(idReserva);
-                JOptionPane.showMessageDialog(PCancelar, "Cancelacion exitosa");
-                menu.mostrarInterfaz();
-                dispose();
-                Log.success("Cancelacion Exitosa");
-                }
-
+            }
         };
         cancelarReservaButton.addActionListener(accion);
     }
