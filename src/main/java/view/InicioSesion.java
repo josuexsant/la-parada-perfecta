@@ -38,17 +38,20 @@ public class InicioSesion extends JFrame {
         String password = new String(passwordText.getPassword());
 
         if (correoElectronico.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(inicio, "Ingrese un correo ó contraseña validos");
+            UIManager.put("OptionPane.okButtonText", "Aceptar");
+            JOptionPane.showMessageDialog(inicio, "Ingrese un correo ó contraseña validos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (ctrlUsuario.iniciarSesion(correoElectronico, password)) {
-            JOptionPane.showMessageDialog(inicio, "Inicio de sesión exitoso");
+            UIManager.put("OptionPane.okButtonText", "Aceptar");
+            JOptionPane.showMessageDialog(inicio, "Inicio de sesión exitoso", "Inicio de sesion", JOptionPane.INFORMATION_MESSAGE);
             menu.mostrarInterfaz();
             dispose();
             Log.success("Sesion Exitosa");
         } else {
-            JOptionPane.showMessageDialog(inicio, "Inicio de sesión fallido");
+            UIManager.put("OptionPane.okButtonText", "Intentar de nuevo");
+            JOptionPane.showMessageDialog(inicio, "Inicio de sesión fallido", "Error", JOptionPane.ERROR_MESSAGE);
             Log.error("Fallo en el inicio de sesión");
         }
     }
@@ -62,7 +65,8 @@ public class InicioSesion extends JFrame {
     private void iniciarSesionOperador() {
         CtrlOperador ctrlOperador = new CtrlOperador();
         if (emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(inicio, "Ingrese un correo ó contraseña validos");
+            UIManager.put("OptionPane.okButtonText", "Intentar de nuevo");
+            JOptionPane.showMessageDialog(inicio, "Ingrese un correo ó contraseña validos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -76,7 +80,8 @@ public class InicioSesion extends JFrame {
             dispose();
         } else {
             setLocation(100,100);
-            JOptionPane.showMessageDialog(inicio, "Datos incorrectos");
+            UIManager.put("OptionPane.okButtonText", "Intentar de nuevo");
+            JOptionPane.showMessageDialog(inicio, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

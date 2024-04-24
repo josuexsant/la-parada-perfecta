@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-/*public class CtrlFactura {
+public class CtrlFactura {
         String template = "src/main/xml/templates/factura.xml";
         Factura factura = new Factura(template);
         Sesion sesion = Sesion._instance();
@@ -64,6 +64,6 @@ import java.util.LinkedList;
             // Generar el PDF
             factura.crearPDF("src/main/xml/templates/factura.xsl", "src/main/facturas/factura-" + usuario.getId() +"-"+ usuario.getNombre()+ ".pdf");
         }
-}*/
+}
 
 

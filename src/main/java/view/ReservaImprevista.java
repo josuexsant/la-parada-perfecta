@@ -89,7 +89,8 @@ public class ReservaImprevista extends JFrame{
                             dispose();
                         } else {
                             Log.error("No hay una matricula registrada");
-                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.");
+                            UIManager.put("OptionPane.okButtonText", "Volver a intentar");
+                            JOptionPane.showMessageDialog(ReservaP, "No hay una matricula seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     });
                 }
