@@ -105,6 +105,7 @@ public class ResgitroReserva extends JFrame {
                         Calendar peticion = Calendar.getInstance();
                         peticion.set(2024, mesSeleccionado - 1, diaSeleccionado, Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]), 0);
                         Log.debug(peticion.toString());
+
                         /**
                          * Codigos de error
                          *  0: matricula vacia..
@@ -136,6 +137,10 @@ public class ResgitroReserva extends JFrame {
                                 dispose();
                                 break;
                             case 4:
+                                Log.error("Horas iguales");
+                                JOptionPane.showMessageDialog(ReservaP, "Las horas de llegada y salida no pueden ser iguales.");
+                                break;
+                            case 5:
                                 ctrlReserva.guardar();
                                 ConfirmarReserva view2 = new ConfirmarReserva(reserva);
                                 view2.mostrarInterfaz();
@@ -166,13 +171,16 @@ public class ResgitroReserva extends JFrame {
         i = ctrlReserva.esFusionable(rn);
         if(i ==3)
             return i;
-        return 4;
+        i = verificarHoras();
+        if (i == 4)
+            return i;
+        return 5;
     }
 
     public int verificarMatricula() {
         if (MatriculaBox.getSelectedItem() == null)
             return 0;
-        return 4;
+        return 5;
     }
 
     public void mostrarInterfaz() {
@@ -206,8 +214,29 @@ public class ResgitroReserva extends JFrame {
 
         if (i)
             return 1;
-        return 4;
+        return 5;
     }
+
+
+    public int verificarHoras() {
+        String horaLlegadaSeleccionada = new SimpleDateFormat("HH:mm").format(llegadaSpinner.getValue());
+        String horaSalidaSeleccionada = new SimpleDateFormat("HH:mm").format(salidaSpinner.getValue());
+
+        int horaLlegada = Integer.parseInt(horaLlegadaSeleccionada.split(":")[0]);
+        int minutoLlegada = Integer.parseInt(horaLlegadaSeleccionada.split(":")[1]);
+
+        int horaSalida = Integer.parseInt(horaSalidaSeleccionada.split(":")[0]);
+        int minutoSalida = Integer.parseInt(horaSalidaSeleccionada.split(":")[1]);
+
+        if (horaLlegada == horaSalida && minutoLlegada == minutoSalida) {
+            return 4; // Podrías usar cualquier otro código de error aquí
+        }
+
+        // Las horas de llegada y salida son diferentes
+        return 5; // Podrías usar cualquier otro código para indicar que las horas son válidas
+    }
+
+
 
 
     private void createUIComponents() {
