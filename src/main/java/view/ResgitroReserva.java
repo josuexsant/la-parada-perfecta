@@ -12,6 +12,7 @@ import model.SimulatedTime;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -151,7 +152,15 @@ public class ResgitroReserva extends JFrame {
                                 dispose();
                         }
                         CtrlFactura ctrlFactura = new CtrlFactura();
-                        ctrlFactura.generarFacturaPDF(horaLlegadaSeleccionada,horaSalidaSeleccionada, matriculaSeleccionada,diaSeleccionado,mesSeleccionado);
+
+                        try {
+                            ctrlFactura.generarFacturaPDF(horaLlegadaSeleccionada,horaSalidaSeleccionada, matriculaSeleccionada,diaSeleccionado,mesSeleccionado);
+                        } catch (ParseException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+
+
 
                     });
                 }
