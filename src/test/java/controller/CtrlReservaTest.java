@@ -2,10 +2,12 @@ package controller;
 
 import model.Log;
 import model.Reserva;
+import model.SimulatedTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 class CtrlReservaTest {
@@ -112,5 +114,14 @@ class CtrlReservaTest {
         Reserva reservaNueva = ctrlReserva.crearReserva(12,9,"14:00","17:00","QET-12-14");
 
         ctrlReserva.fusionAfter(new Reserva(40), reservaNueva);
+    }
+
+    @Test
+    void enviarNotificacion() {
+        SimulatedTime.getInstance().setDate(Calendar.getInstance());
+        CtrlUsuario ctrlUsuario = new CtrlUsuario();
+        ctrlUsuario.iniciarSesion("josuexsanta@gmail.com","12345678");
+        CtrlReserva ctrlReserva = new CtrlReserva();
+        ctrlReserva.enviarNotificacion("Test","Este es un mensaje de TEST","Hola, espero que estes muy bien de parte de todos");
     }
 }

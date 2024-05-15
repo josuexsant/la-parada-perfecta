@@ -70,11 +70,7 @@ public class ReservaImprevista extends JFrame{
                         String horaLlegadaSeleccionada = horaLlegadaLabel.getText();
                         String horaSalidaSeleccionada = new SimpleDateFormat("HH:mm").format(horaSalidaSpinner.getValue());
                         String nombreSeleccionado;
-                        try {
-                            nombreSeleccionado = Sesion._instance().getUsuario().nombreCompleto(Sesion._instance().getUsuario().getId());
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        nombreSeleccionado = Sesion._instance().getUsuario().nombreCompleto(Sesion._instance().getUsuario().getId());
                         String matriculaSeleccionada = (String) matriculaComboBox.getSelectedItem();
 
 

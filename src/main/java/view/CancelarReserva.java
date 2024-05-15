@@ -1,10 +1,12 @@
 package view;
 
 import controller.CtrlAutomovil;
+import controller.CtrlFactura;
 import controller.CtrlReserva;
 import model.Automovil;
 import model.Log;
 import model.Reserva;
+import model.Sesion;
 
 import javax.swing.*;
 import java.awt.*;

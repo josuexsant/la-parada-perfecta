@@ -31,7 +31,7 @@
                         <xsl:value-of select="factura/cabecera/leyenda"/><fo:block/>
                         <xsl:value-of select="factura/cabecera/ciudad"/><fo:block/>
                         <fo:block/><fo:block/> Fecha: <xsl:value-of
-                            select="concat(factura/fecha/dia, ' de ', factura/fecha/mes, ' de ', factura/fecha/ano)"/><fo:block/>
+                            select="concat(factura/fecha/dia, '/', factura/fecha/mes, '/', factura/fecha/ano)"/><fo:block/>
                         <fo:block/>
                         <!-- FIN CABECERA -->
                         <!-- Salto de linea -->
@@ -105,7 +105,7 @@
                         <fo:block space-after="12pt"/>
                         <!-- CONTACTO -->
                         <!-- Salto de linea -->
-                        <fo:block space-after="30pt"/>
+                        <fo:block space-after="10pt"/>
                         <fo:block font-weight="bold" text-align="center" font-size="14pt"
                             color="#1D3557" padding="10px"> CONTACTO </fo:block>
                         <fo:block text-align="center">

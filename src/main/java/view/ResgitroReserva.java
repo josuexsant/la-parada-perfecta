@@ -116,7 +116,7 @@ public class ResgitroReserva extends JFrame {
                          *  3: fusionable
                          *  4: ok
                          */
-                        Reserva reserva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado -1, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
+                        Reserva reserva = ctrlReserva.crearReserva(diaSeleccionado, mesSeleccionado - 1, horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada);
                         switch (status(reserva)) {
                             case 0:
                                 Log.error("No hay una matricula registrada");
@@ -149,47 +149,29 @@ public class ResgitroReserva extends JFrame {
                                 ctrlReserva.guardar();
                                 ConfirmarReserva view2 = new ConfirmarReserva(reserva);
                                 view2.mostrarInterfaz();
+                                CtrlFactura ctrlFactura = new CtrlFactura();
+                                try {
+                                    ctrlFactura.generarFacturaPDF(horaLlegadaSeleccionada, horaSalidaSeleccionada, matriculaSeleccionada, diaSeleccionado, mesSeleccionado);
+                                } catch (ParseException ex) {
+                                    throw new RuntimeException(ex);
+                                }
                                 dispose();
                         }
-                        CtrlFactura ctrlFactura = new CtrlFactura();
-
-                        try {
-                            ctrlFactura.generarFacturaPDF(horaLlegadaSeleccionada,horaSalidaSeleccionada, matriculaSeleccionada,diaSeleccionado,mesSeleccionado);
-                        } catch (ParseException ex) {
-                            throw new RuntimeException(ex);
-                        }
-
-
-
-
                     });
                 }
             });
             timer.setRepeats(false); // Para que solo se ejecute una vez
             timer.start();
         };
-
         confirmarButton.addActionListener(accion);
     }
 
     public int status(Reserva rn) {
-        int i;
-        i = verificarMatricula();
-        if (i == 0)
-            return i;
-        i = verificarDisponibilidad();
-        if (i == 1){
-            return 1;
-        }
-        i = ctrlReserva.esDuplicada(rn);
-        if (i==2)
-            return 2;
-        i = ctrlReserva.esFusionable(rn);
-        if(i ==3)
-            return i;
-        i = verificarHoras();
-        if (i == 4)
-            return i;
+        if (verificarMatricula() == 0) return 0;
+        if (verificarDisponibilidad() == 1) return 1;
+        if (ctrlReserva.esDuplicada(rn) == 2) return 2;
+        if (ctrlReserva.esFusionable(rn) == 3) return 3;
+        if (verificarHoras() == 4) return 4;
         return 5;
     }
 
@@ -251,8 +233,6 @@ public class ResgitroReserva extends JFrame {
         // Las horas de llegada y salida son diferentes
         return 5; // Podrías usar cualquier otro código para indicar que las horas son válidas
     }
-
-
 
 
     private void createUIComponents() {

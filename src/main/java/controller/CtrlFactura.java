@@ -16,7 +16,7 @@ import java.util.*;
 public class CtrlFactura {
 
 
-    private static void enviarConGMail(String destinatario, String asunto, String cuerpo, String rutaArchivo) {
+    public static void enviarConGMail(String destinatario, String asunto, String cuerpo, String rutaArchivo) {
         String remitente = "jfqc120@gmail.com";
         String claveemail = "qxoo cxzf txli toxg";
         Properties props = System.getProperties();
@@ -140,6 +140,7 @@ public class CtrlFactura {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
 
         //-----
         Automovil automovil = new Automovil(Automovil.getIdConMatricula(matricula));

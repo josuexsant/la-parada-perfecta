@@ -233,7 +233,7 @@ public class Usuario {
         }
     }
 
-    public String nombreCompleto(int id_Usuario) throws SQLException {
+    public String nombreCompleto(int id_Usuario) {
         String nombreCompleto = null;
         String query = "SELECT nombre, apellido_paterno, apellido_materno " +
                 "FROM informacion_usuario " +

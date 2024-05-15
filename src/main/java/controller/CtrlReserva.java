@@ -2,6 +2,11 @@ package controller;
 
 import model.*;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -10,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Properties;
 
 public class CtrlReserva {
     Reserva reserva;
@@ -81,6 +87,8 @@ public class CtrlReserva {
 
     public void eliminarReservaSelccionada(int id) {
         Reserva reserva = new Reserva(id);
+        Automovil automovil = new Automovil(reserva.getIdAutomovil());
+        enviarNotificacion("Reserva cancelada", "Reserva cancelada", "Tu reserva con No. " + reserva.getId() + " con fecha "+reserva.getFecha()+ " para el vehiculo con matricula: "+ automovil.getPlaca() +" ha sido cancelada");
         reserva.eliminar(id);
     }
 
@@ -105,11 +113,13 @@ public class CtrlReserva {
             reserva.setIdCajon(idCajon);
             reserva.setIdUsuario(idUsuario);
             reserva.modificar(idUsuario, idReserva);
+            enviarNotificacion("Reserva modificada", "Reserva modificada", "Tu reserva con No. " + reserva.getId() + " ha sido modificada");
             return true;
         } else {
             return false;
         }
     }
+
     public boolean extenderReserva(int idReserva, String horaInicio, String horaFin, String matricula) {
         CtrlCajon ctrlCajon = new CtrlCajon();
         Cajon cajon = ctrlCajon.getCajonDisponible();
@@ -129,6 +139,7 @@ public class CtrlReserva {
             // Llamar al método para actualizar la reserva en la base de datos
             reserva.extenderReserva(idUsuario, idReserva);
             Log.success("Salió bien extender tiempo");
+            enviarNotificacion("Reserva extendida", "Reserva extendida", "Tu reserva con No. " + reserva.getId() + " ha sido extendida");
             return true;
         } else {
             return false;
@@ -218,5 +229,76 @@ public class CtrlReserva {
             }
         }
         return 4;
+    }
+
+    public void enviarNotificacion(String asunto, String titulo, String mensaje) {
+        String cuerpo = "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "  <body style='font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;'>\n" +
+                "    <div style='width: 80%; margin: auto; overflow: hidden;'>\n" +
+                "      <div style='padding: 20px; background-color: #fff; color: #333;'>\n" +
+                "        <h1 style='color: #1d3557; text-align: left;'>LA PARADA PERFECTA</h1>\n" +
+                "        <hr />\n" +
+                "        <h2 style='color: #e63946; text-align: center;'>" + titulo + "</h2>\n" +
+                "        <p style='font-size: 1.1em; line-height: 1.6; color: #666;'>Hola, " + Sesion._instance().getUsuario().nombreCompleto(Sesion._instance().getUsuario().getId()) + "</p>\n" +
+                "        <p style='color: white; text-align: center; background-color: #457b9d; padding: 10px; border-radius: 5px;'>" + mensaje + "</p>\n" +
+                "        <p style='font-size: 1.1em; line-height: 1.6; color: #666;'>Fecha: " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(SimulatedTime.getInstance().getDate().getTime()) + "</p>\n" +
+                "      </div>\n" +
+                "\n" +
+                "      <div style='background-color: white; padding: 10px; margin-top: 10px; border-radius: 5px;'>\n" +
+                "        <p style='font-size: 1.1em; line-height: 1.6; color: #666;'>\n" +
+                "          Si tienes alguna duda, por favor contáctanos a través de nuestro\n" +
+                "          correo electrónico\n" +
+                "        </p>\n" +
+                "        <hr />\n" +
+                "        <p style='font-size: 1.1em; line-height: 1.6; color: #666;'>Gracias por confiar en nosotros</p>\n" +
+                "      </div>\n" +
+                "\n" +
+                "      <div style='color: white; text-align: center; background-color: #457b9d; padding: 10px; border-radius: 5px; margin-top: 10px;'>\n" +
+                "        <p style='color: white;'>\n" +
+                "          Correo:\n" +
+                "          <a style='color: white; text-decoration: none;' href=\"mailto:josuexsanta@gmail.com\">laparadaperfecta@gmail.com</a>\n" +
+                "        </p>\n" +
+                "      </div>\n" +
+                "    </div>\n" +
+                "  </body>\n" +
+                "</html>\n";
+
+        String destinatario = Sesion._instance().getUsuario().getCorreoElectronico();
+        String remitente = "jfqc120@gmail.com";
+        String claveemail = "qxoo cxzf txli toxg";
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.user", remitente);
+        props.put("mail.smtp.clave", claveemail);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+        Session session = Session.getDefaultInstance(props);
+
+        MimeMessage message = new MimeMessage(session);
+
+        try {
+            message.setFrom(new InternetAddress(remitente));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+            message.setSubject(asunto);
+
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setContent(cuerpo, "text/html");
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(textPart);
+
+            message.setContent(multipart);
+
+            Transport transport = session.getTransport("smtp");
+            transport.connect("smtp.gmail.com", remitente, claveemail);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 }
