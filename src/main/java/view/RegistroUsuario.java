@@ -33,32 +33,34 @@ public class RegistroUsuario extends JFrame {
         cancelarButton.addActionListener(e -> cancelar());
 
         siguienteButton.addActionListener(e -> {
-            String nombre = nombretext.getText();
-            String password = new String(passwordText.getPassword());
-            String apellidoMaterno = apellidoMaternotext.getText();
-            String apellidoPaterno = apellidoPaternotext.getText();
-            String telefono = telefonotext.getText();
-            String correo = correotext.getText();
-            int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
-            int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
+            if(camposValidos()) {
+                String nombre = nombretext.getText();
+                String password = new String(passwordText.getPassword());
+                String apellidoMaterno = apellidoMaternotext.getText();
+                String apellidoPaterno = apellidoPaternotext.getText();
+                String telefono = telefonotext.getText();
+                String correo = correotext.getText();
+                int idGenero = obtenerIdGenero((String) genero.getSelectedItem());
+                int idCiudad = obtenerIdCiudad((String) ciudades.getSelectedItem());
 
-            UIManager.put("OptionPane.yesButtonText", "Sí");
-            UIManager.put("OptionPane.noButtonText", "No");
-            int confirmacion = JOptionPane.showConfirmDialog(registroUsuariopanel, "¿La información que ingresaste es correcta?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                UIManager.put("OptionPane.yesButtonText", "Sí");
+                UIManager.put("OptionPane.noButtonText", "No");
+                int confirmacion = JOptionPane.showConfirmDialog(registroUsuariopanel, "¿La información que ingresaste es correcta?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
-                    UIManager.put("OptionPane.okButtonText", "Aceptar");
-                    JOptionPane.showMessageDialog(registroUsuariopanel, "Registro Exitoso", "Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    if (ctrlUsuario.registrarUsuario(nombre, password, apellidoPaterno, apellidoMaterno, telefono, correo, idGenero, idCiudad)) {
+                        UIManager.put("OptionPane.okButtonText", "Aceptar");
+                        JOptionPane.showMessageDialog(registroUsuariopanel, "Registro Exitoso", "Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
 
-                    RegistroTDC registroTDC = new RegistroTDC();
-                    registroTDC.mostrarInterfaz();
-                    dispose();
+                        RegistroTDC registroTDC = new RegistroTDC();
+                        registroTDC.mostrarInterfaz();
+                        dispose();
 
-                    Log.info("Registro de usuario");
-                } else {
-                    UIManager.put("OptionPane.okButtonText", "Intentar de nuevo");
-                    JOptionPane.showMessageDialog(registroUsuariopanel, "Error en el registro");
+                        Log.info("Registro de usuario");
+                    } else {
+                        UIManager.put("OptionPane.okButtonText", "Intentar de nuevo");
+                        JOptionPane.showMessageDialog(registroUsuariopanel, "Error en el registro");
+                    }
                 }
             }
         });
@@ -252,5 +254,20 @@ public class RegistroUsuario extends JFrame {
         ImageIcon icon = new ImageIcon("src/main/images/agregar.gif");
         Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_FAST);
         logo = new JLabel(new ImageIcon(image));
+    }
+
+    private boolean camposValidos() {
+        if (nombretext.getText().trim().isEmpty() ||
+                apellidoPaternotext.getText().trim().isEmpty() ||
+                apellidoMaternotext.getText().trim().isEmpty() ||
+                telefonotext.getText().trim().isEmpty() ||
+                correotext.getText().trim().isEmpty() ||
+                passwordText.getPassword().length == 0 ||
+                genero.getSelectedIndex() == 0 ||
+                ciudades.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(registroUsuariopanel, "Todos los campos son obligatorios");
+            return false;
+        }
+        return true;
     }
 }
